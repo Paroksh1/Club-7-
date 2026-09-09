@@ -1,0 +1,329 @@
+/*
+  CLUB 7 ARENA — MOTION VOCABULARY
+  ----------------------------------------------------------------
+  Each keyframe below models something that could physically happen at
+  the venue. This file only defines the vocabulary (CSS keyframes +
+  utility classes) for simple, one-shot or looping transitions.
+
+  Anything that needs scroll-scrubbed choreography or sequenced
+  timelines (e.g. the Section 02 sport-transformation sequence) is out
+  of scope here and will be built with GSAP when that section exists —
+  not installed speculatively now.
+
+  Every animation respects prefers-reduced-motion by being disabled
+  outright below; there is no reduced-motion "lite" version because
+  none of these are load-bearing for comprehension.
+*/
+
+/* Floodlights snapping/ramping on — for hero entrance, or any surface
+   that should feel "switched on" rather than merely faded in. */
+@keyframes c7-floodlight-on {
+  0% {
+    opacity: 0;
+    filter: brightness(0.4);
+  }
+  55% {
+    opacity: 1;
+    filter: brightness(1.2);
+  }
+  72% {
+    opacity: 0.86;
+    filter: brightness(0.88);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+.c7-anim-floodlight-on {
+  animation: c7-floodlight-on 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* A painted court line being drawn. Apply to an SVG <path>/<line> with
+   stroke set; pass the path's total length via --c7-line-length
+   (from el.getTotalLength() in JS). */
+@keyframes c7-line-draw {
+  from {
+    stroke-dashoffset: var(--c7-line-length, 1000);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.c7-anim-line-draw {
+  stroke-dasharray: var(--c7-line-length, 1000);
+  animation: c7-line-draw 1100ms ease-out forwards;
+}
+
+/* Scoreboard digit flip — pair with a JS swap of the digit's text
+   content timed to the midpoint of the animation. */
+@keyframes c7-scoreboard-flip {
+  0% {
+    transform: rotateX(0deg);
+  }
+  49% {
+    transform: rotateX(-90deg);
+  }
+  51% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+.c7-anim-scoreboard-flip {
+  animation: c7-scoreboard-flip 480ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* A poster being pasted up — slight overshoot in scale/rotation that
+   settles, as if the paper was just smoothed onto the board. */
+@keyframes c7-poster-paste {
+  0% {
+    opacity: 0;
+    transform: scale(1.04) rotate(-1.1deg) translateY(6px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(0.996) rotate(0.25deg) translateY(-1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg) translateY(0);
+  }
+}
+.c7-anim-poster-paste {
+  animation: c7-poster-paste 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* LED perimeter board ticker. Track should contain the content twice
+   back-to-back; this scrolls exactly one copy's width. */
+@keyframes c7-ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.c7-anim-ticker {
+  animation: c7-ticker-scroll 24s linear infinite;
+}
+
+/* A sheet of paper lifting slightly — noticeboard items, fixture
+   sheets. Hover/focus only; not a load animation. */
+.c7-paper-lift {
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+.c7-paper-lift:hover,
+.c7-paper-lift:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 24px -12px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- HERO ENTRANCE ----------
+   The dark veil that lifts off an already-fully-lit scene, in stepped
+   plateaus rather than a linear fade — this is what reads as "banks of
+   floodlights switching on in sequence" rather than a generic fade-in.
+   Runs once on load; content underneath is authored at full opacity so
+   disabling this animation (reduced motion) simply reveals everything
+   immediately instead of leaving it hidden. */
+@keyframes c7-scrim-lift {
+  0% {
+    opacity: 1;
+  }
+  31% {
+    opacity: 0.82;
+  }
+  58% {
+    opacity: 0.42;
+  }
+  80% {
+    opacity: 0.07;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.c7-anim-scrim-lift {
+  animation: c7-scrim-lift 900ms cubic-bezier(0.3, 0.6, 0.2, 1) both;
+}
+
+/* Exposure rising on a real photograph — the floodlight-on moment
+   played out directly on the venue photo's own pixels (brightness/
+   contrast/saturation), rather than a synthetic overlay. Used once,
+   on load, on the hero photo. */
+@keyframes c7-photo-expose {
+  0% {
+    filter: brightness(0.32) contrast(1.05) saturate(0.85);
+  }
+  55% {
+    filter: brightness(0.82) contrast(1.02) saturate(0.96);
+  }
+  100% {
+    filter: brightness(1) contrast(1) saturate(1);
+  }
+}
+.c7-anim-photo-expose {
+  animation: c7-photo-expose 900ms cubic-bezier(0.3, 0.6, 0.2, 1) both;
+}
+
+/* Display copy resolving into position, as if a poster's focus is
+   settling — used once per headline line, not per word. */
+@keyframes c7-headline-resolve {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+    letter-spacing: 0.02em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0em;
+  }
+}
+.c7-anim-headline {
+  animation: c7-headline-resolve 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Generic small-distance reveal for supporting copy, CTAs and nav
+   items that appear as the lights finish coming on. */
+@keyframes c7-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.c7-anim-reveal {
+  animation: c7-reveal 500ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Scroll cue's arrow — a slow, small nudge, not a bouncing icon. */
+@keyframes c7-cue-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+.c7-anim-cue-bounce {
+  animation: c7-cue-bounce 1800ms ease-in-out 2000ms infinite;
+}
+
+/* "Open" status lamp — a slow pulse, like an indicator bulb. */
+@keyframes c7-pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+.c7-anim-pulse-dot {
+  animation: c7-pulse-dot 2000ms ease-in-out infinite;
+}
+
+/* Painted field markings growing into place from a fixed edge — the
+   rectilinear, div-based equivalent of c7-anim-line-draw, used where a
+   straight line needs to track a percentage-based box (a field
+   marking over a photo) rather than an SVG path. Pair the transform-
+   origin with the edge the line should grow from. */
+@keyframes c7-grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes c7-grow-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.c7-anim-grow-x {
+  animation: c7-grow-x 650ms cubic-bezier(0.3, 0.7, 0.2, 1) both;
+}
+.c7-anim-grow-y {
+  animation: c7-grow-y 650ms cubic-bezier(0.3, 0.7, 0.2, 1) both;
+}
+
+/* A generic court outline flashing on then off — the bridge between
+   the turf and the real pickleball photo resolving underneath it, so
+   the swap reads as "lines reorganizing" rather than a plain fade. */
+@keyframes c7-line-flash {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.c7-anim-line-flash {
+  animation: c7-line-flash 900ms ease-in-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c7-anim-floodlight-on,
+  .c7-anim-line-draw,
+  .c7-anim-scoreboard-flip,
+  .c7-anim-poster-paste,
+  .c7-anim-ticker,
+  .c7-anim-cue-bounce {
+    animation: none !important;
+  }
+  .c7-anim-grow-x,
+  .c7-anim-grow-y {
+    animation: none !important;
+    transform: none !important;
+  }
+  .c7-anim-line-flash {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  .c7-anim-scrim-lift {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  .c7-anim-photo-expose {
+    animation: none !important;
+    filter: none !important;
+  }
+  .c7-anim-headline,
+  .c7-anim-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    letter-spacing: normal !important;
+  }
+  .c7-anim-pulse-dot {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .c7-paper-lift {
+    transition: none !important;
+  }
+  .c7-overlay-panel {
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+}

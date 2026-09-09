@@ -1,0 +1,115 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+
+/**
+ * The hero environment is the real Club 7 night aerial photograph — no
+ * constructed/illustrated scenery. The photo already does the hard
+ * work: the venue sits lit in the middle of genuine surrounding
+ * darkness. Two things are layered on top of it:
+ *
+ * 1. A static compositional gradient that lets that darkness bleed
+ *    into the site background, so copy has a legible zone without a
+ *    hard rectangle/card edge. Direction flips per breakpoint — side-on
+ *    (desktop, text sits left) vs top-down (mobile, text sits below).
+ * 2. A one-shot exposure ramp (CSS `filter: brightness/contrast`) on
+ *    the image itself for the entrance — "very dark → lights visible →
+ *    full exposure" — instead of a black scrim or fake lamp dots.
+ *
+ * No grain, no added vignette, no desaturation: the brief is explicit
+ * that these are real venue photographs and should read as such.
+ */
+type HeroMediaProps = {
+  imageSrc?: string;
+  imageAlt?: string;
+};
+
+export default function HeroMedia({
+  imageSrc = "/venue/night-aerial.jpg",
+  imageAlt = "Club 7's floodlit turf complex at night, Sector 89, Faridabad",
+}: HeroMediaProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const spotlightRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!finePointer.matches || reducedMotion.matches) return;
+
+    const container = containerRef.current;
+    const spot = spotlightRef.current;
+    if (!container || !spot) return;
+
+    function handleMove(e: MouseEvent) {
+      const rect = container!.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      spot!.style.setProperty("--spot-x", `${x}%`);
+      spot!.style.setProperty("--spot-y", `${y}%`);
+      spot!.style.opacity = "1";
+    }
+    function handleLeave() {
+      spot!.style.opacity = "0";
+    }
+
+    container.addEventListener("mousemove", handleMove);
+    container.addEventListener("mouseleave", handleLeave);
+    return () => {
+      container.removeEventListener("mousemove", handleMove);
+      container.removeEventListener("mouseleave", handleLeave);
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden bg-c7-bg-1">
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-[center_44%] c7-anim-photo-expose"
+      />
+
+      {/* Slight lift on the lower portion of the photo only — the ground
+          itself, not the sky/tree band above it. ~10-15%, not a global
+          brighten. */}
+      <div
+        className="pointer-events-none absolute inset-0 mix-blend-screen"
+        style={{
+          background:
+            "linear-gradient(180deg, transparent 0%, transparent 48%, rgba(255,255,255,0.11) 100%)",
+        }}
+      />
+
+      {/* Compositional reveal — lets the photo's own darkness merge
+          into the site background. Top-down on mobile (copy sits
+          below), side-on from the left on desktop (copy sits left). */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, transparent 0%, transparent 18%, var(--color-c7-bg-1) 58%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 hidden md:block"
+        style={{
+          background:
+            "linear-gradient(100deg, var(--color-c7-bg-1) 2%, var(--color-c7-bg-1) 34%, transparent 64%)",
+        }}
+      />
+
+      {/* Cursor spotlight — desktop, fine-pointer only; see effect above */}
+      <div
+        ref={spotlightRef}
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "radial-gradient(320px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(243,236,223,0.10), transparent 60%)",
+        }}
+      />
+    </div>
+  );
+}
