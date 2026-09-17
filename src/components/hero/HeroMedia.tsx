@@ -4,10 +4,10 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 
 /**
- * The hero environment is the real Club 7 night aerial photograph — no
- * constructed/illustrated scenery. The photo already does the hard
- * work: the venue sits lit in the middle of genuine surrounding
- * darkness. Two things are layered on top of it:
+ * The hero environment is a representative CourtPlay-style night
+ * photograph — no constructed/illustrated scenery. The photo already
+ * does the hard work: the courts sit lit in the middle of genuine
+ * surrounding darkness. Two things are layered on top of it:
  *
  * 1. A static compositional gradient that lets that darkness bleed
  *    into the site background, so copy has a legible zone without a
@@ -17,8 +17,8 @@ import Image from "next/image";
  *    the image itself for the entrance — "very dark → lights visible →
  *    full exposure" — instead of a black scrim or fake lamp dots.
  *
- * No grain, no added vignette, no desaturation: the brief is explicit
- * that these are real venue photographs and should read as such.
+ * No grain, no added vignette, no desaturation: kept clean so the
+ * photograph reads as a real place, not a treated stock image.
  */
 type HeroMediaProps = {
   imageSrc?: string;
@@ -26,8 +26,8 @@ type HeroMediaProps = {
 };
 
 export default function HeroMedia({
-  imageSrc = "/venue/night-aerial.jpg",
-  imageAlt = "Club 7's floodlit turf complex at night, Sector 89, Faridabad",
+  imageSrc = "/pickleball/hero-wide.jpg",
+  imageAlt = "Floodlit pickleball courts at night, CourtPlay, Gurgaon",
 }: HeroMediaProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);

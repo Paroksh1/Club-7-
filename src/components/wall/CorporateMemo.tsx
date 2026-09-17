@@ -1,7 +1,7 @@
 /**
- * An office memo Club 7 has visibly hijacked — the crossed-out
- * "Meeting Room" is the whole joke, drawn on hover rather than
- * present by default so it reads as a discovered detail.
+ * An office memo CourtPlay has visibly hijacked — the crossed-out
+ * "Boardroom" is the whole joke, drawn on hover rather than present
+ * by default so it reads as a discovered detail.
  */
 export default function CorporateMemo({ className = "" }: { className?: string }) {
   return (
@@ -23,12 +23,12 @@ export default function CorporateMemo({ className = "" }: { className?: string }
             <span className="text-c7-charcoal-dim">To:</span> The Whole Team
           </p>
           <p>
-            <span className="text-c7-charcoal-dim">Subject:</span> Team Building
+            <span className="text-c7-charcoal-dim">Subject:</span> A Better Offsite
           </p>
         </div>
 
         <p className="relative mt-4 inline-block font-body text-body font-medium uppercase text-c7-charcoal-dim">
-          Meeting Room
+          Boardroom
           <span
             className="absolute left-0 top-1/2 h-[2px] w-full origin-left -translate-y-1/2 scale-x-0 bg-c7-red transition-transform duration-500 ease-out group-hover/memo:scale-x-100"
             aria-hidden="true"
@@ -36,13 +36,13 @@ export default function CorporateMemo({ className = "" }: { className?: string }
         </p>
 
         <p className="mt-2 font-display text-display-4 leading-[0.95] uppercase text-c7-charcoal">
-          Take It
+          Court.
           <br />
-          <span className="text-c7-red">To the Turf.</span>
+          <span className="text-c7-red">In.</span>
         </p>
 
         <p className="mt-2 font-body text-tag tracking-[0.2em] uppercase text-c7-charcoal-dim">
-          Sport + Food + Your Team
+          Pickleball + Competition + People
         </p>
 
         <div className="mt-5 flex items-center justify-between">
@@ -58,7 +58,7 @@ export default function CorporateMemo({ className = "" }: { className?: string }
             className="flex h-10 w-10 shrink-0 rotate-6 items-center justify-center rounded-full border border-c7-red/40 font-display text-[0.55rem] uppercase tracking-widest text-c7-red/70"
             aria-hidden="true"
           >
-            C7
+            CP
           </span>
         </div>
       </div>

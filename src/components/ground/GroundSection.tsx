@@ -10,7 +10,7 @@ import GroundCta from "./GroundCta";
 import AvailabilityStrip from "./AvailabilityStrip";
 
 export default function GroundSection() {
-  const [activeSport, setActiveSport] = useState<SportId>("cricket");
+  const [activeSport, setActiveSport] = useState<SportId>("play");
   const { ref: headerRef, visible } = useRevealOnView<HTMLDivElement>();
   const sport = SPORTS.find((s) => s.id === activeSport)!;
 
@@ -26,7 +26,7 @@ export default function GroundSection() {
           className="font-body text-tag tracking-[0.24em] uppercase text-c7-red shrink-0 transition-opacity duration-500"
           style={{ opacity: visible ? 1 : 0 }}
         >
-          02 / The Ground
+          02 / On the Court
         </p>
         <h2
           className="mt-3 md:mt-0 -ml-1 font-display uppercase leading-[0.94] text-c7-ink transition-[opacity,transform] duration-700 text-display-2 md:text-[clamp(1.5rem,2.4vw,2.75rem)] md:leading-[1.05]"
@@ -36,11 +36,11 @@ export default function GroundSection() {
           }}
         >
           <span className="md:hidden">
-            Tonight, What Are
+            How Are We
             <br />
-            We Playing?
+            Playing Today?
           </span>
-          <span className="hidden md:inline">Tonight, What Are We Playing?</span>
+          <span className="hidden md:inline">How Are We Playing Today?</span>
         </h2>
 
         {sport.headline && (
@@ -90,7 +90,7 @@ export default function GroundSection() {
 
       <div className="px-edge py-6 md:py-4 flex justify-end border-t border-c7-line/10">
         <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink">
-          Off the Pitch
+          Beyond the Game
           <span className="ml-1.5 inline-block c7-anim-cue-bounce" aria-hidden="true">
             ↓
           </span>

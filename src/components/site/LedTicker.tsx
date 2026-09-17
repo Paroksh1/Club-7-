@@ -1,11 +1,13 @@
 const ITEMS = [
-  "OPEN 24 HOURS",
-  "2 CRICKET TURFS",
-  "FOOTBALL",
+  "PLAY",
+  "COMPETE",
+  "GATHER",
+  "CREATE",
   "PICKLEBALL",
-  "CAFE",
-  "SECTOR 89",
-  "CLUB 7",
+  "AFTER DARK",
+  "HORIZON × COURTPLAY",
+  "GURGAON",
+  "COURTPLAY",
 ];
 
 function TickerRun() {
@@ -30,7 +32,7 @@ export default function LedTicker({ className = "" }: { className?: string }) {
     <div
       className={`relative overflow-hidden border-t border-c7-line/20 bg-c7-bg-1/90 backdrop-blur-[1px] ${className}`}
       role="marquee"
-      aria-label="Club 7 highlights"
+      aria-label="CourtPlay highlights"
     >
       <div className="flex w-max c7-anim-ticker py-2.5">
         <TickerRun />
