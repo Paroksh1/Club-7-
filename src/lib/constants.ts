@@ -30,3 +30,13 @@ export const WHATSAPP_MESSAGES = {
   birthday: "Hi Club 7, I'd like to plan a birthday.",
   tournament: "Hi Club 7, I'd like to enquire about tournaments.",
 } as const;
+
+/**
+ * No verified Google Maps / place URL exists anywhere in the project
+ * — this is a plain text search built from the location string
+ * already displayed sitewide, not an invented pin or coordinate.
+ * Swap for a real verified place link the moment one exists.
+ */
+export const DIRECTIONS_HREF = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  "Club 7, Sector 89, Faridabad"
+)}`;

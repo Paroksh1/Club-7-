@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRevealOnView } from "@/lib/useRevealOnView";
-import { WHATSAPP_HREF } from "@/lib/constants";
+import { DIRECTIONS_HREF, WHATSAPP_HREF } from "@/lib/constants";
 
 /**
  * Only facts already established elsewhere on the site. "Open 24
@@ -19,14 +19,6 @@ const FACTS = [
   { label: "Cafe", value: "On-site" },
   { label: "Turfs", value: "2 Cricket Turfs" },
 ];
-
-/** No verified Maps URL exists anywhere in the project — this builds
- * a plain text search from the location already displayed sitewide
- * rather than inventing a pin/coordinate. Swap for a real verified
- * place link the moment one exists. */
-const DIRECTIONS_HREF = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-  "Club 7, Sector 89, Faridabad"
-)}`;
 
 function FactGrid() {
   return (
