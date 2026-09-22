@@ -22,10 +22,10 @@ export default function SiteHeader() {
       <header className="fixed inset-x-0 top-0 z-50 px-edge py-4 md:py-5 flex items-center justify-between">
         <div className="flex items-baseline gap-3">
           <a href="#" className="font-display text-2xl md:text-3xl uppercase tracking-tight text-c7-ink leading-none">
-            Court<span className="text-c7-red">Play</span>
+            Club<span className="text-c7-red">7</span>
           </a>
           <span className="hidden md:inline font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">
-            Gurgaon / IN
+            Sector 89 / FBD
           </span>
         </div>
 
@@ -34,7 +34,7 @@ export default function SiteHeader() {
             type="button"
             className="hidden md:inline-flex items-center font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink-dim hover:text-c7-red transition-colors"
           >
-            Book a Court
+            Book a Slot
           </button>
           <button
             type="button"

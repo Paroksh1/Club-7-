@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { WHATSAPP_HREF } from "@/lib/constants";
 
-const ITEMS = ["PLAY", "COMPETE", "GATHER", "COMPANIES", "BRANDS"];
+const ITEMS = ["CRICKET", "FOOTBALL", "PICKLEBALL", "ACADEMY", "EVENTS"];
 
 type FixtureOverlayProps = {
   open: boolean;
@@ -41,7 +41,7 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
       <div className="flex h-full flex-col px-edge py-6">
         <div className="flex items-center justify-between border-b border-c7-line/15 pb-6">
           <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">
-            What&apos;s On
+            Match Programme
           </p>
           <button
             ref={closeRef}
@@ -80,7 +80,7 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
             onClick={onClose}
             className="inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-red-dim transition-colors"
           >
-            Book a Court <span aria-hidden="true">→</span>
+            Book a Slot <span aria-hidden="true">→</span>
           </button>
           <a
             href={WHATSAPP_HREF}
@@ -89,7 +89,7 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
             tabIndex={open ? 0 : -1}
             className="inline-flex items-center justify-center gap-2 border border-c7-line/40 px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-bg-3 transition-colors"
           >
-            WhatsApp CourtPlay
+            WhatsApp Club 7
           </a>
         </div>
       </div>

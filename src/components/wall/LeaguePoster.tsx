@@ -15,16 +15,16 @@ export default function LeaguePoster({ className = "" }: { className?: string })
       {/* Red masthead */}
       <div className="relative bg-c7-red px-5 pt-5 pb-6 sm:px-6 sm:pt-6 sm:pb-7 shadow-[0_16px_36px_-16px_rgba(34,30,25,0.45)]">
         <p className="font-display text-[clamp(0.8rem,4.5cqw,1.1rem)] uppercase tracking-tight text-c7-ink/90">
-          Court<span className="text-c7-ink">Play</span>
+          Club<span className="text-c7-ink">7</span>
         </p>
         <p className="mt-2 font-display leading-[0.88] uppercase text-c7-ink text-[clamp(1.6rem,13cqw,2.9rem)]">
-          Tournaments
+          Leagues
         </p>
         <p className="font-display leading-[0.88] uppercase text-c7-ink/70 text-[clamp(0.9rem,6cqw,1.4rem)]">
           &amp;
         </p>
         <p className="font-display leading-[0.88] uppercase text-c7-ink text-[clamp(1.6rem,13cqw,2.9rem)]">
-          Competition
+          Tournaments
         </p>
       </div>
 
@@ -37,7 +37,7 @@ export default function LeaguePoster({ className = "" }: { className?: string })
         }}
       >
         <div className="space-y-1.5">
-          {["Structured play.", "Competitive formats.", "Bigger stages."].map((line) => (
+          {["Form a Team.", "Enter the Draw.", "Play Under the Lights."].map((line) => (
             <p
               key={line}
               className="font-body text-[clamp(0.75rem,3.6cqw,0.9375rem)] font-medium uppercase tracking-[0.02em] text-c7-charcoal"
@@ -64,7 +64,7 @@ export default function LeaguePoster({ className = "" }: { className?: string })
             type="button"
             className="font-body text-[clamp(0.75rem,3.6cqw,0.875rem)] font-medium uppercase tracking-[0.08em] text-c7-red hover:text-c7-red-dim transition-colors"
           >
-            See Competition <span aria-hidden="true">→</span>
+            Register Interest <span aria-hidden="true">→</span>
           </button>
 
           {/* Registration stamp — clarifies on hover */}
@@ -73,9 +73,8 @@ export default function LeaguePoster({ className = "" }: { className?: string })
             aria-hidden="true"
           >
             <span className="font-display text-[0.55rem] leading-none uppercase tracking-widest text-c7-red text-center">
-              Court
-              <br />
-              Play
+              Club
+              <br />7
             </span>
             <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 48 48">
               <circle

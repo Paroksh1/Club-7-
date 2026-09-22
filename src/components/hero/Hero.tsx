@@ -1,4 +1,5 @@
 import { entrance } from "@/lib/entrance";
+import { WHATSAPP_HREF } from "@/lib/constants";
 import HeroMedia from "./HeroMedia";
 import LedTicker from "../site/LedTicker";
 
@@ -16,9 +17,9 @@ export default function Hero() {
             )}`}
           >
             <span className="h-1.5 w-1.5 bg-c7-red c7-anim-pulse-dot" aria-hidden="true" />
-            CourtPlay, Gurgaon
+            Sector 89, Faridabad
             <span className="text-c7-ink-dim/50">/</span>
-            Sport / People / After Hours
+            Open 24 Hours
           </p>
 
           {/* Headline */}
@@ -28,34 +29,36 @@ export default function Hero() {
                 850
               )}`}
             >
-              Play Is Only
+              Play Late.
             </span>
             <span
               className={`c7-anim-headline block font-display text-display-1 uppercase leading-[0.92] text-c7-red ${entrance(
                 1000
               )}`}
             >
-              Half the Story.
+              Stay Later.
             </span>
           </h1>
 
           {/* Supporting line + actions */}
           <div className={`c7-anim-reveal mt-8 ${entrance(1150)}`}>
             <p className="font-body text-body-lg text-c7-ink/85">
-              Sport · People · After Hours
+              Cricket · Football · Pickleball · Cafe
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <button
                 type="button"
                 className="inline-flex items-center justify-center gap-2 bg-c7-red px-7 py-4 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-red-dim transition-colors"
               >
-                Book a Court <span aria-hidden="true">→</span>
+                Book a Slot <span aria-hidden="true">→</span>
               </button>
               <a
-                href="#the-ground"
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 border border-c7-line/40 px-7 py-4 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-bg-3 transition-colors"
               >
-                See What&apos;s On <span aria-hidden="true">↓</span>
+                WhatsApp Club 7
               </a>
             </div>
           </div>
@@ -72,7 +75,7 @@ export default function Hero() {
             href="#the-ground"
             className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim hover:text-c7-ink transition-colors"
           >
-            Enter the Court
+            Enter the Ground
             <span className="ml-1.5 inline-block c7-anim-cue-bounce" aria-hidden="true">
               ↓
             </span>

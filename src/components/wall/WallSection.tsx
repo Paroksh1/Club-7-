@@ -69,7 +69,7 @@ export default function WallSection() {
           className="font-body text-tag tracking-[0.24em] uppercase text-c7-red transition-opacity duration-500"
           style={{ opacity: introVisible ? 1 : 0 }}
         >
-          03 / Beyond the Game
+          03 / Off the Pitch
         </p>
         <h2
           className="mt-3 -ml-1 font-display text-display-2 uppercase leading-[0.92] text-c7-charcoal transition-[opacity,transform] duration-700"
@@ -86,7 +86,7 @@ export default function WallSection() {
           className="mt-4 font-body text-tag tracking-[0.3em] uppercase text-c7-charcoal-dim transition-opacity duration-700"
           style={{ opacity: introVisible ? 1 : 0, transitionDelay: introVisible ? "200ms" : "0ms" }}
         >
-          Play / Compete / Gather / Create
+          Play / Train / Celebrate / Compete
         </p>
       </div>
 
@@ -176,7 +176,7 @@ export default function WallSection() {
 
       <div className="px-edge pb-8 flex justify-end border-t border-c7-charcoal/10">
         <p className="pt-5 font-body text-tag tracking-[0.24em] uppercase text-c7-charcoal-dim">
-          After Hours
+          After the Game
           <span className="ml-1.5 inline-block c7-anim-cue-bounce" aria-hidden="true">
             ↓
           </span>

@@ -19,9 +19,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "CourtPlay — Play Is Only Half the Story",
+  title: "Club 7 Arena — Sector 89, Faridabad",
   description:
-    "CourtPlay brings together pickleball, competition, people and experiences in Gurgaon.",
+    "Box cricket, 7-a-side football, pickleball, cricket academy and cafe. Open 24 hours in Sector 89, Faridabad.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

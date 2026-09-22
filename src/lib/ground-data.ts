@@ -1,11 +1,11 @@
-export type SportId = "play" | "compete" | "social";
+export type SportId = "cricket" | "football" | "pickleball";
 
 export type SportConfig = {
   id: SportId;
   number: string;
   label: string;
-  /** Only compete and social carry a state-specific headline — for
-   * play (the default state) the section's own question stands in. */
+  /** Only football and pickleball carry a state-specific headline — for
+   * cricket (the default state) the section's own question stands in. */
   headline?: string[];
   annotations: string[];
   cta: string;
@@ -13,41 +13,41 @@ export type SportConfig = {
 
 export const SPORTS: SportConfig[] = [
   {
-    id: "play",
+    id: "cricket",
     number: "01",
-    label: "Play",
-    headline: ["Just", "Play."],
-    annotations: ["Open Play", "Court Bookings", "Regular Games"],
-    cta: "Book a Court",
+    label: "Cricket",
+    annotations: ["2 Turfs", "Box Cricket", "Open 24 Hours"],
+    cta: "Check Cricket Slots",
   },
   {
-    id: "compete",
+    id: "football",
     number: "02",
-    label: "Compete",
-    headline: ["Keep", "Score."],
-    annotations: ["Structured Play", "Tournaments", "Competitive Games"],
-    cta: "See Competition",
+    label: "Football",
+    headline: ["7-a-side", "Football"],
+    annotations: ["Under the Lights", "Open 24 Hours"],
+    cta: "Check Football Slots",
   },
   {
-    id: "social",
+    id: "pickleball",
     number: "03",
-    label: "Social",
-    headline: ["Stay", "After."],
-    annotations: ["Social Nights", "Community Formats", "After-Hours Experiences"],
-    cta: "See What's On",
+    label: "Pickleball",
+    headline: ["New to it?", "Come anyway."],
+    annotations: ["Beginner Friendly"],
+    cta: "Check Pickleball Slots",
   },
 ];
 
 /**
- * DEMO/EDITORIAL PROGRAMMING ONLY — not a live booking feed and not
- * connected to any real-time system. Shows what a night at CourtPlay
- * looks like, not actual slot availability. No "live" indicator, no
- * pulse, no claim of real-time accuracy.
+ * DEMO DATA ONLY. Standing in for a future live availability feed —
+ * not connected to any booking system. Do not present this as
+ * real-time in copy or UI treatment (no "live" indicator, no pulse).
+ * Replace this array with an API response when the booking system
+ * exists; the shape below (`time`, `open`) is what the UI expects.
  */
-export const TONIGHT_PROGRAMME: { time: string; program: string }[] = [
-  { time: "7 PM", program: "Open Play" },
-  { time: "8 PM", program: "Compete" },
-  { time: "9 PM", program: "Social" },
-  { time: "10 PM", program: "After Hours" },
-  { time: "11 PM", program: "One More?" },
+export const DEMO_AVAILABILITY: { time: string; open: boolean }[] = [
+  { time: "7 PM", open: true },
+  { time: "8 PM", open: false },
+  { time: "9 PM", open: true },
+  { time: "10 PM", open: true },
+  { time: "11 PM", open: false },
 ];

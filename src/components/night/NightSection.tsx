@@ -42,7 +42,7 @@ export default function NightSection() {
     <section id="after-the-game" className="relative bg-c7-bg-1 overflow-hidden">
       {/* Transition — the last sheet on the notice wall lifting away;
           darkness was always underneath it. Quick, one-shot. */}
-      <div className="relative h-10 md:h-12" aria-hidden="true">
+      <div className="relative h-12 md:h-14" aria-hidden="true">
         <div
           className="absolute inset-0 bg-c7-paper transition-[transform,opacity] duration-500 ease-in origin-top"
           style={{
@@ -52,15 +52,13 @@ export default function NightSection() {
         />
       </div>
 
-      {/* Intro — generous top clearance: the fixed nav sits on top of
-          whatever section is scrolled beneath it, so this needs its own
-          protected space, not just enough to clear the transition band. */}
-      <div ref={introRef} className="px-edge pt-24 pb-8 md:pt-28 md:pb-9">
+      {/* Intro */}
+      <div ref={introRef} className="px-edge pt-6 pb-8 md:pt-7 md:pb-9">
         <p
           className="font-body text-tag tracking-[0.24em] uppercase text-c7-red transition-opacity duration-500"
           style={{ opacity: introVisible ? 1 : 0 }}
         >
-          04 / After Hours
+          04 / After the Game
         </p>
         <h2
           className="mt-3 -ml-1 font-display text-display-2 uppercase leading-[0.9] text-c7-ink transition-[opacity,transform] duration-700"
@@ -85,7 +83,7 @@ export default function NightSection() {
           className="mt-4 font-body text-tag tracking-[0.3em] uppercase text-c7-ink-dim transition-opacity duration-700"
           style={{ opacity: introVisible ? 1 : 0, transitionDelay: introVisible ? "220ms" : "0ms" }}
         >
-          The Court / The People / One More Game
+          The Cafe / The Crew / One More Hour
         </p>
       </div>
 
@@ -111,7 +109,7 @@ export default function NightSection() {
       {/* Closing beat */}
       <div className="px-edge pb-10 md:pb-12">
         <p className="font-body text-tag tracking-[0.3em] uppercase text-c7-ink-dim">
-          Play <span className="text-c7-red">/</span> People <span className="text-c7-red">/</span> After Hours
+          Play <span className="text-c7-red">/</span> Eat <span className="text-c7-red">/</span> Stay
         </p>
         <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-3">
           <button
