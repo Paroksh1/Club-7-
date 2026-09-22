@@ -4,7 +4,7 @@ import PlaySection1 from "@/components/play/PlaySection1";
 
 export const metadata: Metadata = {
   title: "Play — Club 7 Arena",
-  description: "Football, box cricket or pickleball. Same club. Different kind of night.",
+  description: "Football, box cricket or pickleball. Pick one. We'll take it from there.",
 };
 
 export default function PlayPage() {

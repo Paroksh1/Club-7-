@@ -3,28 +3,44 @@ export type PlaySportId = "football" | "cricket" | "pickleball";
 export type PlaySport = {
   id: PlaySportId;
   number: string;
+  /** short form used in nav-style contexts (selector, CTA) */
+  shortName: string;
+  /** fuller display name for the active panel headline */
   name: string;
-  descriptor: string;
+  /** second headline line, accent-coloured */
+  tagline: string;
+  /** one personality sentence — the only "joke" per sport */
+  line: string;
+  /** 2-3 verified facts only — nothing invented */
+  info: { label: string; value: string }[];
   image: { src: string; position: string; alt: string; stock?: boolean };
 };
 
 /**
- * Section 1 of /play only needs enough to identify and preview each
- * sport — full detail (format, pricing, availability) belongs to
- * later sections that don't exist yet.
+ * Every fact in `info` below already exists elsewhere on the site
+ * (Hero, GroundSection/ground-data.ts) — nothing new is asserted
+ * here. Pickleball genuinely only has one confirmed detail beyond
+ * location; it stays at two info points rather than padding to three.
  *
- * Football's image is representative stock already used (and graded)
- * elsewhere on the site — flagged here, not hidden. Cricket and
- * Pickleball are real Club 7 photography; Pickleball is the weaker of
- * the two (empty daytime court) but it's the only pickleball asset
- * that exists — swap it the moment better photography is available.
+ * Football's image is representative stock already used elsewhere on
+ * the site (flagged via `stock: true`); Cricket and Pickleball are
+ * real Club 7 photography. Pickleball's asset is the weakest of the
+ * three (empty, flat daytime light) but it's the only one that
+ * exists — swap it the moment better photography is available.
  */
 export const PLAY_SPORTS: PlaySport[] = [
   {
     id: "football",
     number: "01",
+    shortName: "Football",
     name: "Football",
-    descriptor: "7v7 / After Dark",
+    tagline: "After Dark.",
+    line: "Built for the group chat that actually shows up.",
+    info: [
+      { label: "Format", value: "7-a-side" },
+      { label: "Setting", value: "Under the Lights" },
+      { label: "Location", value: "Sector 89" },
+    ],
     image: {
       src: "/stock/last-goal-night.jpg",
       position: "40% 55%",
@@ -35,8 +51,15 @@ export const PLAY_SPORTS: PlaySport[] = [
   {
     id: "cricket",
     number: "02",
+    shortName: "Cricket",
     name: "Box Cricket",
-    descriptor: "Bring the Crew",
+    tagline: "Bring the Crew.",
+    line: "One bad over. Twenty messages later.",
+    info: [
+      { label: "Format", value: "Box Cricket" },
+      { label: "Turfs", value: "2 Turfs" },
+      { label: "Location", value: "Sector 89" },
+    ],
     image: {
       src: "/venue/turf-top-down-night.jpg",
       position: "65% 50%",
@@ -46,8 +69,14 @@ export const PLAY_SPORTS: PlaySport[] = [
   {
     id: "pickleball",
     number: "03",
+    shortName: "Pickleball",
     name: "Pickleball",
-    descriptor: "One More Game?",
+    tagline: "One More Game?",
+    line: "You already know how this ends.",
+    info: [
+      { label: "Level", value: "Beginner Friendly" },
+      { label: "Location", value: "Sector 89" },
+    ],
     image: {
       src: "/venue/pickleball.jpg",
       position: "50% 55%",
