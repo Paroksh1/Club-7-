@@ -5,6 +5,7 @@ import { useState } from "react";
 import { PLAY_SPORTS, type PlaySportId } from "@/lib/play-data";
 import PlaySection1 from "./PlaySection1";
 import PlaySection2 from "./PlaySection2";
+import PlaySection3 from "./PlaySection3";
 
 /**
  * Sport selection is the one piece of state both sections need —
@@ -31,6 +32,7 @@ export default function PlayPageClient() {
     <>
       <PlaySection1 activeId={activeId} onSelect={handleSelect} />
       <PlaySection2 activeId={activeId} />
+      <PlaySection3 />
     </>
   );
 }
