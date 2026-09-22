@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import PlaySection1 from "@/components/play/PlaySection1";
+import PlayPageClient from "@/components/play/PlayPageClient";
 
 export const metadata: Metadata = {
   title: "Play — Club 7 Arena",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function PlayPage() {
   return (
     <Suspense fallback={null}>
-      <PlaySection1 />
+      <PlayPageClient />
     </Suspense>
   );
 }

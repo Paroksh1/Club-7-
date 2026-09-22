@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 import { PLAY_SPORTS, type PlaySportId } from "@/lib/play-data";
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
 import { FILM_GRAIN_URL } from "@/lib/grain";
@@ -104,21 +102,13 @@ function InfoGrid({ info }: { info: { label: string; value: string }[] }) {
   );
 }
 
-export default function PlaySection1() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+type PlaySection1Props = {
+  activeId: PlaySportId;
+  onSelect: (id: PlaySportId) => void;
+};
 
-  const initial = PLAY_SPORTS.find((s) => s.id === searchParams.get("sport"))?.id ?? PLAY_SPORTS[0].id;
-  const [activeId, setActiveId] = useState<PlaySportId>(initial);
+export default function PlaySection1({ activeId, onSelect }: PlaySection1Props) {
   const sport = PLAY_SPORTS.find((s) => s.id === activeId)!;
-
-  function handleSelect(id: PlaySportId) {
-    setActiveId(id);
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("sport", id);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }
 
   return (
     <section className="relative bg-c7-bg-1 px-edge pb-20 pt-24 md:pb-24 md:pt-20">
@@ -137,7 +127,7 @@ export default function PlaySection1() {
 
       {/* Selector */}
       <div className="mt-14 md:mt-16">
-        <Selector activeId={activeId} onSelect={handleSelect} />
+        <Selector activeId={activeId} onSelect={onSelect} />
       </div>
 
       {/* Active panel — desktop: two columns, image never dominant */}
