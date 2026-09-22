@@ -42,7 +42,7 @@ export default function NightSection() {
     <section id="after-the-game" className="relative bg-c7-bg-1 overflow-hidden">
       {/* Transition — the last sheet on the notice wall lifting away;
           darkness was always underneath it. Quick, one-shot. */}
-      <div className="relative h-12 md:h-14" aria-hidden="true">
+      <div className="relative h-10 md:h-12" aria-hidden="true">
         <div
           className="absolute inset-0 bg-c7-paper transition-[transform,opacity] duration-500 ease-in origin-top"
           style={{
@@ -52,8 +52,10 @@ export default function NightSection() {
         />
       </div>
 
-      {/* Intro */}
-      <div ref={introRef} className="px-edge pt-6 pb-8 md:pt-7 md:pb-9">
+      {/* Intro — generous top clearance: the fixed nav sits on top of
+          whatever section is scrolled beneath it, so this needs its own
+          protected space, not just enough to clear the transition band. */}
+      <div ref={introRef} className="px-edge pt-24 pb-8 md:pt-28 md:pb-9">
         <p
           className="font-body text-tag tracking-[0.24em] uppercase text-c7-red transition-opacity duration-500"
           style={{ opacity: introVisible ? 1 : 0 }}
