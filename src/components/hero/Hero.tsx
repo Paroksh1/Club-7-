@@ -46,12 +46,14 @@ export default function Hero() {
               Cricket · Football · Pickleball · Cafe
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <button
-                type="button"
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-c7-red px-7 py-4 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-red-dim transition-colors"
               >
-                Book a Slot <span aria-hidden="true">→</span>
-              </button>
+                Book a Slot <span aria-hidden="true">↗</span>
+              </a>
               <a
                 href={WHATSAPP_HREF}
                 target="_blank"

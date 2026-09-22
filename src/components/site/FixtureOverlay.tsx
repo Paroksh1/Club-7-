@@ -5,12 +5,16 @@ import { WHATSAPP_HREF } from "@/lib/constants";
 
 const ITEMS = ["CRICKET", "FOOTBALL", "PICKLEBALL", "ACADEMY", "EVENTS"];
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 type FixtureOverlayProps = {
   open: boolean;
   onClose: () => void;
 };
 
 export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
+  const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -20,7 +24,27 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
     document.documentElement.style.overflow = "hidden";
 
     function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      // Full-screen modal — keep Tab cycling inside it rather than
+      // leaking focus into the (visually hidden) page behind it.
+      if (e.key === "Tab" && panelRef.current) {
+        const focusable = Array.from(
+          panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     }
     document.addEventListener("keydown", handleKey);
     return () => {
@@ -31,6 +55,11 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
 
   return (
     <div
+      id="fixture-overlay"
+      ref={panelRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site menu"
       className={`c7-overlay-panel fixed inset-0 z-[60] bg-c7-bg-1 transition-[clip-path] duration-300 ease-out ${
         open
           ? "[clip-path:inset(0_0_0%_0)]"
@@ -74,14 +103,15 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
         </nav>
 
         <div className="flex flex-col sm:flex-row gap-3 border-t border-c7-line/15 pt-6">
-          <button
-            type="button"
+          <a
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
             tabIndex={open ? 0 : -1}
-            onClick={onClose}
             className="inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-red-dim transition-colors"
           >
-            Book a Slot <span aria-hidden="true">→</span>
-          </button>
+            Book a Slot <span aria-hidden="true">↗</span>
+          </a>
           <a
             href={WHATSAPP_HREF}
             target="_blank"

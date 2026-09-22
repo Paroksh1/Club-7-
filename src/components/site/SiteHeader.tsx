@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { WHATSAPP_HREF } from "@/lib/constants";
 import FixtureOverlay from "./FixtureOverlay";
 
 export default function SiteHeader() {
@@ -30,24 +31,29 @@ export default function SiteHeader() {
         </div>
 
         <div className="flex items-center gap-3 md:gap-6">
-          <button
-            type="button"
-            className="hidden md:inline-flex items-center font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink-dim hover:text-c7-red transition-colors"
+          <a
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:inline-flex items-center gap-1.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink-dim hover:text-c7-red transition-colors"
           >
-            Book a Slot
-          </button>
-          <button
-            type="button"
+            Book a Slot <span aria-hidden="true">↗</span>
+          </a>
+          <a
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
             className="md:hidden inline-flex items-center font-body text-body-sm font-medium uppercase tracking-[0.06em] text-c7-ink-dim"
           >
             Book
-          </button>
+          </a>
 
           <button
             type="button"
             onClick={() => setOpen(true)}
-            aria-haspopup="true"
+            aria-haspopup="dialog"
             aria-expanded={open}
+            aria-controls="fixture-overlay"
             className="hidden md:inline-flex items-center gap-2 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:text-c7-red transition-colors"
           >
             Play <span aria-hidden="true">↓</span>
@@ -56,8 +62,9 @@ export default function SiteHeader() {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            aria-haspopup="true"
+            aria-haspopup="dialog"
             aria-expanded={open}
+            aria-controls="fixture-overlay"
             aria-label="Open menu"
             className="md:hidden flex h-9 w-9 flex-col items-center justify-center gap-1.5 border border-c7-line/30"
           >

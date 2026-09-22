@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { SPORTS, type SportId } from "@/lib/ground-data";
 import { useRevealOnView } from "@/lib/useRevealOnView";
+import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
 import FieldStage from "./FieldStage";
 import { SportSelectorRail, SportSelectorBar } from "./SportSelector";
 import { FieldAnnotationsRail, FieldAnnotationsList } from "./FieldAnnotations";
@@ -13,6 +14,7 @@ export default function GroundSection() {
   const [activeSport, setActiveSport] = useState<SportId>("cricket");
   const { ref: headerRef, visible } = useRevealOnView<HTMLDivElement>();
   const sport = SPORTS.find((s) => s.id === activeSport)!;
+  const sportCtaHref = whatsappHref(WHATSAPP_MESSAGES[activeSport]);
 
   return (
     <section id="the-ground" className="relative bg-c7-bg-1 md:py-5">
@@ -69,6 +71,7 @@ export default function GroundSection() {
         <FieldStage activeSport={activeSport}>
           <GroundCta
             label={sport.cta}
+            href={sportCtaHref}
             className="hidden md:inline-flex absolute bottom-4 right-4 z-10"
           />
         </FieldStage>
@@ -80,7 +83,7 @@ export default function GroundSection() {
       <div className="md:hidden">
         <FieldAnnotationsList sport={sport} />
         <div className="px-edge pb-6">
-          <GroundCta label={sport.cta} className="flex w-full justify-center" />
+          <GroundCta label={sport.cta} href={sportCtaHref} className="flex w-full justify-center" />
         </div>
       </div>
 

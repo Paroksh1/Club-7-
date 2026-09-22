@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
 
 /**
  * A taped-together memory strip, not a party graphic. Two crops of the
@@ -49,12 +50,14 @@ export default function BirthdayStrip({ className = "" }: { className?: string }
           Play first. Cake later.
         </p>
 
-        <button
-          type="button"
-          className="mt-4 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-charcoal hover:text-c7-red transition-colors"
+        <a
+          href={whatsappHref(WHATSAPP_MESSAGES.birthday)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-charcoal hover:text-c7-red transition-colors"
         >
-          Plan a Birthday <span aria-hidden="true">→</span>
-        </button>
+          Plan a Birthday <span aria-hidden="true" className="ml-1">↗</span>
+        </a>
       </div>
     </div>
   );

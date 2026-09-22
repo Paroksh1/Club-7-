@@ -71,15 +71,17 @@ function InfoBlock({ visible }: { visible: boolean }) {
 function CtaRow({ visible }: { visible: boolean }) {
   return (
     <div className="flex flex-col gap-3 transition-opacity duration-700 sm:flex-row sm:items-center" style={fade(visible, 360)}>
-      <button
-        type="button"
+      <a
+        href={WHATSAPP_HREF}
+        target="_blank"
+        rel="noopener noreferrer"
         className="group inline-flex items-center justify-center gap-2 bg-c7-red py-3.5 pl-6 pr-6 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-[padding-right,background-color] duration-200 hover:bg-c7-red-dim hover:pr-8"
       >
         Book a Slot
         <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-          →
+          ↗
         </span>
-      </button>
+      </a>
       <a
         href={WHATSAPP_HREF}
         target="_blank"

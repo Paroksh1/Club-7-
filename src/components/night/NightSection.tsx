@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRevealOnView } from "@/lib/useRevealOnView";
 import { NIGHT_MOMENTS } from "@/lib/night-data";
+import { WHATSAPP_HREF } from "@/lib/constants";
 import FilmFrame from "./FilmFrame";
 
 export default function NightSection() {
@@ -114,12 +115,14 @@ export default function NightSection() {
           Play <span className="text-c7-red">/</span> Eat <span className="text-c7-red">/</span> Stay
         </p>
         <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-3">
-          <button
-            type="button"
+          <a
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-red-dim transition-colors"
           >
-            Book the Game <span aria-hidden="true">→</span>
-          </button>
+            Book a Slot <span aria-hidden="true">↗</span>
+          </a>
           <p className="font-body text-body-sm uppercase tracking-[0.04em] text-c7-ink-dim">
             Stay for the rest.
           </p>

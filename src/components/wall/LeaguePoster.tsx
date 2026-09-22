@@ -1,3 +1,5 @@
+import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
+
 const BRACKET = ["Group A", "Group B", "QF", "SF", "Final"];
 
 /**
@@ -60,12 +62,14 @@ export default function LeaguePoster({ className = "" }: { className?: string })
         </div>
 
         <div className="mt-6 flex items-center justify-between">
-          <button
-            type="button"
+          <a
+            href={whatsappHref(WHATSAPP_MESSAGES.tournament)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-body text-[clamp(0.75rem,3.6cqw,0.875rem)] font-medium uppercase tracking-[0.08em] text-c7-red hover:text-c7-red-dim transition-colors"
           >
-            Register Interest <span aria-hidden="true">→</span>
-          </button>
+            Register Interest <span aria-hidden="true">↗</span>
+          </a>
 
           {/* Registration stamp — clarifies on hover */}
           <div

@@ -36,18 +36,3 @@ export const SPORTS: SportConfig[] = [
     cta: "Check Pickleball Slots",
   },
 ];
-
-/**
- * DEMO DATA ONLY. Standing in for a future live availability feed —
- * not connected to any booking system. Do not present this as
- * real-time in copy or UI treatment (no "live" indicator, no pulse).
- * Replace this array with an API response when the booking system
- * exists; the shape below (`time`, `open`) is what the UI expects.
- */
-export const DEMO_AVAILABILITY: { time: string; open: boolean }[] = [
-  { time: "7 PM", open: true },
-  { time: "8 PM", open: false },
-  { time: "9 PM", open: true },
-  { time: "10 PM", open: true },
-  { time: "11 PM", open: false },
-];

@@ -1,3 +1,5 @@
+import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
+
 /**
  * An office memo Club 7 has visibly hijacked — the crossed-out
  * "Meeting Room" is the whole joke, drawn on hover rather than
@@ -46,12 +48,14 @@ export default function CorporateMemo({ className = "" }: { className?: string }
         </p>
 
         <div className="mt-5 flex items-center justify-between">
-          <button
-            type="button"
+          <a
+            href={whatsappHref(WHATSAPP_MESSAGES.teamDay)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-charcoal hover:text-c7-red transition-colors"
           >
-            Plan a Team Day <span aria-hidden="true">→</span>
-          </button>
+            Plan a Team Day <span aria-hidden="true">↗</span>
+          </a>
 
           {/* Approval stamp */}
           <span

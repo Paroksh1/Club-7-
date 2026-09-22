@@ -1,3 +1,5 @@
+import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
+
 const FIELDS = ["Trial", "Batch", "Coach", "Session"];
 
 /**
@@ -52,12 +54,14 @@ export default function AcademySheet({ className = "" }: { className?: string })
           ))}
         </div>
 
-        <button
-          type="button"
-          className="mt-5 w-full border-t border-dashed border-c7-charcoal-dim/50 pt-3 text-left font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-red hover:text-c7-red-dim transition-colors"
+        <a
+          href={whatsappHref(WHATSAPP_MESSAGES.academy)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 block w-full border-t border-dashed border-c7-charcoal-dim/50 pt-3 text-left font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-red hover:text-c7-red-dim transition-colors"
         >
-          Book a Trial <span aria-hidden="true">→</span>
-        </button>
+          Book a Trial <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
   );

@@ -8,4 +8,25 @@
 // TODO: replace with Club 7's real WhatsApp Business number (E.164, no "+").
 export const WHATSAPP_NUMBER_DEMO = "910000000000";
 
-export const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER_DEMO}`;
+/**
+ * Every booking/enquiry CTA on the site routes here with a contextual
+ * prefilled message rather than a bare, unexplained chat open — the
+ * routing is the same everywhere, only the message changes.
+ */
+export function whatsappHref(message: string): string {
+  return `https://wa.me/${WHATSAPP_NUMBER_DEMO}?text=${encodeURIComponent(message)}`;
+}
+
+export const WHATSAPP_HREF = whatsappHref("Hi Club 7, I'd like to book a slot.");
+
+export const WHATSAPP_MESSAGES = {
+  booking: "Hi Club 7, I'd like to book a slot.",
+  availability: "Hi Club 7, can you tell me tonight's availability?",
+  cricket: "Hi Club 7, I want to check box cricket slots.",
+  football: "Hi Club 7, I want to check football availability.",
+  pickleball: "Hi Club 7, I want to check pickleball slots.",
+  academy: "Hi Club 7, I'd like to enquire about a cricket academy trial.",
+  teamDay: "Hi Club 7, I'm planning a team outing.",
+  birthday: "Hi Club 7, I'd like to plan a birthday.",
+  tournament: "Hi Club 7, I'd like to enquire about tournaments.",
+} as const;
