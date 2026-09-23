@@ -28,6 +28,7 @@ export const WHATSAPP_MESSAGES = {
   academy: "Hi Club 7, I'd like to enquire about a cricket academy trial.",
   teamDay: "Hi Club 7, I'm planning a team outing.",
   birthday: "Hi Club 7, I'd like to plan a birthday.",
+  events: "Hi Club 7, I'd like to plan an event.",
   tournament: "Hi Club 7, I'd like to enquire about tournaments.",
 } as const;
 
