@@ -3,15 +3,13 @@
 import { useEffect, useRef } from "react";
 import { WHATSAPP_HREF } from "@/lib/constants";
 
-// Each item is a real destination — the menu previously just closed
-// itself on click with nowhere to go, which read as broken navigation
-// dressed up as a menu.
+// Matches the desktop nav's three journeys — the menu previously
+// listed each sport plus academy plus events as five equal items,
+// which described a booking sub-menu, not a site map.
 const ITEMS = [
-  { label: "CRICKET", href: "/play?sport=cricket" },
-  { label: "FOOTBALL", href: "/play?sport=football" },
-  { label: "PICKLEBALL", href: "/play?sport=pickleball" },
-  { label: "ACADEMY", href: "/#off-the-pitch" },
-  { label: "EVENTS", href: "/events" },
+  { label: "PLAY", href: "/play" },
+  { label: "GROUP EVENTS", href: "/events" },
+  { label: "VISIT", href: "/#visit" },
 ];
 
 const FOCUSABLE_SELECTOR =
@@ -113,13 +111,12 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
 
         <div className="flex flex-col sm:flex-row gap-3 border-t border-c7-line/15 pt-6">
           <a
-            href={WHATSAPP_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/play#book-enquiry"
             tabIndex={open ? 0 : -1}
+            onClick={onClose}
             className="inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-ink"
           >
-            Book a Slot <span aria-hidden="true">↗</span>
+            Find a Slot <span aria-hidden="true">↗</span>
           </a>
           <a
             href={WHATSAPP_HREF}

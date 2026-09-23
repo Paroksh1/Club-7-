@@ -7,13 +7,28 @@
 
 // TODO: replace with Club 7's real WhatsApp Business number (E.164, no "+").
 export const WHATSAPP_NUMBER_DEMO = "910000000000";
+const IS_PLACEHOLDER_NUMBER = WHATSAPP_NUMBER_DEMO === "910000000000";
+let warnedOnce = false;
 
 /**
  * Every booking/enquiry CTA on the site routes here with a contextual
  * prefilled message rather than a bare, unexplained chat open — the
  * routing is the same everywhere, only the message changes.
+ *
+ * Every enquiry link on the live site currently points at a
+ * placeholder number, meaning the site's entire conversion path is
+ * non-functional in production. This warns loudly (once) in the
+ * browser console — the real number must be supplied and swapped
+ * into WHATSAPP_NUMBER_DEMO above before this can be considered
+ * shipped, not just deployed.
  */
 export function whatsappHref(message: string): string {
+  if (IS_PLACEHOLDER_NUMBER && !warnedOnce && typeof window !== "undefined") {
+    warnedOnce = true;
+    console.error(
+      "[Club 7] Every WhatsApp link on this site uses a placeholder number (src/lib/constants.ts:WHATSAPP_NUMBER_DEMO). Replace it with the real WhatsApp Business number before this goes live — bookings currently go nowhere."
+    );
+  }
   return `https://wa.me/${WHATSAPP_NUMBER_DEMO}?text=${encodeURIComponent(message)}`;
 }
 

@@ -5,11 +5,11 @@ export type PlaySport = {
   number: string;
   /** short form used in nav-style contexts (selector, CTA) */
   shortName: string;
-  /** fuller display name for the active panel headline */
-  name: string;
-  /** second headline line, accent-coloured */
-  tagline: string;
-  /** one personality sentence — the only "joke" per sport */
+  /** the panel's benefit headline, split across two display lines.
+   * Plain ink, not automatically red — red is reserved for selection
+   * and action, not every second heading line. */
+  heading: [string, string];
+  /** one supporting sentence — what this sport's booking flow actually does */
   line: string;
   /** 2-3 verified facts only — nothing invented */
   info: { label: string; value: string }[];
@@ -48,9 +48,8 @@ export const PLAY_SPORTS: PlaySport[] = [
     id: "football",
     number: "01",
     shortName: "Football",
-    name: "Football",
-    tagline: "After Dark.",
-    line: "Built for the group chat that actually shows up.",
+    heading: ["Make Time for", "a Proper Game."],
+    line: "Get your side together and choose a time to play.",
     info: [
       { label: "Format", value: "7-a-side" },
       { label: "Setting", value: "Under the Lights" },
@@ -67,10 +66,9 @@ export const PLAY_SPORTS: PlaySport[] = [
   {
     id: "cricket",
     number: "02",
-    shortName: "Cricket",
-    name: "Box Cricket",
-    tagline: "Bring the Crew.",
-    line: "One bad over. Twenty messages later.",
+    shortName: "Box Cricket",
+    heading: ["Settle It", "on the Pitch."],
+    line: "Bring the batting order. We'll help you check a turf slot.",
     info: [
       { label: "Format", value: "Box Cricket" },
       { label: "Turfs", value: "2 Turfs" },
@@ -87,9 +85,8 @@ export const PLAY_SPORTS: PlaySport[] = [
     id: "pickleball",
     number: "03",
     shortName: "Pickleball",
-    name: "Pickleball",
-    tagline: "One More Game?",
-    line: "You already know how this ends.",
+    heading: ["Meet You", "Across the Net."],
+    line: "Arrange a game with friends and enquire about court time.",
     info: [
       { label: "Level", value: "Beginner Friendly" },
       { label: "Location", value: "Sector 89" },

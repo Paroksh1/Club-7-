@@ -1,30 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { SPORTS, type SportId } from "@/lib/ground-data";
 import { useRevealOnView } from "@/lib/useRevealOnView";
-import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
-import FieldStage from "./FieldStage";
-import { SportSelectorRail, SportSelectorBar } from "./SportSelector";
-import { FieldAnnotationsRail, FieldAnnotationsList } from "./FieldAnnotations";
-import GroundCta from "./GroundCta";
-import AvailabilityStrip from "./AvailabilityStrip";
+import VenueExplorer from "./VenueExplorer";
 
 export default function GroundSection() {
-  const [activeSport, setActiveSport] = useState<SportId>("cricket");
   const { ref: headerRef, visible } = useRevealOnView<HTMLDivElement>();
-  const sport = SPORTS.find((s) => s.id === activeSport)!;
-  const sportCtaHref = whatsappHref(WHATSAPP_MESSAGES[activeSport]);
 
   return (
-    <section id="the-ground" className="relative bg-c7-bg-1 md:py-5">
-      {/* Editorial header — one clear stack (label, then the question,
-          then the sport's own line), not three elements competing on
-          one baseline. Same bounded grid as the header/hero so this
-          section's left edge lines up with the rest of the page. */}
+    <section id="the-ground" className="relative bg-c7-bg-1 pb-14 md:pb-20">
       <div
         ref={headerRef}
-        className="mx-auto w-full max-w-[1600px] px-edge pt-24 pb-8 md:pt-20 md:pb-10"
+        className="mx-auto w-full max-w-[1600px] px-edge pt-16 pb-8 md:pt-20 md:pb-10"
       >
         <p
           className="font-body text-tag tracking-[0.2em] uppercase text-c7-red transition-opacity duration-500"
@@ -39,52 +25,31 @@ export default function GroundSection() {
             transform: visible ? "translateY(0)" : "translateY(14px)",
           }}
         >
-          Tonight, What Are We Playing?
+          Get to Know the Ground.
         </h2>
-
         <p
-          key={sport.id}
-          className="c7-anim-reveal mt-3 font-display uppercase leading-none tracking-[0.01em] text-c7-red text-[clamp(1.1rem,0.6vw+0.95rem,1.375rem)]"
+          className="mt-3 font-body text-body-lg text-c7-ink-dim transition-opacity duration-700"
+          style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "150ms" : "0ms" }}
         >
-          {sport.headline}
+          Take a look around Club 7.
         </p>
       </div>
 
-      {/* Mobile selector — sits above the field, per the mobile flow */}
-      <SportSelectorBar active={activeSport} onSelect={setActiveSport} />
+      <VenueExplorer />
 
-      {/* One stage: selector, field and annotations as a single row on
-          desktop, left-aligned to the same edge as the heading above
-          it — rather than centred in the leftover width — so the two
-          read as one deliberately composed block, not two unrelated
-          rows sharing a section. */}
-      <div className="mx-auto w-full max-w-[1600px] px-edge md:flex md:items-center md:gap-6 lg:gap-10 mt-1 md:mt-0">
-        <SportSelectorRail active={activeSport} onSelect={setActiveSport} />
-
-        <FieldStage activeSport={activeSport}>
-          <GroundCta
-            label={sport.cta}
-            href={sportCtaHref}
-            className="hidden md:inline-flex absolute bottom-4 right-4 z-10"
-          />
-        </FieldStage>
-
-        <FieldAnnotationsRail sport={sport} />
+      <div className="mx-auto w-full max-w-[1600px] px-edge pt-8 md:pt-10">
+        <a
+          href="/play"
+          className="group inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+        >
+          Explore Sports & Booking
+          <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
+            ↗
+          </span>
+        </a>
       </div>
 
-      {/* Mobile annotations + CTA — plain text beneath the field */}
-      <div className="md:hidden">
-        <FieldAnnotationsList sport={sport} />
-        <div className="mx-auto w-full max-w-[1600px] px-edge pb-6">
-          <GroundCta label={sport.cta} href={sportCtaHref} className="flex w-full justify-center" />
-        </div>
-      </div>
-
-      <div className="mt-8 md:mt-10">
-        <AvailabilityStrip />
-      </div>
-
-      <div className="mx-auto w-full max-w-[1600px] px-edge py-6 md:py-4 flex justify-end border-t border-c7-line/10">
+      <div className="mx-auto w-full max-w-[1600px] px-edge py-6 md:py-4 flex justify-end border-t border-c7-line/10 mt-10 md:mt-14">
         <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink">
           Off the Pitch
           <span className="ml-1.5 inline-block c7-anim-cue-bounce" aria-hidden="true">

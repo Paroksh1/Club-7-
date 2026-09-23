@@ -2,33 +2,53 @@
 
 import Image from "next/image";
 import { useRevealOnView } from "@/lib/useRevealOnView";
-import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
 
-/**
- * Real Club 7 match footage — multiple players, floodlit pitch, the
- * closest honest stand-in for "a team on the ground." One frame, kept
- * simple, rather than a stacked pair.
- */
 const IMAGE = {
   src: "/stock/warmup-turf.jpg",
   alt: "A group warming up together on a floodlit pitch",
   position: "50% 60%",
 };
 
-const STEPS = [
-  { number: "01", title: "Pick the Game", detail: "Football / Box Cricket / Pickleball" },
-  { number: "02", title: "Bring the People", detail: "Your office. Your team. Your crew." },
-  { number: "03", title: "Pick the Day", detail: "We'll help you take it from there." },
+const PLANNING_POINTS = [
+  "Group size and mix",
+  "Preferred sport",
+  "Playing time",
+  "Food requirements",
+  "Any organisational needs",
 ];
 
-const HREF = whatsappHref(WHATSAPP_MESSAGES.teamDay);
+/** Illustrative formation only — arranging simple markers into two
+ * sides as the section enters, not a claim about a guaranteed format. */
+function FormationDiagram({ visible }: { visible: boolean }) {
+  const teamA = [18, 32, 46].map((y) => ({ x: 28, y }));
+  const teamB = [18, 32, 46].map((y) => ({ x: 72, y }));
+  return (
+    <svg viewBox="0 0 100 64" className="h-24 w-full max-w-[220px] text-c7-ink-dim/60" aria-hidden="true">
+      <line x1="50" y1="4" x2="50" y2="60" stroke="currentColor" strokeWidth="0.5" />
+      {[...teamA, ...teamB].map((p, i) => (
+        <circle
+          key={i}
+          cx={p.x}
+          cy={p.y}
+          r="3.2"
+          className={p.x < 50 ? "fill-c7-red" : "fill-c7-ink/50"}
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "scale(1)" : "scale(0.3)",
+            transformOrigin: `${p.x}px ${p.y}px`,
+            transition: `opacity 400ms ease-out ${i * 70}ms, transform 400ms ease-out ${i * 70}ms`,
+          }}
+        />
+      ))}
+    </svg>
+  );
+}
 
 export default function EventsTeamDay() {
   const { ref, visible } = useRevealOnView<HTMLDivElement>(0.15);
 
   return (
     <section id="team-days" ref={ref} className="relative mx-auto w-full max-w-[1600px] scroll-mt-[calc(var(--header-height,90px)+24px)] bg-c7-bg-1 px-edge pb-20 pt-16 md:pb-24 md:pt-20">
-      {/* Header + image — editorial split, content leads */}
       <div className="md:grid md:grid-cols-[3fr_2fr] md:items-center md:gap-16">
         <div
           className="transition-[opacity,transform] duration-700 ease-out"
@@ -39,10 +59,11 @@ export default function EventsTeamDay() {
             Take It to the Turf.
           </h2>
           <p className="mt-5 max-w-md font-body text-body-lg text-c7-ink/85">
-            A better team plan than another table for twelve.
+            A team outing built around a game everyone can get involved in.
           </p>
           <p className="mt-3 max-w-md font-body text-body text-c7-ink-dim">
-            Football, Box Cricket or Pickleball — built around your group.
+            Share your headcount, preferred date and the sports you have in mind. We&apos;ll help you explore a plan
+            for the group.
           </p>
         </div>
 
@@ -66,51 +87,33 @@ export default function EventsTeamDay() {
         </div>
       </div>
 
-      {/* How it works — one continuous strip, not cards */}
       <div
-        className="mt-16 border-t border-c7-line/15 pt-10 transition-opacity duration-700 ease-out md:mt-20"
+        className="mt-16 border-t border-c7-line/15 pt-10 transition-opacity duration-700 ease-out md:mt-20 md:grid md:grid-cols-[1fr_auto] md:items-start md:gap-16"
         style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "240ms" : "0ms" }}
       >
-        <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">How It Works</p>
-
-        <div className="mt-6 flex flex-col md:mt-8 md:flex-row md:divide-x md:divide-c7-line/15">
-          {STEPS.map((step, i) => (
-            <div
-              key={step.number}
-              className="border-t border-c7-line/15 py-6 first:border-t-0 md:border-t-0 md:px-10 md:py-0 md:first:pl-0 md:last:pr-0"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(10px)",
-                transition: "opacity 600ms ease-out, transform 600ms ease-out",
-                transitionDelay: visible ? `${320 + i * 80}ms` : "0ms",
-              }}
-            >
-              <p className="font-body text-body-sm font-medium uppercase tracking-[0.1em] text-c7-ink">
-                <span className="text-c7-red">{step.number}</span> / {step.title}
-              </p>
-              <p className="mt-2 font-body text-body text-c7-ink-dim">{step.detail}</p>
-            </div>
-          ))}
+        <div>
+          <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">What We&apos;ll Plan Around</p>
+          <ul className="mt-4 flex flex-col gap-2.5">
+            {PLANNING_POINTS.map((point) => (
+              <li key={point} className="flex items-baseline gap-2.5 font-body text-body text-c7-ink/90">
+                <span className="h-1 w-1 shrink-0 translate-y-[-2px] rounded-full bg-c7-red/70" aria-hidden="true" />
+                {point}
+              </li>
+            ))}
+          </ul>
         </div>
+        <FormationDiagram visible={visible} />
       </div>
 
-      {/* Closing statement + CTA — same beat, generous room around it */}
       <div
-        className="mt-16 border-t border-c7-line/15 pt-12 transition-opacity duration-700 ease-out md:mt-20 md:pt-14"
-        style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "440ms" : "0ms" }}
+        className="mt-14 transition-opacity duration-700 ease-out md:mt-16"
+        style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "360ms" : "0ms" }}
       >
-        <h3 className="font-display uppercase leading-[0.98] text-c7-ink text-[clamp(1.75rem,2.6vw,2.5rem)]">
-          No boardroom. No icebreakers.
-          <br />
-          <span className="text-c7-red">Just play.</span>
-        </h3>
         <a
-          href={HREF}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group mt-8 inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+          href="/events?plan=team-outing#plan"
+          className="group inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
         >
-          Plan a Team Day
+          Start a Team-Day Enquiry
           <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
             ↗
           </span>

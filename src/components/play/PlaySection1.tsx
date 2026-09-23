@@ -172,7 +172,7 @@ function SportCta({ shortName, href }: { shortName: string; href: string }) {
       rel="noopener noreferrer"
       className="group relative mt-8 inline-flex w-fit items-center gap-2 pb-1.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
     >
-      Check {shortName} Slots
+      Ask About {shortName}
       <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
         ↗
       </span>
@@ -205,16 +205,14 @@ export default function PlaySection1({ activeId, onSelect }: PlaySection1Props) 
           01 / Play
         </p>
         <h1
-          className={`c7-anim-headline -ml-1 mt-3 font-display uppercase leading-[0.94] text-c7-ink text-[clamp(3.5rem,5.5vw,6.5rem)] ${entrance(
+          className={`c7-anim-headline -ml-1 mt-3 font-display uppercase leading-[0.94] text-c7-ink text-[clamp(3rem,4.5vw,5.5rem)] ${entrance(
             120
           )}`}
         >
-          What Are You
-          <br />
-          Playing Tonight?
+          Pick Your Game.
         </h1>
         <p className={`c7-anim-reveal mt-4 font-body text-body text-c7-ink-dim ${entrance(240)}`}>
-          Football, box cricket or pickleball. Pick one. We&apos;ll take it from there.
+          Choose a sport, then tell us when you&apos;d like to play.
         </p>
       </div>
 
@@ -233,9 +231,9 @@ export default function PlaySection1({ activeId, onSelect }: PlaySection1Props) 
             {sport.number} / {sport.shortName}
           </p>
           <h2 className="-ml-1 mt-2 font-display uppercase leading-[0.92] text-[clamp(2.75rem,4vw,5rem)]">
-            <span className="text-c7-ink">{sport.name}</span>
+            <span className="text-c7-ink">{sport.heading[0]}</span>
             <br />
-            <span className="text-c7-red">{sport.tagline}</span>
+            <span className="text-c7-ink">{sport.heading[1]}</span>
           </h2>
           <p className="mt-3 max-w-[36ch] font-body text-body-lg text-c7-ink/85">{sport.line}</p>
           <div className="mt-7">
@@ -257,9 +255,9 @@ export default function PlaySection1({ activeId, onSelect }: PlaySection1Props) 
             {sport.number} / {sport.shortName}
           </p>
           <h2 className="-ml-1 mt-2 font-display uppercase leading-[0.92] text-[clamp(2.75rem,10vw,3.75rem)]">
-            <span className="text-c7-ink">{sport.name}</span>
+            <span className="text-c7-ink">{sport.heading[0]}</span>
             <br />
-            <span className="text-c7-red">{sport.tagline}</span>
+            <span className="text-c7-ink">{sport.heading[1]}</span>
           </h2>
         </div>
 

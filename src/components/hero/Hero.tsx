@@ -1,11 +1,9 @@
 import { entrance } from "@/lib/entrance";
-import { WHATSAPP_HREF } from "@/lib/constants";
 import HeroMedia from "./HeroMedia";
-import LedTicker from "../site/LedTicker";
 
 export default function Hero() {
   return (
-    <section className="relative isolate min-h-dvh overflow-hidden">
+    <section className="relative isolate min-h-[92dvh] overflow-hidden md:min-h-[90dvh]">
       <HeroMedia />
 
       {/* A bounded content grid, shared with the header, so wide
@@ -30,9 +28,7 @@ export default function Hero() {
               )}`}
             >
               <span className="mt-[5px] h-1.5 w-1.5 shrink-0 bg-c7-red c7-anim-pulse-dot" aria-hidden="true" />
-              <span>
-                Sector 89, Faridabad <span className="text-c7-ink-dim/50">/</span> Open 24 Hours
-              </span>
+              <span>Sector 89, Faridabad</span>
             </p>
 
             {/* Headline — a slightly gentler ceiling than the shared
@@ -58,57 +54,33 @@ export default function Hero() {
 
             {/* Supporting line + actions */}
             <div className={`c7-anim-reveal mt-7 ${entrance(1150)}`}>
-              <p className="font-body text-body uppercase tracking-[0.04em] sm:tracking-[0.06em] text-c7-ink-dim md:text-body-lg">
-                Cricket / Football / Pickleball / Cafe
+              <p className="font-body text-body text-c7-ink-dim md:text-body-lg">
+                Cricket, football, pickleball and a café in Sector 89, Faridabad.
               </p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <a
-                  href={WHATSAPP_HREF}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#the-ground"
                   className="group inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
                 >
-                  Book a Slot
+                  Explore the Ground
                   <span
                     aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-[3px]"
+                    className="transition-transform duration-200 group-hover:translate-y-[2px]"
                   >
-                    ↗
+                    ↘
                   </span>
                 </a>
                 <a
-                  href={WHATSAPP_HREF}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/play#book-enquiry"
                   className="inline-flex items-center justify-center gap-2 border border-c7-line/35 px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-line/60 hover:bg-c7-bg-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
                 >
-                  WhatsApp Club 7
+                  Find a Slot <span aria-hidden="true">↗</span>
                 </a>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Scroll cue — pushed toward the photo on desktop: Section 02
-            continues the journey from this aerial view into the ground. */}
-        <div
-          className={`c7-anim-reveal mt-10 self-start border-l border-c7-line/30 pl-3 md:mt-14 md:self-end md:border-l-0 md:border-r md:pl-0 md:pr-3 md:text-right ${entrance(
-            1300
-          )}`}
-        >
-          <a
-            href="#the-ground"
-            className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim transition-colors hover:text-c7-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
-          >
-            Enter the Ground
-            <span className="ml-1.5 inline-block c7-anim-cue-bounce" aria-hidden="true">
-              ↓
-            </span>
-          </a>
-        </div>
       </div>
-
-      <LedTicker className="absolute inset-x-0 bottom-0 z-20" />
     </section>
   );
 }

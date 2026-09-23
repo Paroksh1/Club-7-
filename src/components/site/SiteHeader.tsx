@@ -1,8 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { WHATSAPP_HREF } from "@/lib/constants";
+import Link from "next/link";
 import FixtureOverlay from "./FixtureOverlay";
+
+/**
+ * The three journeys the site actually offers, visible directly rather
+ * than hidden inside one "Play" dropdown that used to bundle sports,
+ * academy and events together under a label that didn't describe half
+ * of what was in it.
+ */
+const NAV_LINKS = [
+  { label: "Play", href: "/play" },
+  { label: "Group Events", href: "/events" },
+  { label: "Visit", href: "/#visit" },
+];
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -38,10 +50,10 @@ export default function SiteHeader() {
           underneath it — blur softens the content behind it either
           way, tint alone only works reliably over dark photography. */}
       <div
-        className="pointer-events-none fixed inset-x-0 top-0 z-40 h-28 backdrop-blur-sm md:h-32"
+        className="pointer-events-none fixed inset-x-0 top-0 z-40 backdrop-blur-sm"
         style={{
-          background:
-            "linear-gradient(180deg, color-mix(in srgb, var(--color-c7-bg-1) 94%, transparent) 0%, color-mix(in srgb, var(--color-c7-bg-1) 60%, transparent) 60%, transparent 100%)",
+          height: "var(--header-height, 90px)",
+          background: "color-mix(in srgb, var(--color-c7-bg-1) 88%, transparent)",
         }}
         aria-hidden="true"
       />
@@ -54,42 +66,39 @@ export default function SiteHeader() {
         className="fixed inset-x-0 top-0 z-50 mx-auto flex w-full max-w-[1600px] items-center justify-between px-edge py-5 md:py-7"
       >
         <div className="flex items-baseline gap-3">
-          <a href="#" className="font-display text-2xl md:text-3xl uppercase tracking-tight text-c7-ink leading-none">
+          <Link href="/" className="font-display text-2xl md:text-3xl uppercase tracking-tight text-c7-ink leading-none">
             Club<span className="text-c7-red">7</span>
-          </a>
+          </Link>
           <span className="hidden md:inline font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">
             Sector 89 / FBD
           </span>
         </div>
 
+        <nav className="hidden items-center gap-7 md:flex lg:gap-9">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink-dim transition-colors hover:text-c7-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
         <div className="flex items-center gap-3 md:gap-6">
           <a
-            href={WHATSAPP_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:inline-flex items-center gap-1.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink-dim hover:text-c7-red transition-colors"
+            href="/play#book-enquiry"
+            className="hidden items-center gap-1.5 border border-c7-line/40 px-4 py-2 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red md:inline-flex focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
           >
-            Book a Slot <span aria-hidden="true">↗</span>
+            Find a Slot <span aria-hidden="true">↗</span>
           </a>
           <a
-            href={WHATSAPP_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/play#book-enquiry"
             className="md:hidden inline-flex items-center font-body text-body-sm font-medium uppercase tracking-[0.06em] text-c7-ink-dim"
           >
-            Book
+            Find a Slot
           </a>
-
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-haspopup="dialog"
-            aria-expanded={open}
-            aria-controls="fixture-overlay"
-            className="hidden md:inline-flex items-center gap-2 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:text-c7-red transition-colors"
-          >
-            Play <span aria-hidden="true">↓</span>
-          </button>
 
           <button
             type="button"
