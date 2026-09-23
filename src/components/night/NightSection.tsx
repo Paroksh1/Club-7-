@@ -55,8 +55,11 @@ export default function NightSection() {
 
       {/* Intro — generous top clearance: the fixed nav sits on top of
           whatever section is scrolled beneath it, so this needs its own
-          protected space, not just enough to clear the transition band. */}
-      <div ref={introRef} className="px-edge pt-24 pb-8 md:pt-28 md:pb-9">
+          protected space, not just enough to clear the transition band.
+          Bottom padding stays tight, though — the heading and the
+          timeline should read as one composition, not two separated by
+          a gap that feels accidental. */}
+      <div ref={introRef} className="px-edge pt-24 pb-4 md:pt-28 md:pb-5">
         <p
           className="font-body text-tag tracking-[0.24em] uppercase text-c7-red transition-opacity duration-500"
           style={{ opacity: introVisible ? 1 : 0 }}
@@ -109,24 +112,24 @@ export default function NightSection() {
         </div>
       </div>
 
-      {/* Closing beat */}
-      <div className="px-edge pb-10 md:pb-12">
-        <p className="font-body text-tag tracking-[0.3em] uppercase text-c7-ink-dim">
+      {/* Closing beat — reads as the story's last chapter rather than a
+          bolted-on footer CTA: a confident closing line, the Play/Eat/
+          Stay motif underneath it as texture, then the one action. */}
+      <div className="border-t border-c7-line/10 px-edge pb-10 pt-6 md:pb-12 md:pt-8">
+        <p className="font-display text-display-4 leading-[0.95] uppercase text-c7-ink">
+          Stay for <span className="text-c7-red">the rest.</span>
+        </p>
+        <p className="mt-3 font-body text-tag tracking-[0.3em] uppercase text-c7-ink-dim">
           Play <span className="text-c7-red">/</span> Eat <span className="text-c7-red">/</span> Stay
         </p>
-        <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-3">
-          <a
-            href={WHATSAPP_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-red-dim transition-colors"
-          >
-            Book a Slot <span aria-hidden="true">↗</span>
-          </a>
-          <p className="font-body text-body-sm uppercase tracking-[0.04em] text-c7-ink-dim">
-            Stay for the rest.
-          </p>
-        </div>
+        <a
+          href={WHATSAPP_HREF}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-red-dim transition-colors"
+        >
+          Book a Slot <span aria-hidden="true">↗</span>
+        </a>
       </div>
 
       <div className="px-edge pb-8 pt-5 flex justify-end border-t border-c7-line/10">
