@@ -3,7 +3,16 @@
 import { useEffect, useRef } from "react";
 import { WHATSAPP_HREF } from "@/lib/constants";
 
-const ITEMS = ["CRICKET", "FOOTBALL", "PICKLEBALL", "ACADEMY", "EVENTS"];
+// Each item is a real destination — the menu previously just closed
+// itself on click with nowhere to go, which read as broken navigation
+// dressed up as a menu.
+const ITEMS = [
+  { label: "CRICKET", href: "/play?sport=cricket" },
+  { label: "FOOTBALL", href: "/play?sport=football" },
+  { label: "PICKLEBALL", href: "/play?sport=pickleball" },
+  { label: "ACADEMY", href: "/#off-the-pitch" },
+  { label: "EVENTS", href: "/events" },
+];
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -77,7 +86,7 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
             type="button"
             onClick={onClose}
             tabIndex={open ? 0 : -1}
-            className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink hover:text-c7-red transition-colors"
+            className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink transition-colors hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-red"
           >
             Close ✕
           </button>
@@ -85,20 +94,20 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
 
         <nav className="flex-1 flex flex-col justify-center divide-y divide-c7-line/15">
           {ITEMS.map((item, i) => (
-            <button
-              key={item}
-              type="button"
+            <a
+              key={item.label}
+              href={item.href}
               tabIndex={open ? 0 : -1}
               onClick={onClose}
-              className="group flex items-baseline gap-4 py-4 md:py-5 text-left"
+              className="group flex items-baseline gap-4 py-4 md:py-5 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
             >
               <span className="font-body text-body-sm text-c7-ink-dim w-8 shrink-0">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="font-display text-display-2 uppercase text-c7-ink transition-transform duration-200 group-hover:translate-x-3 group-hover:text-c7-red">
-                {item}
+                {item.label}
               </span>
-            </button>
+            </a>
           ))}
         </nav>
 
@@ -108,7 +117,7 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
             target="_blank"
             rel="noopener noreferrer"
             tabIndex={open ? 0 : -1}
-            className="inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-red-dim transition-colors"
+            className="inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-ink"
           >
             Book a Slot <span aria-hidden="true">↗</span>
           </a>
@@ -117,7 +126,7 @@ export default function FixtureOverlay({ open, onClose }: FixtureOverlayProps) {
             target="_blank"
             rel="noopener noreferrer"
             tabIndex={open ? 0 : -1}
-            className="inline-flex items-center justify-center gap-2 border border-c7-line/40 px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-bg-3 transition-colors"
+            className="inline-flex items-center justify-center gap-2 border border-c7-line/40 px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-bg-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-red"
           >
             WhatsApp Club 7
           </a>

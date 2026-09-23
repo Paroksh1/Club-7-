@@ -108,7 +108,7 @@ export default function HeroMedia({
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 mix-blend-overlay"
         style={{
           backgroundImage:
-            "radial-gradient(320px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(243,236,223,0.10), transparent 60%)",
+            "radial-gradient(320px circle at var(--spot-x, 50%) var(--spot-y, 50%), color-mix(in srgb, var(--color-c7-ink) 10%, transparent), transparent 60%)",
         }}
       />
     </div>

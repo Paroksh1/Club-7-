@@ -99,7 +99,7 @@ export default function FieldStage({ activeSport, children }: FieldStageProps) {
           src="/venue/turf-top-down-night.jpg"
           alt="Top-down view of a Club 7 turf at night, showing the red cricket pitch"
           fill
-          sizes="100vw"
+          sizes="(min-width: 768px) 995px, 100vw"
           className="object-cover [filter:saturate(0.88)_contrast(1.05)_brightness(0.95)_hue-rotate(-6deg)]"
         />
       </div>
@@ -121,7 +121,7 @@ export default function FieldStage({ activeSport, children }: FieldStageProps) {
           src="/venue/pickleball.jpg"
           alt="Club 7's pickleball court"
           fill
-          sizes="100vw"
+          sizes="(min-width: 768px) 995px, 100vw"
           loading="lazy"
           className="object-cover object-[center_40%] [filter:saturate(0.7)_contrast(1.12)_brightness(0.58)]"
         />
@@ -150,7 +150,7 @@ export default function FieldStage({ activeSport, children }: FieldStageProps) {
           src="/venue/night-aerial.jpg"
           alt=""
           fill
-          sizes="100vw"
+          sizes="(min-width: 768px) 995px, 100vw"
           className="object-cover object-[center_44%]"
         />
       </div>

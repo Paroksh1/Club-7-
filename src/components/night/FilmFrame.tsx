@@ -27,25 +27,33 @@ function PhotoVisual({
   image,
   tone,
   className = "",
+  sizes,
 }: {
   image: NonNullable<NightMoment["image"]>;
   tone: "cool" | "warm";
   className?: string;
+  sizes: string;
 }) {
   return (
     <div className={`relative overflow-hidden bg-c7-bg-3 ${className}`}>
+      {/* The per-image `zoom` (static framing crop) and the hover
+          micro-scale both need to live on the same `transform`, so an
+          inline `transform` can't be used for the zoom — it would
+          have higher specificity than the group-hover class and the
+          hover scale would silently never apply. Both are composed as
+          CSS custom properties instead, multiplied via `calc()`. */}
       <Image
         src={image.src}
         alt=""
         fill
-        sizes="320px"
+        sizes={sizes}
         quality={90}
-        className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+        className="object-cover transition-transform duration-500 ease-out motion-reduce:transition-none [--hz:1] [transform:scale(calc(var(--zoom)*var(--hz)))] group-hover:[--hz:1.02]"
         style={
           {
             objectPosition: image.position,
-            transform: `scale(${image.zoom})`,
             filter: gradeFor(image.stock, tone),
+            "--zoom": String(image.zoom),
           } as CSSProperties
         }
       />
@@ -58,7 +66,7 @@ function PhotoVisual({
           touching the graded filter directly (which is already an
           inline style, so a class-based hover couldn't win against it
           anyway). No overlay panel, no text reveal. */}
-      <div className="pointer-events-none absolute inset-0 bg-white opacity-0 mix-blend-overlay transition-opacity duration-500 ease-out group-hover:opacity-[0.06]" />
+      <div className="pointer-events-none absolute inset-0 bg-white opacity-0 mix-blend-overlay transition-opacity duration-500 ease-out motion-reduce:transition-none group-hover:opacity-[0.06]" />
     </div>
   );
 }
@@ -113,6 +121,21 @@ export default function FilmFrame({ moment, visible, delay, orientation }: FilmF
     wide: "w-36 sm:w-44",
     default: "w-28 sm:w-32",
   };
+  // Matches ROW_WIDTH/COL_WIDTH above so the fetched image is actually
+  // close to its rendered size instead of a flat guess — this strip
+  // never renders anywhere near 320px for most of these frames.
+  const ROW_SIZES: Record<string, string> = {
+    narrow: "14vw",
+    tall: "17vw",
+    wide: "26vw",
+    default: "17vw",
+  };
+  const COL_SIZES: Record<string, string> = {
+    narrow: "112px",
+    tall: "128px",
+    wide: "176px",
+    default: "128px",
+  };
   const sizeKey = moment.size ?? "default";
 
   const visual = (
@@ -120,6 +143,7 @@ export default function FilmFrame({ moment, visible, delay, orientation }: FilmF
       image={moment.image!}
       tone={tone}
       className={orientation === "row" ? `${ROW_ASPECT[sizeKey]} w-full` : `aspect-[3/4] ${COL_WIDTH[sizeKey]}`}
+      sizes={orientation === "row" ? ROW_SIZES[sizeKey] : COL_SIZES[sizeKey]}
     />
   );
 

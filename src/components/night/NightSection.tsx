@@ -59,7 +59,7 @@ export default function NightSection() {
           Bottom padding stays tight, though — the heading and the
           timeline should read as one composition, not two separated by
           a gap that feels accidental. */}
-      <div ref={introRef} className="px-edge pt-24 pb-4 md:pt-28 md:pb-5">
+      <div ref={introRef} className="mx-auto w-full max-w-[1600px] px-edge pt-24 pb-4 md:pt-28 md:pb-5">
         <p
           className="font-body text-tag tracking-[0.24em] uppercase text-c7-red transition-opacity duration-500"
           style={{ opacity: introVisible ? 1 : 0 }}
@@ -67,23 +67,23 @@ export default function NightSection() {
           04 / After the Game
         </p>
         <h2
-          className="mt-3 -ml-1 font-display text-display-2 uppercase leading-[0.9] text-c7-ink transition-[opacity,transform] duration-700"
+          className="mt-3 -ml-1 font-display text-display-2 uppercase leading-[0.9] transition-[opacity,transform] duration-700"
           style={{
             opacity: introVisible ? 1 : 0,
             transform: introVisible ? "translateY(0)" : "translateY(14px)",
           }}
         >
-          Game Over.
-        </h2>
-        <h2
-          className="-mt-1 md:-mt-2 -ml-1 font-display text-display-2 uppercase leading-[0.9] text-c7-red transition-[opacity,transform] duration-700"
-          style={{
-            opacity: introVisible ? 1 : 0,
-            transform: introVisible ? "translateY(0)" : "translateY(14px)",
-            transitionDelay: introVisible ? "100ms" : "0ms",
-          }}
-        >
-          Night&apos;s Not.
+          <span className="block text-c7-ink">Game Over.</span>
+          <span
+            className="-mt-1 block text-c7-red transition-[opacity,transform] duration-700 md:-mt-2"
+            style={{
+              opacity: introVisible ? 1 : 0,
+              transform: introVisible ? "translateY(0)" : "translateY(14px)",
+              transitionDelay: introVisible ? "100ms" : "0ms",
+            }}
+          >
+            Night&apos;s Not.
+          </span>
         </h2>
         <p
           className="mt-4 font-body text-tag tracking-[0.3em] uppercase text-c7-ink-dim transition-opacity duration-700"
@@ -95,7 +95,7 @@ export default function NightSection() {
 
       {/* Filmstrip — desktop: one horizontal row, subtle scroll parallax.
           Mobile: vertical sequence, no horizontal scroll. */}
-      <div ref={stripRef} className="px-edge">
+      <div ref={stripRef} className="mx-auto w-full max-w-[1600px] px-edge">
         <div
           ref={trackRef}
           className="hidden md:flex md:justify-center md:gap-4 lg:gap-6"
@@ -116,23 +116,25 @@ export default function NightSection() {
           bolted-on footer CTA: a confident closing line, the Play/Eat/
           Stay motif underneath it as texture, then the one action. */}
       <div className="border-t border-c7-line/10 px-edge pb-10 pt-6 md:pb-12 md:pt-8">
-        <p className="font-display text-display-4 leading-[0.95] uppercase text-c7-ink">
-          Stay for <span className="text-c7-red">the rest.</span>
-        </p>
-        <p className="mt-3 font-body text-tag tracking-[0.3em] uppercase text-c7-ink-dim">
-          Play <span className="text-c7-red">/</span> Eat <span className="text-c7-red">/</span> Stay
-        </p>
-        <a
-          href={WHATSAPP_HREF}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:bg-c7-red-dim transition-colors"
-        >
-          Book a Slot <span aria-hidden="true">↗</span>
-        </a>
+        <div className="mx-auto w-full max-w-[1600px]">
+          <p className="font-display text-display-4 leading-[0.95] uppercase text-c7-ink">
+            Stay for <span className="text-c7-red">the rest.</span>
+          </p>
+          <p className="mt-3 font-body text-tag tracking-[0.3em] uppercase text-c7-ink-dim">
+            Play <span className="text-c7-red">/</span> Eat <span className="text-c7-red">/</span> Stay
+          </p>
+          <a
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+          >
+            Book a Slot <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
 
-      <div className="px-edge pb-8 pt-5 flex justify-end border-t border-c7-line/10">
+      <div className="mx-auto flex w-full max-w-[1600px] justify-end border-t border-c7-line/10 px-edge pb-8 pt-5">
         <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">
           One Last Thing
           <span className="ml-1.5 inline-block c7-anim-cue-bounce" aria-hidden="true">

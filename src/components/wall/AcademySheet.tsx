@@ -18,7 +18,7 @@ export default function AcademySheet({ className = "" }: { className?: string })
         aria-hidden="true"
       />
       <div
-        className="relative overflow-hidden bg-c7-paper shadow-[0_10px_24px_-12px_rgba(34,30,25,0.35)] ring-1 ring-inset ring-c7-charcoal/[0.06] px-5 py-5 sm:px-6 sm:py-6 transition-[transform,box-shadow] duration-300 ease-out group-hover/academy:-translate-y-1 group-hover/academy:shadow-[0_20px_34px_-16px_rgba(34,30,25,0.45)]"
+        className="relative overflow-hidden bg-c7-paper shadow-[0_10px_24px_-12px_color-mix(in_srgb,var(--color-c7-charcoal)_35%,transparent)] ring-1 ring-inset ring-c7-charcoal/[0.06] px-5 py-5 sm:px-6 sm:py-6 transition-[transform,box-shadow] duration-300 ease-out group-hover/academy:-translate-y-1 group-hover/academy:shadow-[0_20px_34px_-16px_color-mix(in_srgb,var(--color-c7-charcoal)_45%,transparent)]"
       >
         <PaperGrain />
 

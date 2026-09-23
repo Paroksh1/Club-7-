@@ -20,7 +20,7 @@ export default function SiteHeader() {
         className="pointer-events-none fixed inset-x-0 top-0 z-40 h-28 backdrop-blur-sm md:h-32"
         style={{
           background:
-            "linear-gradient(180deg, rgba(6,17,11,0.8) 0%, rgba(6,17,11,0.42) 60%, transparent 100%)",
+            "linear-gradient(180deg, color-mix(in srgb, var(--color-c7-bg-1) 80%, transparent) 0%, color-mix(in srgb, var(--color-c7-bg-1) 42%, transparent) 60%, transparent 100%)",
         }}
         aria-hidden="true"
       />

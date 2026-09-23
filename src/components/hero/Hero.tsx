@@ -66,7 +66,7 @@ export default function Hero() {
                   href={WHATSAPP_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim"
+                  className="group inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
                 >
                   Book a Slot
                   <span
@@ -80,7 +80,7 @@ export default function Hero() {
                   href={WHATSAPP_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-c7-line/35 px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-line/60 hover:bg-c7-bg-3"
+                  className="inline-flex items-center justify-center gap-2 border border-c7-line/35 px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-line/60 hover:bg-c7-bg-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
                 >
                   WhatsApp Club 7
                 </a>
@@ -98,7 +98,7 @@ export default function Hero() {
         >
           <a
             href="#the-ground"
-            className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim hover:text-c7-ink transition-colors"
+            className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim transition-colors hover:text-c7-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
           >
             Enter the Ground
             <span className="ml-1.5 inline-block c7-anim-cue-bounce" aria-hidden="true">

@@ -76,7 +76,7 @@ function CtaRow({ visible }: { visible: boolean }) {
         href={WHATSAPP_HREF}
         target="_blank"
         rel="noopener noreferrer"
-        className="group inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim"
+        className="group inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
       >
         Book a Slot
         <span
@@ -90,7 +90,7 @@ function CtaRow({ visible }: { visible: boolean }) {
         href={WHATSAPP_HREF}
         target="_blank"
         rel="noopener noreferrer"
-        className="group inline-flex items-center justify-center gap-2 border border-c7-line/40 px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-line/60 hover:bg-c7-bg-3"
+        className="group inline-flex items-center justify-center gap-2 border border-c7-line/40 px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-line/60 hover:bg-c7-bg-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
       >
         WhatsApp Club 7
         <span
@@ -149,7 +149,7 @@ const CLOSING_GRADE = "saturate(0.86) contrast(1.12) brightness(0.92) hue-rotate
 function DesktopPhoto({ visible }: { visible: boolean }) {
   return (
     <div
-      className="relative z-[1] ml-auto hidden overflow-hidden bg-c7-bg-3 transition-[opacity,transform] duration-1000 ease-out md:block md:w-[54%] lg:w-[60%]"
+      className="relative z-[1] ml-auto hidden overflow-hidden bg-c7-bg-3 transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none md:block md:w-[54%] lg:w-[60%]"
       style={{ ...fade(visible, 0), transform: visible ? "scale(1)" : "scale(1.02)" }}
     >
       <Image
@@ -180,7 +180,10 @@ function DesktopPhoto({ visible }: { visible: boolean }) {
 
 function MobilePhoto({ visible }: { visible: boolean }) {
   return (
-    <div className="relative transition-[opacity,transform] duration-1000 ease-out" style={{ ...fade(visible, 0), transform: visible ? "scale(1)" : "scale(1.02)" }}>
+    <div
+      className="relative transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none"
+      style={{ ...fade(visible, 0), transform: visible ? "scale(1)" : "scale(1.02)" }}
+    >
       <div className="relative aspect-[430/758] overflow-hidden bg-c7-bg-3">
         <Image
           src="/venue/entrance-signage.jpg"
@@ -243,7 +246,7 @@ export default function YourMoveSection() {
             lower than dead-centre (justify-end + generous bottom
             clearance) — a settled, confident closing frame rather than
             a centred hero repeated a fifth time. */}
-        <div className="relative hidden md:flex md:flex-1 md:min-h-0 md:items-stretch md:gap-10 md:py-4 lg:gap-14">
+        <div className="relative mx-auto hidden w-full max-w-[1600px] md:flex md:flex-1 md:min-h-0 md:items-stretch md:gap-10 md:py-4 lg:gap-14">
           <BrandWatermark />
           <FieldLine />
 
@@ -271,7 +274,7 @@ export default function YourMoveSection() {
           left in it), a hairline divider, and generous horizontal
           spacing so it reads as a closing credit line, not a bar. */}
       <div className="relative z-10 shrink-0 border-t border-c7-line/[0.07] bg-c7-bg-1 px-edge py-3.5 md:py-2.5">
-        <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-10 sm:gap-y-1">
+        <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-10 sm:gap-y-1">
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-body text-[0.6875rem] tracking-[0.18em] uppercase text-c7-ink-dim/70">
             <span>Club 7</span>
             <span className="text-c7-ink-dim/30">/</span>
@@ -284,7 +287,7 @@ export default function YourMoveSection() {
             <button
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="font-body text-[0.6875rem] tracking-[0.18em] uppercase text-c7-ink-dim/70 transition-colors hover:text-c7-red"
+              className="font-body text-[0.6875rem] tracking-[0.18em] uppercase text-c7-ink-dim/70 transition-colors hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-red"
             >
               Book a Slot <span aria-hidden="true">↑</span>
             </button>

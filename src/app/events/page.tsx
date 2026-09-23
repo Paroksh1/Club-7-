@@ -5,7 +5,7 @@ import EventsSection3 from "@/components/events/EventsSection3";
 import EventsSection4 from "@/components/events/EventsSection4";
 
 export const metadata: Metadata = {
-  title: "Events — Club 7 Arena",
+  title: "Events",
   description: "Office crew, birthday crew — bring them over. Team days and celebrations at Club 7.",
 };
 

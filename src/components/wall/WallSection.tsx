@@ -45,7 +45,7 @@ function WallItem({
       onMouseLeave={() => setHovered(false)}
     >
       <div
-        className="transition-transform duration-300 ease-out"
+        className="transition-transform duration-300 ease-out motion-reduce:transition-none"
         style={{
           transform: `translate(var(--wall-shift-x, 0px), calc(var(--wall-shift-y, 0px) + ${lift}px)) rotate(${settledRotate}deg)`,
         }}

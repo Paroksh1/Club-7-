@@ -17,7 +17,7 @@ export default function BirthdayStrip({ className = "" }: { className?: string }
         aria-hidden="true"
       />
 
-      <div className="relative overflow-hidden bg-c7-paper shadow-[0_10px_24px_-12px_rgba(34,30,25,0.35)] ring-1 ring-inset ring-c7-charcoal/[0.06] p-3 sm:p-4 transition-[transform,box-shadow] duration-300 ease-out group-hover/bday:-translate-y-1 group-hover/bday:shadow-[0_20px_34px_-16px_rgba(34,30,25,0.45)]">
+      <div className="relative overflow-hidden bg-c7-paper shadow-[0_10px_24px_-12px_color-mix(in_srgb,var(--color-c7-charcoal)_35%,transparent)] ring-1 ring-inset ring-c7-charcoal/[0.06] p-3 sm:p-4 transition-[transform,box-shadow] duration-300 ease-out group-hover/bday:-translate-y-1 group-hover/bday:shadow-[0_20px_34px_-16px_color-mix(in_srgb,var(--color-c7-charcoal)_45%,transparent)]">
         <PaperGrain />
         <div className="flex gap-2">
           <div className="relative w-1/2 aspect-[3/4] overflow-hidden bg-c7-paper-deep transition-transform duration-300 ease-out group-hover/bday:-translate-y-1">

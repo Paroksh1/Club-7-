@@ -17,7 +17,7 @@ export default function AvailabilityStrip() {
           href={whatsappHref(WHATSAPP_MESSAGES.availability)}
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-1.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:text-c7-red"
+          className="group inline-flex items-center gap-1.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-red"
         >
           Ask for Availability
           <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-[3px]">
