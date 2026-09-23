@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import EventsSection1 from "@/components/events/EventsSection1";
 import EventsSection2 from "@/components/events/EventsSection2";
+import EventsSection3 from "@/components/events/EventsSection3";
 
 export const metadata: Metadata = {
   title: "Events — Club 7 Arena",
@@ -12,6 +13,7 @@ export default function EventsPage() {
     <>
       <EventsSection1 />
       <EventsSection2 />
+      <EventsSection3 />
     </>
   );
 }
