@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import EventsSection1 from "@/components/events/EventsSection1";
-import EventsSection2 from "@/components/events/EventsSection2";
-import EventsSection3 from "@/components/events/EventsSection3";
-import EventsSection4 from "@/components/events/EventsSection4";
+import EventsHero from "@/components/events/EventsHero";
+import EventsWhyClub7 from "@/components/events/EventsWhyClub7";
+import EventsTeamDay from "@/components/events/EventsTeamDay";
+import EventsBirthday from "@/components/events/EventsBirthday";
+import EventsNightStory from "@/components/events/EventsNightStory";
+import EventsEnquiry from "@/components/events/EventsEnquiry";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -12,10 +14,12 @@ export const metadata: Metadata = {
 export default function EventsPage() {
   return (
     <>
-      <EventsSection1 />
-      <EventsSection2 />
-      <EventsSection3 />
-      <EventsSection4 />
+      <EventsHero />
+      <EventsWhyClub7 />
+      <EventsTeamDay />
+      <EventsBirthday />
+      <EventsNightStory />
+      <EventsEnquiry />
     </>
   );
 }

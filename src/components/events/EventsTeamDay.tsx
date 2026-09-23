@@ -5,16 +5,22 @@ import { useRevealOnView } from "@/lib/useRevealOnView";
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
 
 /**
- * No dedicated corporate/team photo exists in the project — every
- * /venue asset is an empty venue shot. This is real Club 7 match
- * footage (multiple players, floodlit pitch), reused from the Play
- * page as the closest honest stand-in for "a team on the ground."
- * Flagged in the implementation report, not hidden.
+ * Real Club 7 match footage as the primary — multiple players, floodlit
+ * pitch, the closest honest stand-in for "a team on the ground." The
+ * secondary frame is real Club 7 venue photography (the turf itself),
+ * offset and overlapping the primary for an editorial pair rather than
+ * a second equal-weight photo.
  */
-const IMAGE = {
-  src: "/stock/last-goal-night.jpg",
-  alt: "Players on a floodlit pitch mid-match at Club 7",
-  position: "60% 68%",
+const PRIMARY_IMAGE = {
+  src: "/stock/warmup-turf.jpg",
+  alt: "A group warming up together on a floodlit pitch",
+  position: "50% 60%",
+};
+
+const SECONDARY_IMAGE = {
+  src: "/venue/turf-top-down-night.jpg",
+  alt: "Top-down view of Club 7's floodlit turf at night",
+  position: "60% 45%",
 };
 
 const STEPS = [
@@ -25,14 +31,14 @@ const STEPS = [
 
 const HREF = whatsappHref(WHATSAPP_MESSAGES.teamDay);
 
-export default function EventsSection2() {
+export default function EventsTeamDay() {
   const { ref, visible } = useRevealOnView<HTMLDivElement>(0.15);
 
   return (
-    <section ref={ref} className="relative bg-c7-bg-1 px-edge pb-24 pt-24 md:pb-28 md:pt-28">
+    <section id="team-days" ref={ref} className="relative mx-auto w-full max-w-[1600px] scroll-mt-[calc(var(--header-height,90px)+24px)] bg-c7-bg-1 px-edge pb-24 pt-20 md:pb-28 md:pt-24">
       <div className="border-t border-c7-line/15" />
 
-      {/* Header + image — editorial split, content leads */}
+      {/* Header + image pair — editorial split, content leads */}
       <div className="mt-14 md:mt-16 md:grid md:grid-cols-[3fr_2fr] md:items-center md:gap-16">
         <div
           className="transition-[opacity,transform] duration-700 ease-out"
@@ -53,22 +59,34 @@ export default function EventsSection2() {
         </div>
 
         <div
-          className="mt-8 transition-[opacity,transform] duration-700 ease-out md:mt-0"
+          className="relative mt-12 transition-[opacity,transform] duration-700 ease-out md:mt-0"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(20px)",
             transitionDelay: visible ? "150ms" : "0ms",
           }}
         >
-          <div className="relative ml-auto h-[280px] w-full overflow-hidden rounded-[2px] bg-c7-bg-3 md:h-[300px] md:max-w-[420px]">
+          <div className="relative ml-auto h-[280px] w-full overflow-hidden bg-c7-bg-3 md:h-[320px] md:max-w-[420px]">
             <Image
-              src={IMAGE.src}
-              alt={IMAGE.alt}
+              src={PRIMARY_IMAGE.src}
+              alt={PRIMARY_IMAGE.alt}
               fill
               sizes="(min-width: 768px) 420px, 100vw"
               quality={90}
               className="object-cover"
-              style={{ objectPosition: IMAGE.position, filter: "saturate(0.85) contrast(1.06) brightness(0.92)" }}
+              style={{ objectPosition: PRIMARY_IMAGE.position, filter: "saturate(0.85) contrast(1.06) brightness(0.92)" }}
+            />
+          </div>
+          {/* Secondary — offset, overlapping the primary's bottom-left corner */}
+          <div className="absolute -bottom-8 left-0 h-[130px] w-[42%] overflow-hidden border-4 border-c7-bg-1 bg-c7-bg-3 shadow-[0_14px_28px_-12px_rgba(0,0,0,0.6)] md:-bottom-10 md:h-[150px]">
+            <Image
+              src={SECONDARY_IMAGE.src}
+              alt={SECONDARY_IMAGE.alt}
+              fill
+              sizes="200px"
+              quality={90}
+              className="object-cover"
+              style={{ objectPosition: SECONDARY_IMAGE.position, filter: "saturate(0.8) contrast(1.08) brightness(0.9)" }}
             />
           </div>
         </div>
@@ -76,7 +94,7 @@ export default function EventsSection2() {
 
       {/* How it works — one continuous strip, not cards */}
       <div
-        className="mt-16 border-t border-c7-line/15 pt-10 transition-opacity duration-700 ease-out md:mt-20"
+        className="mt-24 border-t border-c7-line/15 pt-10 transition-opacity duration-700 ease-out md:mt-28"
         style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "260ms" : "0ms" }}
       >
         <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">How It Works</p>
@@ -102,12 +120,12 @@ export default function EventsSection2() {
         </div>
       </div>
 
-      {/* Small personality moment */}
+      {/* Closing statement — deliberate negative space, no CTA crowding it */}
       <div
-        className="mt-14 border-t border-c7-line/15 pt-10 transition-opacity duration-700 ease-out md:mt-16"
+        className="mt-24 border-t border-c7-line/15 pt-16 pb-4 text-center transition-opacity duration-700 ease-out md:mt-28 md:pt-20 md:pb-8"
         style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "480ms" : "0ms" }}
       >
-        <h3 className="font-display uppercase leading-[0.98] text-c7-ink text-[clamp(1.5rem,2.2vw,2.25rem)]">
+        <h3 className="mx-auto font-display uppercase leading-[0.98] text-c7-ink text-[clamp(2rem,3.4vw,3.25rem)]">
           No Boardroom. No Icebreakers.
           <br />
           <span className="text-c7-red">Just Play.</span>
@@ -116,17 +134,17 @@ export default function EventsSection2() {
 
       {/* CTA */}
       <div
-        className="mt-10 flex flex-col items-start gap-2 transition-opacity duration-700 ease-out md:mt-12"
+        className="mt-16 flex flex-col items-center gap-2 text-center transition-opacity duration-700 ease-out md:mt-20"
         style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "560ms" : "0ms" }}
       >
         <a
           href={HREF}
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red"
+          className="group inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
         >
           Plan a Team Day
-          <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
+          <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
             ↗
           </span>
         </a>

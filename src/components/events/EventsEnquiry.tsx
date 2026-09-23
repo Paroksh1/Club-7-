@@ -5,11 +5,12 @@ import type { ChangeEvent, FormEvent, InputHTMLAttributes } from "react";
 import { useRevealOnView } from "@/lib/useRevealOnView";
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
 
-type PlanType = "team-day" | "birthday";
+type PlanType = "team-day" | "birthday" | "private-group";
 
 const PLAN_OPTIONS: { value: PlanType; number: string; label: string }[] = [
   { value: "team-day", number: "01", label: "Team Day" },
-  { value: "birthday", number: "02", label: "Birthday / Private Group" },
+  { value: "birthday", number: "02", label: "Birthday" },
+  { value: "private-group", number: "03", label: "Private Group" },
 ];
 
 type Errors = Partial<Record<"name" | "phone" | "planType" | "people" | "date", string>>;
@@ -18,11 +19,12 @@ function Field({
   id,
   label,
   error,
+  className = "",
   ...rest
-}: { id: string; label: string; error?: string } & InputHTMLAttributes<HTMLInputElement>) {
+}: { id: string; label: string; error?: string; className?: string } & InputHTMLAttributes<HTMLInputElement>) {
   const errorId = `${id}-error`;
   return (
-    <div>
+    <div className={className}>
       <label htmlFor={id} className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim">
         {label}
       </label>
@@ -44,16 +46,14 @@ function Field({
 
 /**
  * No backend exists anywhere in the project — no API route, server
- * action, or form service. There is nowhere to send stored data. The
- * only verified, real destination on the whole site is Club 7's
- * WhatsApp — so submission means assembling the answers into one
- * readable message and opening that chat with it prefilled, exactly
- * like every other CTA already does. This is a genuine handoff (the
- * enquiry really does reach Club 7 once the visitor taps send inside
- * WhatsApp), not a faked success screen — the confirmation copy below
- * says so plainly rather than claiming the plan is already received.
+ * action, or form service. The only verified, real destination on the
+ * whole site is Club 7's WhatsApp — so submission assembles the
+ * answers into one readable message and opens that chat prefilled,
+ * exactly like every other CTA already does. This is a genuine
+ * handoff (the enquiry really does reach Club 7 once the visitor taps
+ * send inside WhatsApp), not a faked success screen.
  */
-export default function EventsSection4() {
+export default function EventsEnquiry() {
   const { ref, visible } = useRevealOnView<HTMLDivElement>(0.15);
 
   const [name, setName] = useState("");
@@ -98,7 +98,7 @@ export default function EventsSection4() {
   }
 
   return (
-    <section ref={ref} className="relative bg-c7-bg-1 px-edge pb-24 pt-24 md:pb-28 md:pt-28">
+    <section id="plan" ref={ref} className="relative mx-auto w-full max-w-[1600px] scroll-mt-[calc(var(--header-height,90px)+24px)] bg-c7-bg-1 px-edge pb-24 pt-20 md:pb-28 md:pt-24">
       <div className="border-t border-c7-line/15" />
 
       <div className="mt-14 md:mt-16 md:grid md:grid-cols-[2fr_3fr] md:items-start md:gap-16">
@@ -117,10 +117,11 @@ export default function EventsSection4() {
             <br />
             give us the basics.
           </p>
+          <p className="mt-3 font-body text-body-sm text-c7-ink-dim">30 seconds. We&apos;ll take it from there.</p>
         </div>
 
         <div
-          className="mt-10 transition-[opacity,transform] duration-700 ease-out md:mt-0"
+          className="mt-12 transition-[opacity,transform] duration-700 ease-out md:mt-0"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(20px)",
@@ -137,25 +138,27 @@ export default function EventsSection4() {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} noValidate className="flex max-w-md flex-col gap-7">
-              <Field
-                id="plan-name"
-                label="Name"
-                type="text"
-                value={name}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-                error={errors.name}
-              />
-              <Field
-                id="plan-phone"
-                label="Phone / WhatsApp"
-                type="tel"
-                inputMode="tel"
-                placeholder="+91 ..."
-                value={phone}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
-                error={errors.phone}
-              />
+            <form onSubmit={handleSubmit} noValidate className="flex max-w-xl flex-col gap-y-9">
+              <div className="grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2">
+                <Field
+                  id="plan-name"
+                  label="Name"
+                  type="text"
+                  value={name}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                  error={errors.name}
+                />
+                <Field
+                  id="plan-phone"
+                  label="Phone / WhatsApp"
+                  type="tel"
+                  inputMode="tel"
+                  placeholder="+91 ..."
+                  value={phone}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
+                  error={errors.phone}
+                />
+              </div>
 
               <fieldset>
                 <legend className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim">
@@ -192,24 +195,26 @@ export default function EventsSection4() {
                 ) : null}
               </fieldset>
 
-              <Field
-                id="plan-people"
-                label="How Many People?"
-                type="text"
-                inputMode="numeric"
-                placeholder="e.g. 20"
-                value={people}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setPeople(e.target.value)}
-                error={errors.people}
-              />
-              <Field
-                id="plan-date"
-                label="Preferred Date"
-                type="date"
-                value={date}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setDate(e.target.value)}
-                error={errors.date}
-              />
+              <div className="grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2">
+                <Field
+                  id="plan-people"
+                  label="How Many People?"
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="e.g. 20"
+                  value={people}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setPeople(e.target.value)}
+                  error={errors.people}
+                />
+                <Field
+                  id="plan-date"
+                  label="Preferred Date"
+                  type="date"
+                  value={date}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setDate(e.target.value)}
+                  error={errors.date}
+                />
+              </div>
 
               <div>
                 <label htmlFor="plan-message" className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim">
@@ -228,33 +233,33 @@ export default function EventsSection4() {
               <div className="mt-2">
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 bg-c7-red px-7 py-4 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim"
+                  className="inline-flex items-center gap-2 bg-c7-red px-7 py-4 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
                 >
                   Send the Plan
                   <span aria-hidden="true">↗</span>
                 </button>
-                <p className="mt-3 font-body text-body-sm text-c7-ink-dim">We&apos;ll get back to you on WhatsApp.</p>
               </div>
             </form>
           )}
 
           {!submitted ? (
-            <div className="mt-8 max-w-md border-t border-c7-line/15 pt-6">
+            <div className="mt-8 max-w-xl border-t border-c7-line/15 pt-6">
               <a
                 href={whatsappHref(WHATSAPP_MESSAGES.events)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink-dim transition-colors hover:text-c7-ink"
+                className="group inline-flex items-center gap-2 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink-dim transition-colors hover:text-c7-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
               >
                 Prefer WhatsApp? Message Club 7
-                <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
+                <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
                   ↗
                 </span>
               </a>
+              <p className="mt-3 font-body text-body-sm text-c7-ink-dim">We&apos;ll get back to you on WhatsApp.</p>
             </div>
           ) : null}
 
-          <p className="mt-8 max-w-md font-body text-body-sm uppercase tracking-[0.12em] text-c7-ink-dim/70">
+          <p className="mt-8 max-w-xl font-body text-body-sm uppercase tracking-[0.12em] text-c7-ink-dim/70">
             Team Days / Birthdays
             <br />
             Sector 89, Faridabad
