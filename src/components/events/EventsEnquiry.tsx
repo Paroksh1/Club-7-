@@ -107,10 +107,8 @@ export default function EventsEnquiry() {
           style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)" }}
         >
           <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-red">04 / Your Plan</p>
-          <h2 className="-ml-1 mt-3 font-display uppercase leading-[0.94] text-c7-ink text-[clamp(4rem,6vw,7rem)]">
-            Tell Us
-            <br />
-            The Plan.
+          <h2 className="-ml-1 mt-3 font-display uppercase leading-[0.96] text-c7-ink text-[clamp(2.5rem,3.6vw,4rem)]">
+            Tell Us the Plan.
           </h2>
           <p className="mt-5 font-body text-body-lg text-c7-ink/85">
             Team day or birthday —

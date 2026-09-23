@@ -6,29 +6,15 @@ import { WHATSAPP_HREF, WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants"
 import PaperGrain from "@/components/wall/PaperGrain";
 
 /**
- * The only genuine social/friends photo in the library, as the main
- * image — warm, real, unposed. The football action shot returns here
- * at small scale as a deliberate callback to "Play First," pairing
- * visually with "Cake Later" on the cafe photo beside it, rather than
- * introducing a fourth unrelated image.
+ * The only genuine social/friends photo in the library — warm, real,
+ * unposed. One frame, no overlap, no rotation — the calmest treatment
+ * on the page, matching the section's own warmer register.
  */
-const MAIN_IMAGE = {
+const IMAGE = {
   src: "/stock/cafe-porch.jpg",
   alt: "Friends gathered together at night at Club 7",
   position: "50% 38%",
 };
-
-const CALLBACK_IMAGE = {
-  src: "/stock/last-goal-night.jpg",
-  alt: "Players mid-match on a floodlit pitch",
-  position: "45% 60%",
-};
-
-const STEPS = [
-  { number: "01", title: "Pick the Game", detail: "Football / Box Cricket / Pickleball" },
-  { number: "02", title: "Bring Your People", detail: "Friends, family, your whole crew." },
-  { number: "03", title: "Make It Yours", detail: "We'll help you plan the venue side." },
-];
 
 const BIRTHDAY_HREF = whatsappHref(WHATSAPP_MESSAGES.birthday);
 
@@ -45,93 +31,52 @@ export default function EventsBirthday() {
         aria-hidden="true"
       />
 
-      <div ref={ref} className="relative mx-auto w-full max-w-[1600px] px-edge pb-24 pt-4 md:pb-28 md:pt-6">
+      <div ref={ref} className="relative mx-auto w-full max-w-[1600px] px-edge pb-20 pt-4 md:pb-24 md:pt-6">
         <PaperGrain />
-        {/* Header — looser than Team Days: text sits alone, images form
-            their own asymmetric pair below rather than sharing a strict
-            split row */}
-        <div
-          className="max-w-xl transition-[opacity,transform] duration-700 ease-out"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)" }}
-        >
-          <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-red">03 / Celebrate</p>
-          <h2 className="-ml-1 mt-3 font-display uppercase leading-[0.94] text-c7-charcoal text-[clamp(4rem,6vw,7rem)]">
-            Your Birthday.
-            <br />
-            Your Rules.
-          </h2>
-          <p className="mt-5 font-body text-body-lg text-c7-charcoal/85">
-            Play first.
-            <br />
-            Cake later.
-          </p>
-        </div>
 
-        {/* Image pair — controlled, slightly playful overlap */}
-        <div
-          className="relative mt-16 h-[300px] md:mt-20 md:h-[380px]"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(20px)",
-            transition: "opacity 700ms ease-out, transform 700ms ease-out",
-            transitionDelay: visible ? "150ms" : "0ms",
-          }}
-        >
-          <div className="absolute left-0 top-0 h-full w-[62%] overflow-hidden shadow-[0_18px_36px_-16px_rgba(0,0,0,0.25)] md:w-[52%] md:-rotate-1">
+        <div className="md:grid md:grid-cols-[1fr_1fr] md:items-center md:gap-16">
+          <div
+            className="transition-[opacity,transform] duration-700 ease-out"
+            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)" }}
+          >
+            <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-red">03 / Celebrate</p>
+            <h2 className="-ml-1 mt-3 font-display uppercase leading-[0.96] text-c7-charcoal text-[clamp(2.75rem,4.2vw,4.5rem)]">
+              Your Birthday. Your Rules.
+            </h2>
+            <p className="mt-5 font-body text-body-lg text-c7-charcoal/85">
+              Play first. Cake later.
+            </p>
+            <p className="mt-4 max-w-sm font-body text-body text-c7-charcoal-dim">
+              Football, box cricket or pickleball — whatever your crew&apos;s
+              into. Bring friends, family, whoever&apos;s actually showing up.
+              We&apos;ll help sort the venue side.
+            </p>
+          </div>
+
+          <div
+            className="relative mt-10 h-[280px] w-full overflow-hidden transition-[opacity,transform] duration-700 ease-out md:mt-0 md:h-[340px]"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(18px)",
+              transitionDelay: visible ? "140ms" : "0ms",
+            }}
+          >
             <Image
-              src={MAIN_IMAGE.src}
-              alt={MAIN_IMAGE.alt}
+              src={IMAGE.src}
+              alt={IMAGE.alt}
               fill
-              sizes="(min-width: 768px) 52vw, 62vw"
+              sizes="(min-width: 768px) 46vw, 100vw"
               quality={90}
               className="object-cover"
-              style={{ objectPosition: MAIN_IMAGE.position, filter: "saturate(0.92) contrast(1.02) brightness(1.01) sepia(0.08)" }}
+              style={{ objectPosition: IMAGE.position, filter: "saturate(0.92) contrast(1.02) brightness(1.01) sepia(0.08)" }}
             />
-          </div>
-          <div className="absolute bottom-0 right-0 h-[64%] w-[42%] overflow-hidden border-4 border-c7-paper shadow-[0_14px_28px_-14px_rgba(0,0,0,0.3)] md:h-[70%] md:w-[36%] md:rotate-2">
-            <Image
-              src={CALLBACK_IMAGE.src}
-              alt={CALLBACK_IMAGE.alt}
-              fill
-              sizes="(min-width: 768px) 36vw, 42vw"
-              quality={90}
-              className="object-cover"
-              style={{ objectPosition: CALLBACK_IMAGE.position, filter: "saturate(0.55) contrast(1.05) brightness(0.9) sepia(0.15)" }}
-            />
-          </div>
-        </div>
-
-        {/* Steps — looser: generous wrap, no full-width divider rows */}
-        <div
-          className="mt-20 border-t border-c7-charcoal/12 pt-10 transition-opacity duration-700 ease-out md:mt-24"
-          style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "300ms" : "0ms" }}
-        >
-          <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-charcoal-dim">Make a Night of It.</p>
-          <div className="mt-7 flex flex-wrap gap-x-16 gap-y-8 md:mt-9">
-            {STEPS.map((step, i) => (
-              <div
-                key={step.number}
-                className="max-w-[16rem]"
-                style={{
-                  opacity: visible ? 1 : 0,
-                  transform: visible ? "translateY(0)" : "translateY(10px)",
-                  transition: "opacity 600ms ease-out, transform 600ms ease-out",
-                  transitionDelay: visible ? `${380 + i * 80}ms` : "0ms",
-                }}
-              >
-                <p className="font-body text-body-sm font-medium uppercase tracking-[0.1em] text-c7-charcoal">
-                  <span className="text-c7-red">{step.number}</span> / {step.title}
-                </p>
-                <p className="mt-2 font-body text-body text-c7-charcoal-dim">{step.detail}</p>
-              </div>
-            ))}
           </div>
         </div>
 
         {/* CTA */}
         <div
-          className="mt-16 flex flex-col items-start gap-4 border-t border-c7-charcoal/12 pt-10 transition-opacity duration-700 ease-out md:mt-20"
-          style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "520ms" : "0ms" }}
+          className="mt-14 flex flex-col items-start gap-4 border-t border-c7-charcoal/12 pt-10 transition-opacity duration-700 ease-out md:mt-16"
+          style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "300ms" : "0ms" }}
         >
           <a
             href={BIRTHDAY_HREF}
