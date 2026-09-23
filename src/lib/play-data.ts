@@ -97,7 +97,7 @@ export const PLAY_SPORTS: PlaySport[] = [
     image: {
       src: "/venue/pickleball.jpg",
       position: "50% 55%",
-      alt: "Club 7's pickleball court at night",
+      alt: "Club 7's floodlit pickleball court at night",
       grade: "strong",
     },
   },
