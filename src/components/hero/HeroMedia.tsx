@@ -73,13 +73,14 @@ export default function HeroMedia({
       />
 
       {/* Slight lift on the lower portion of the photo only — the ground
-          itself, not the sky/tree band above it. ~10-15%, not a global
-          brighten. */}
+          itself, not the sky/tree band above it. ~13%, not a global
+          brighten — just enough that the floodlights and turf read as
+          the natural focal point on the right. */}
       <div
         className="pointer-events-none absolute inset-0 mix-blend-screen"
         style={{
           background:
-            "linear-gradient(180deg, transparent 0%, transparent 48%, rgba(255,255,255,0.11) 100%)",
+            "linear-gradient(180deg, transparent 0%, transparent 44%, rgba(255,255,255,0.13) 100%)",
         }}
       />
 

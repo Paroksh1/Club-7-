@@ -20,7 +20,11 @@ export default function SiteHeader() {
         }}
         aria-hidden="true"
       />
-      <header className="fixed inset-x-0 top-0 z-50 px-edge py-4 md:py-5 flex items-center justify-between">
+      {/* Same bounded content grid as the hero (max-w-[1600px] + the
+          shared px-edge gutter) so the two share one consistent frame
+          instead of the header running edge-to-edge against a hero
+          that's deliberately composed within a margin. */}
+      <header className="fixed inset-x-0 top-0 z-50 mx-auto flex w-full max-w-[1600px] items-center justify-between px-edge py-5 md:py-7">
         <div className="flex items-baseline gap-3">
           <a href="#" className="font-display text-2xl md:text-3xl uppercase tracking-tight text-c7-ink leading-none">
             Club<span className="text-c7-red">7</span>
