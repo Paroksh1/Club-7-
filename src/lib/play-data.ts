@@ -13,7 +13,20 @@ export type PlaySport = {
   line: string;
   /** 2-3 verified facts only — nothing invented */
   info: { label: string; value: string }[];
-  image: { src: string; position: string; alt: string; stock?: boolean };
+  image: {
+    src: string;
+    position: string;
+    alt: string;
+    stock?: boolean;
+    /** How much cinematic correction this specific photo needs to
+     * match the others — not tied to `stock`. Football's stock shot
+     * and cricket's real top-down shot are both already reasonably
+     * moody and share the same "moderate" grade; pickleball's real
+     * photo is genuinely flat daylight (see note below) and needs
+     * the much stronger "strong" day-for-night treatment to sit in
+     * the same register, regardless of it being real Club 7 media. */
+    grade?: "moderate" | "strong";
+  };
 };
 
 /**
@@ -26,7 +39,9 @@ export type PlaySport = {
  * the site (flagged via `stock: true`); Cricket and Pickleball are
  * real Club 7 photography. Pickleball's asset is the weakest of the
  * three (empty, flat daytime light) but it's the only one that
- * exists — swap it the moment better photography is available.
+ * exists — swap it the moment better photography is available. Its
+ * `grade: "strong"` is compensating for that source material, not a
+ * statement that the photo itself is fine as shot.
  */
 export const PLAY_SPORTS: PlaySport[] = [
   {
@@ -44,8 +59,9 @@ export const PLAY_SPORTS: PlaySport[] = [
     image: {
       src: "/stock/last-goal-night.jpg",
       position: "40% 55%",
-      alt: "Floodlit football match at night",
+      alt: "Floodlit football match at night, Club 7",
       stock: true,
+      grade: "moderate",
     },
   },
   {
@@ -63,7 +79,8 @@ export const PLAY_SPORTS: PlaySport[] = [
     image: {
       src: "/venue/turf-top-down-night.jpg",
       position: "65% 50%",
-      alt: "Top-down view of Club 7's floodlit cricket pitch",
+      alt: "Top-down view of Club 7's floodlit cricket pitch at night",
+      grade: "moderate",
     },
   },
   {
@@ -80,7 +97,8 @@ export const PLAY_SPORTS: PlaySport[] = [
     image: {
       src: "/venue/pickleball.jpg",
       position: "50% 55%",
-      alt: "Club 7's pickleball court",
+      alt: "Club 7's pickleball court at night",
+      grade: "strong",
     },
   },
 ];

@@ -6,14 +6,19 @@ import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
 import { FILM_GRAIN_URL } from "@/lib/grain";
 import { entrance } from "@/lib/entrance";
 
-/** Same cinematic night-register formula used elsewhere on the site —
- * deep, cool, controlled contrast, floodlights preserved rather than
- * blown out. Stock frames get a touch more correction to sit in the
- * same register as the real venue photography. */
-function gradeFor(stock: boolean | undefined): string {
-  return stock
-    ? "saturate(0.85) contrast(1.1) brightness(0.9) hue-rotate(5deg)"
-    : "saturate(0.92) contrast(1.05) brightness(0.95) hue-rotate(3deg)";
+/** Two correction tiers, chosen per-photo (see play-data.ts) rather
+ * than inferred from `stock` — being a stock photo says nothing about
+ * how much a given image actually needs. Football's stock shot and
+ * cricket's real top-down shot are both already reasonably moody, so
+ * both use "moderate" and now genuinely match each other. Pickleball
+ * is a flat daylight source photo standing in for night photography
+ * that doesn't exist yet — "strong" pushes it much further, the same
+ * day-for-night approach already used for this exact photo on the
+ * homepage's Ground section. */
+function gradeFor(grade: "moderate" | "strong" | undefined): string {
+  return grade === "strong"
+    ? "saturate(0.75) contrast(1.14) brightness(0.62) hue-rotate(6deg) sepia(0.03)"
+    : "saturate(0.87) contrast(1.08) brightness(0.93) hue-rotate(4deg)";
 }
 
 /** All three photos stay mounted and cross-fade via opacity/transform —
@@ -38,14 +43,27 @@ function SportPhoto({ activeId, className }: { activeId: PlaySportId; className:
             fill
             sizes="(min-width: 768px) 58vw, 100vw"
             quality={90}
-            priority={sport.id === PLAY_SPORTS[0].id}
+            priority={sport.id === activeId}
             className="object-cover"
-            style={{ objectPosition: sport.image.position, filter: gradeFor(sport.image.stock) }}
+            style={{ objectPosition: sport.image.position, filter: gradeFor(sport.image.grade) }}
           />
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.045] mix-blend-overlay"
             style={{ backgroundImage: `url("${FILM_GRAIN_URL}")`, backgroundSize: "120px 120px" }}
           />
+          {/* Day-for-night's filter alone isn't enough to fully sell a
+              bright daylight source as night — same conclusion reached
+              grading this identical photo on the homepage. A cool
+              multiply tint on top finishes the job. */}
+          {sport.image.grade === "strong" && (
+            <div
+              className="pointer-events-none absolute inset-0 mix-blend-multiply"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(4,14,14,0.5) 0%, rgba(4,14,14,0.2) 55%, rgba(4,14,14,0.35) 100%)",
+              }}
+            />
+          )}
         </div>
       ))}
     </div>
@@ -176,7 +194,7 @@ export default function PlaySection1({ activeId, onSelect }: PlaySection1Props) 
 
   return (
     <section
-      className="relative bg-c7-bg-1 px-edge pb-20 md:pb-24"
+      className="relative mx-auto w-full max-w-[1600px] bg-c7-bg-1 px-edge pb-20 md:pb-24"
       style={{ paddingTop: "calc(var(--header-height, 90px) + 40px)" }}
     >
       {/* Intro — controlled, not hero-scale. One quick staged reveal on

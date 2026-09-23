@@ -151,7 +151,7 @@ export default function PlaySection2({ activeId }: { activeId: PlaySportId }) {
   const { ref, visible } = useRevealOnView<HTMLDivElement>(0.2);
 
   return (
-    <section ref={ref} className="relative bg-c7-bg-1 px-edge pb-24 pt-12 md:pb-28 md:pt-14">
+    <section ref={ref} className="relative mx-auto w-full max-w-[1600px] bg-c7-bg-1 px-edge pb-24 pt-12 md:pb-28 md:pt-14">
       {/* Intro — sits close to where Section 1 left off rather than
           restarting with a full header-clearance gap, so this reads
           as the next beat in one flow ("you picked pickleball — now

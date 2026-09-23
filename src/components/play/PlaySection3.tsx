@@ -115,7 +115,7 @@ export default function PlaySection3() {
   const { ref, visible } = useRevealOnView<HTMLDivElement>(0.15);
 
   return (
-    <section ref={ref} className="relative bg-c7-bg-1 px-edge pb-24 pt-24 md:pb-28 md:pt-24">
+    <section ref={ref} className="relative mx-auto w-full max-w-[1600px] bg-c7-bg-1 px-edge pb-24 pt-24 md:pb-28 md:pt-24">
       {/* Header + data — asymmetric split, not two equal columns.
           Both sides share the same top edge and a tighter gap than
           before, so the facts read as directly attached to the
@@ -154,7 +154,7 @@ export default function PlaySection3() {
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red"
+              className="group inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
             >
               WhatsApp Us
               <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
@@ -184,7 +184,7 @@ export default function PlaySection3() {
             href={DIRECTIONS_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red"
+            className="group inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
           >
             Get Directions
             <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">

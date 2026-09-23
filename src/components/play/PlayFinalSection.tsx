@@ -8,7 +8,7 @@ export default function PlayFinalSection() {
   const { ref, visible } = useRevealOnView<HTMLDivElement>(0.2);
 
   return (
-    <section ref={ref} className="relative bg-c7-bg-1 px-edge pb-24 pt-28 md:pb-28 md:pt-32">
+    <section ref={ref} className="relative mx-auto w-full max-w-[1600px] bg-c7-bg-1 px-edge pb-24 pt-28 md:pb-28 md:pt-32">
       <div className="border-t border-c7-line/15" />
 
       {/* Header — asymmetric: headline left, action stack right */}
@@ -44,7 +44,7 @@ export default function PlayFinalSection() {
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-c7-red px-7 py-4 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim"
+              className="inline-flex items-center gap-2 bg-c7-red px-7 py-4 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
             >
               Book a Slot <span aria-hidden="true">↗</span>
             </a>
@@ -52,10 +52,10 @@ export default function PlayFinalSection() {
               href={DIRECTIONS_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red"
+              className="group inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
             >
               Get Directions
-              <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
+              <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
                 ↗
               </span>
             </a>
@@ -63,7 +63,7 @@ export default function PlayFinalSection() {
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-body text-body-sm uppercase tracking-[0.06em] text-c7-ink-dim transition-colors hover:text-c7-ink"
+              className="font-body text-body-sm uppercase tracking-[0.06em] text-c7-ink-dim transition-colors hover:text-c7-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
             >
               Ask Club 7 →
             </a>
