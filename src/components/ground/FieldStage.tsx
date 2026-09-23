@@ -104,7 +104,12 @@ export default function FieldStage({ activeSport, children }: FieldStageProps) {
         />
       </div>
 
-      {/* Pickleball — cross-dissolves in with a counter-rotation */}
+      {/* Pickleball — cross-dissolves in with a counter-rotation. This
+          is the one daylight photo among the three venue shots (no
+          night pickleball photography exists yet); a "day for night"
+          grade — heavy darken/desaturate plus a cool multiply tint,
+          not a fake HDR relight — pulls it into the same cinematic
+          register as the turf rather than reading flatter/casual. */}
       <div
         className="absolute inset-0 transition-[opacity,transform] duration-700 ease-out"
         style={{
@@ -118,7 +123,14 @@ export default function FieldStage({ activeSport, children }: FieldStageProps) {
           fill
           sizes="100vw"
           loading="lazy"
-          className="object-cover [filter:contrast(1.03)_brightness(0.97)]"
+          className="object-cover object-[center_40%] [filter:saturate(0.7)_contrast(1.12)_brightness(0.58)]"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 mix-blend-multiply"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(4,14,14,0.55) 0%, rgba(4,14,14,0.22) 55%, rgba(4,14,14,0.4) 100%)",
+          }}
         />
       </div>
 
@@ -302,6 +314,58 @@ export default function FieldStage({ activeSport, children }: FieldStageProps) {
           <span
             className="absolute bg-c7-line/70"
             style={{ left: "50%", top: "22%", width: 2, height: "56%" }}
+          />
+        </div>
+      )}
+
+      {/* Pickleball frame marks — corner brackets, not a top-down court
+          trace: this photo is shot at an angle, not straight down like
+          the turf, so a flat rectangle would sit crooked against it.
+          Same "intentional annotation" weight as the cricket/football
+          overlays (a camera-framing language rather than a diagram
+          language), fading in once the bridge flash clears and staying
+          for the rest of this sport's active state. */}
+      {isPickleball && (
+        <div
+          key={`pickleball-frame-${activeSport}`}
+          className="pointer-events-none absolute inset-0"
+          aria-hidden="true"
+        >
+          {/* top-left */}
+          <span
+            className="c7-anim-grow-x absolute bg-c7-line/50"
+            style={{ left: "10%", top: "16%", width: "5%", height: 2, transformOrigin: "left", animationDelay: "420ms" }}
+          />
+          <span
+            className="c7-anim-grow-y absolute bg-c7-line/50"
+            style={{ left: "10%", top: "16%", width: 2, height: "5%", transformOrigin: "top", animationDelay: "420ms" }}
+          />
+          {/* top-right */}
+          <span
+            className="c7-anim-grow-x absolute bg-c7-line/50"
+            style={{ right: "10%", top: "16%", width: "5%", height: 2, transformOrigin: "right", animationDelay: "480ms" }}
+          />
+          <span
+            className="c7-anim-grow-y absolute bg-c7-line/50"
+            style={{ right: "10%", top: "16%", width: 2, height: "5%", transformOrigin: "top", animationDelay: "480ms" }}
+          />
+          {/* bottom-left */}
+          <span
+            className="c7-anim-grow-x absolute bg-c7-line/50"
+            style={{ left: "10%", top: "76%", width: "5%", height: 2, transformOrigin: "left", animationDelay: "540ms" }}
+          />
+          <span
+            className="c7-anim-grow-y absolute bg-c7-line/50"
+            style={{ left: "10%", top: "73%", width: 2, height: "5%", transformOrigin: "bottom", animationDelay: "540ms" }}
+          />
+          {/* bottom-right */}
+          <span
+            className="c7-anim-grow-x absolute bg-c7-line/50"
+            style={{ right: "10%", top: "76%", width: "5%", height: 2, transformOrigin: "right", animationDelay: "600ms" }}
+          />
+          <span
+            className="c7-anim-grow-y absolute bg-c7-line/50"
+            style={{ right: "10%", top: "73%", width: 2, height: "5%", transformOrigin: "bottom", animationDelay: "600ms" }}
           />
         </div>
       )}

@@ -15,7 +15,7 @@ type SportSelectorProps = {
  */
 export function SportSelectorRail({ active, onSelect }: SportSelectorProps) {
   return (
-    <div className="hidden md:flex md:shrink-0 md:w-28 lg:w-36 flex-col justify-center gap-3 lg:gap-4">
+    <div className="hidden md:flex md:shrink-0 md:w-28 lg:w-32 flex-col justify-center gap-6 lg:gap-7">
       {SPORTS.map((sport) => {
         const isActive = sport.id === active;
         return (
@@ -24,16 +24,16 @@ export function SportSelectorRail({ active, onSelect }: SportSelectorProps) {
             type="button"
             onClick={() => onSelect(sport.id)}
             aria-pressed={isActive}
-            className="group text-left"
+            className="group text-left transition-transform duration-200 ease-out hover:translate-x-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
           >
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2.5">
               <span
                 className="h-px bg-c7-red transition-[width] duration-300"
-                style={{ width: isActive ? 14 : 0 }}
+                style={{ width: isActive ? 16 : 0 }}
                 aria-hidden="true"
               />
               <span
-                className={`block font-body text-body-sm tracking-[0.08em] transition-colors ${
+                className={`block font-body text-body-sm tracking-[0.1em] transition-colors ${
                   isActive ? "text-c7-red" : "text-c7-ink-dim"
                 }`}
               >
@@ -41,7 +41,7 @@ export function SportSelectorRail({ active, onSelect }: SportSelectorProps) {
               </span>
             </span>
             <span
-              className={`block font-display text-display-4 uppercase leading-none transition-colors ${
+              className={`mt-1.5 block font-display uppercase leading-none transition-colors text-[clamp(1.5rem,1.3vw+1rem,2.125rem)] ${
                 isActive ? "text-c7-red" : "text-c7-ink/70 group-hover:text-c7-ink"
               }`}
             >
@@ -65,7 +65,7 @@ export function SportSelectorBar({ active, onSelect }: SportSelectorProps) {
             type="button"
             onClick={() => onSelect(sport.id)}
             aria-pressed={isActive}
-            className={`flex-1 min-h-12 py-3 border-t-2 font-body text-body-sm font-medium uppercase tracking-[0.08em] transition-colors ${
+            className={`flex-1 min-h-12 py-3 border-t-2 font-body text-body-sm font-medium uppercase tracking-[0.08em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-c7-red ${
               isActive
                 ? "border-c7-red text-c7-red"
                 : "border-transparent text-c7-ink-dim"

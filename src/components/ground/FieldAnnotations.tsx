@@ -7,48 +7,42 @@ type FieldAnnotationsProps = {
 };
 
 /**
- * Information attached to the field itself — leader lines pointing out
- * from the edge to a label, like a broadcast graphic or architectural
- * drawing. Not a card, not a HUD: one thin line, one small label.
+ * One subtle information block — a single rule along the left edge
+ * (not a leader-line-per-item HUD with arbitrary varying widths) so
+ * this reads as supporting proof points attached to the field, not
+ * floating decoration.
  */
 export function FieldAnnotationsRail({ sport }: FieldAnnotationsProps) {
   return (
-    <div
-      key={sport.id}
-      className="hidden md:flex md:shrink-0 md:w-40 lg:w-48 flex-col justify-center gap-3 lg:gap-4"
-    >
-      {sport.annotations.map((label, i) => (
-        <div
-          key={label}
-          className="c7-anim-reveal flex items-center gap-2.5"
-          style={{ animationDelay: `${200 + i * 110}ms` }}
-        >
-          <span
-            className="h-1 w-1 rounded-full bg-c7-line/60 shrink-0"
-            aria-hidden="true"
-          />
-          <span
-            className="h-px bg-c7-line/45 shrink-0"
-            style={{ width: i % 2 === 0 ? 28 : 18 }}
-            aria-hidden="true"
-          />
-          <span className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim whitespace-nowrap">
-            {label}
-          </span>
-        </div>
-      ))}
+    <div className="hidden md:flex md:shrink-0 md:w-40 lg:w-44 flex-col justify-center border-l border-c7-line/15 pl-5 lg:pl-6">
+      <ul key={sport.id} className="flex flex-col gap-3.5">
+        {sport.annotations.map((label, i) => (
+          <li
+            key={label}
+            className="c7-anim-reveal flex items-baseline gap-2"
+            style={{ animationDelay: `${200 + i * 110}ms` }}
+          >
+            <span className="h-1 w-1 shrink-0 rounded-full bg-c7-red/70" aria-hidden="true" />
+            <span className="font-body text-body-sm tracking-[0.04em] text-c7-ink/80">{label}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 export function FieldAnnotationsList({ sport }: FieldAnnotationsProps) {
   return (
-    <ul key={sport.id} className="md:hidden flex flex-col gap-2 px-edge py-5">
+    <ul
+      key={sport.id}
+      className="mx-auto flex w-full max-w-[1600px] flex-wrap gap-x-5 gap-y-2.5 px-edge py-5"
+    >
       {sport.annotations.map((label) => (
         <li
           key={label}
-          className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim"
+          className="flex items-center gap-2 font-body text-body-sm tracking-[0.04em] text-c7-ink/80"
         >
+          <span className="h-1 w-1 shrink-0 rounded-full bg-c7-red/70" aria-hidden="true" />
           {label}
         </li>
       ))}

@@ -8,18 +8,21 @@ import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
  */
 export default function AvailabilityStrip() {
   return (
-    <div className="border-t-2 border-c7-red/70 bg-c7-bg-3 px-edge py-4 md:py-3">
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">
+    <div className="border-t border-c7-line/15 bg-c7-bg-3/60">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-3 px-edge py-3.5 md:flex-row md:items-center md:justify-between">
+        <p className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim">
           Tonight <span aria-hidden="true">→</span>
         </p>
         <a
           href={whatsappHref(WHATSAPP_MESSAGES.availability)}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:text-c7-red transition-colors"
+          className="group inline-flex items-center gap-1.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:text-c7-red"
         >
-          Ask for Availability <span aria-hidden="true">↗</span>
+          Ask for Availability
+          <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-[3px]">
+            ↗
+          </span>
         </a>
       </div>
     </div>

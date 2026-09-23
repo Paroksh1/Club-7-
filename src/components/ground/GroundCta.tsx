@@ -14,9 +14,12 @@ export default function GroundCta({ label, href, className = "" }: GroundCtaProp
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group items-center gap-2 border-t-2 border-c7-red bg-c7-bg-1/85 px-5 py-3 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink hover:text-c7-red transition-colors ${className}`}
+      className={`group inline-flex items-center gap-2 border-t-2 border-c7-red bg-c7-bg-1/90 px-6 py-3.5 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink backdrop-blur-[1px] transition-colors hover:text-c7-red ${className}`}
     >
-      {label} <span aria-hidden="true">↗</span>
+      {label}
+      <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-[3px]">
+        ↗
+      </span>
     </a>
   );
 }
