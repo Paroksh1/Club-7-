@@ -11,9 +11,13 @@ export default function SiteHeader() {
     <>
       {/* Environmental scrim, not a navbar container — keeps nav text
           readable over whichever photo happens to be scrolled beneath
-          it, without ever reading as a boxed bar. */}
+          it, without ever reading as a boxed bar. A touch of backdrop
+          blur (not just a colour tint) is what keeps the nav legible
+          once light-background sections like "Off the Pitch" scroll
+          underneath it — blur softens the content behind it either
+          way, tint alone only works reliably over dark photography. */}
       <div
-        className="pointer-events-none fixed inset-x-0 top-0 z-40 h-28 md:h-32"
+        className="pointer-events-none fixed inset-x-0 top-0 z-40 h-28 backdrop-blur-sm md:h-32"
         style={{
           background:
             "linear-gradient(180deg, rgba(6,17,11,0.8) 0%, rgba(6,17,11,0.42) 60%, transparent 100%)",

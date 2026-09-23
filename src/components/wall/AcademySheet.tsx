@@ -1,4 +1,5 @@
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
+import PaperGrain from "./PaperGrain";
 
 const FIELDS = ["Trial", "Batch", "Coach", "Session"];
 
@@ -17,8 +18,10 @@ export default function AcademySheet({ className = "" }: { className?: string })
         aria-hidden="true"
       />
       <div
-        className="relative bg-c7-paper shadow-[0_10px_24px_-12px_rgba(34,30,25,0.35)] px-5 py-5 sm:px-6 sm:py-6 transition-transform duration-300 ease-out group-hover/academy:-translate-y-1"
+        className="relative overflow-hidden bg-c7-paper shadow-[0_10px_24px_-12px_rgba(34,30,25,0.35)] ring-1 ring-inset ring-c7-charcoal/[0.06] px-5 py-5 sm:px-6 sm:py-6 transition-[transform,box-shadow] duration-300 ease-out group-hover/academy:-translate-y-1 group-hover/academy:shadow-[0_20px_34px_-16px_rgba(34,30,25,0.45)]"
       >
+        <PaperGrain />
+
         {/* Corner fold */}
         <div
           className="pointer-events-none absolute right-0 top-0 h-6 w-6 bg-c7-paper-deep/60 transition-all duration-300 group-hover/academy:h-8 group-hover/academy:w-8"
@@ -29,8 +32,12 @@ export default function AcademySheet({ className = "" }: { className?: string })
         <p className="font-display text-lg leading-none uppercase tracking-tight text-c7-charcoal">
           Club<span className="text-c7-red">7</span>
         </p>
-        <p className="mt-1 font-body text-tag tracking-[0.2em] uppercase text-c7-charcoal-dim">
+        <p className="relative mt-1 inline-block font-body text-tag tracking-[0.2em] uppercase text-c7-charcoal-dim">
           Cricket Academy
+          <span
+            className="absolute left-0 -bottom-0.5 h-px w-full origin-left scale-x-0 bg-c7-red transition-transform duration-300 ease-out group-hover/academy:scale-x-100"
+            aria-hidden="true"
+          />
         </p>
 
         <p className="mt-4 font-display text-display-3 leading-[0.92] uppercase text-c7-charcoal">
@@ -43,13 +50,13 @@ export default function AcademySheet({ className = "" }: { className?: string })
           Coaching for different age groups.
         </p>
 
-        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-2.5">
+        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-2">
           {FIELDS.map((field) => (
             <div key={field} className="flex items-baseline gap-1.5">
-              <span className="font-body text-[0.6875rem] tracking-[0.16em] uppercase text-c7-charcoal-dim shrink-0">
+              <span className="font-body text-[0.625rem] tracking-[0.14em] uppercase text-c7-charcoal-dim/55 shrink-0">
                 {field}
               </span>
-              <span className="flex-1 border-b border-dashed border-c7-charcoal-dim/40 h-px" />
+              <span className="flex-1 border-b border-dashed border-c7-charcoal-dim/25 h-px" />
             </div>
           ))}
         </div>
@@ -58,7 +65,7 @@ export default function AcademySheet({ className = "" }: { className?: string })
           href={whatsappHref(WHATSAPP_MESSAGES.academy)}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 block w-full border-t border-dashed border-c7-charcoal-dim/50 pt-3 text-left font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-red hover:text-c7-red-dim transition-colors"
+          className="mt-5 block w-full border-t border-dashed border-c7-charcoal-dim/50 pt-3 text-left font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-red transition-colors group-hover/academy:text-c7-red-dim"
         >
           Book a Trial <span aria-hidden="true">↗</span>
         </a>

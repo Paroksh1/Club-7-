@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
+import PaperGrain from "./PaperGrain";
 
 /**
  * A taped-together memory strip, not a party graphic. Two crops of the
@@ -16,7 +17,8 @@ export default function BirthdayStrip({ className = "" }: { className?: string }
         aria-hidden="true"
       />
 
-      <div className="bg-c7-paper shadow-[0_10px_24px_-12px_rgba(34,30,25,0.35)] p-3 sm:p-4">
+      <div className="relative overflow-hidden bg-c7-paper shadow-[0_10px_24px_-12px_rgba(34,30,25,0.35)] ring-1 ring-inset ring-c7-charcoal/[0.06] p-3 sm:p-4 transition-[transform,box-shadow] duration-300 ease-out group-hover/bday:-translate-y-1 group-hover/bday:shadow-[0_20px_34px_-16px_rgba(34,30,25,0.45)]">
+        <PaperGrain />
         <div className="flex gap-2">
           <div className="relative w-1/2 aspect-[3/4] overflow-hidden bg-c7-paper-deep transition-transform duration-300 ease-out group-hover/bday:-translate-y-1">
             <Image
@@ -54,7 +56,7 @@ export default function BirthdayStrip({ className = "" }: { className?: string }
           href={whatsappHref(WHATSAPP_MESSAGES.birthday)}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-charcoal hover:text-c7-red transition-colors"
+          className="mt-4 inline-flex font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-charcoal transition-colors group-hover/bday:text-c7-red"
         >
           Plan a Birthday <span aria-hidden="true" className="ml-1">↗</span>
         </a>

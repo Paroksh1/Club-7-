@@ -1,4 +1,5 @@
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
+import PaperGrain from "./PaperGrain";
 
 const BRACKET = ["Group A", "Group B", "QF", "SF", "Final"];
 
@@ -13,9 +14,10 @@ const BRACKET = ["Group A", "Group B", "QF", "SF", "Final"];
  */
 export default function LeaguePoster({ className = "" }: { className?: string }) {
   return (
-    <div className={`group/league relative @container ${className}`}>
+    <div className={`group/league relative @container transition-transform duration-300 ease-out hover:-translate-y-1 ${className}`}>
       {/* Red masthead */}
-      <div className="relative bg-c7-red px-5 pt-5 pb-6 sm:px-6 sm:pt-6 sm:pb-7 shadow-[0_16px_36px_-16px_rgba(34,30,25,0.45)]">
+      <div className="relative overflow-hidden bg-c7-red px-5 pt-5 pb-6 sm:px-6 sm:pt-6 sm:pb-7 shadow-[0_16px_36px_-16px_rgba(34,30,25,0.45)] ring-1 ring-inset ring-black/[0.06] transition-[filter,box-shadow] duration-300 ease-out group-hover/league:brightness-[0.94] group-hover/league:shadow-[0_24px_44px_-18px_rgba(34,30,25,0.55)]">
+        <PaperGrain />
         <p className="font-display text-[clamp(0.8rem,4.5cqw,1.1rem)] uppercase tracking-tight text-c7-ink/90">
           Club<span className="text-c7-ink">7</span>
         </p>
@@ -32,12 +34,13 @@ export default function LeaguePoster({ className = "" }: { className?: string })
 
       {/* Attached fixture / registration sheet */}
       <div
-        className="relative bg-c7-paper px-5 py-5 sm:px-6 sm:py-6 shadow-[0_16px_36px_-16px_rgba(34,30,25,0.4)]"
+        className="relative bg-c7-paper px-5 py-5 sm:px-6 sm:py-6 shadow-[0_16px_36px_-16px_rgba(34,30,25,0.4)] transition-shadow duration-300 ease-out group-hover/league:shadow-[0_22px_42px_-18px_rgba(34,30,25,0.5)]"
         style={{
           clipPath:
             "polygon(0% 0%,100% 0%,100% 96%,95% 98%,90% 96.2%,85% 98.3%,80% 96%,75% 98.5%,70% 96.3%,65% 98.8%,60% 96%,55% 99%,50% 96.2%,45% 98.6%,40% 96%,35% 99.1%,30% 96.3%,25% 98.7%,20% 96%,15% 99%,10% 96.2%,5% 98.4%,0% 96%)",
         }}
       >
+        <PaperGrain />
         <div className="space-y-1.5">
           {["Form a Team.", "Enter the Draw.", "Play Under the Lights."].map((line) => (
             <p
@@ -66,7 +69,7 @@ export default function LeaguePoster({ className = "" }: { className?: string })
             href={whatsappHref(WHATSAPP_MESSAGES.tournament)}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-body text-[clamp(0.75rem,3.6cqw,0.875rem)] font-medium uppercase tracking-[0.08em] text-c7-red hover:text-c7-red-dim transition-colors"
+            className="font-body text-[clamp(0.75rem,3.6cqw,0.875rem)] font-medium uppercase tracking-[0.08em] text-c7-red transition-colors group-hover/league:text-c7-red-dim"
           >
             Register Interest <span aria-hidden="true">↗</span>
           </a>
