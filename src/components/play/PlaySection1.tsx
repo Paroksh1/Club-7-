@@ -57,7 +57,7 @@ function SportPhoto({ activeId, className }: { activeId: PlaySportId; className:
  * block as atmosphere, not a framed illustration. Small and low-
  * opacity enough that it reads as structure in the background rather
  * than a pattern crossing through the metadata/CTA text. */
-function SportMotif({ sportId }: { sportId: PlaySportId }) {
+export function SportMotif({ sportId }: { sportId: PlaySportId }) {
   const common = "pointer-events-none absolute -z-10 -bottom-10 -left-8 h-[260px] w-[260px] text-c7-ink opacity-[0.035] md:h-[320px] md:w-[320px]";
   if (sportId === "football") {
     return (
