@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useRevealOnView } from "@/lib/useRevealOnView";
 import { WHATSAPP_HREF } from "@/lib/constants";
+import { FILM_GRAIN_URL } from "@/lib/grain";
 
 const AMENITIES = ["Cricket", "Football", "Pickleball", "Cafe"];
 
@@ -48,7 +49,7 @@ function InfoBlock({ visible }: { visible: boolean }) {
         {AMENITIES.map((a, i) => (
           <span key={a} className="flex items-center gap-x-2">
             {i > 0 && (
-              <span className="text-c7-red" aria-hidden="true">
+              <span className="text-c7-red/45 text-[0.85em]" aria-hidden="true">
                 {"///"}
               </span>
             )}
@@ -75,10 +76,13 @@ function CtaRow({ visible }: { visible: boolean }) {
         href={WHATSAPP_HREF}
         target="_blank"
         rel="noopener noreferrer"
-        className="group inline-flex items-center justify-center gap-2 bg-c7-red py-3.5 pl-6 pr-6 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-[padding-right,background-color] duration-200 hover:bg-c7-red-dim hover:pr-8"
+        className="group inline-flex items-center justify-center gap-2 bg-c7-red px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-red-dim"
       >
         Book a Slot
-        <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+        <span
+          aria-hidden="true"
+          className="inline-block transition-transform duration-200 group-hover:translate-x-[3px]"
+        >
           ↗
         </span>
       </a>
@@ -86,9 +90,15 @@ function CtaRow({ visible }: { visible: boolean }) {
         href={WHATSAPP_HREF}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-2 border border-c7-line/40 px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:bg-c7-bg-3"
+        className="group inline-flex items-center justify-center gap-2 border border-c7-line/40 px-6 py-3.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-line/60 hover:bg-c7-bg-3"
       >
-        WhatsApp Club 7 <span aria-hidden="true">↗</span>
+        WhatsApp Club 7
+        <span
+          aria-hidden="true"
+          className="inline-block transition-transform duration-200 group-hover:translate-x-[3px]"
+        >
+          ↗
+        </span>
       </a>
     </div>
   );
@@ -130,23 +140,34 @@ function FieldLine() {
   );
 }
 
+/** One consistent closing-shot grade — deep blue-black shadows, a
+ * touch more contrast, slightly muted saturation — so the sign's glow
+ * reads as the deliberate anchor rather than the whole frame looking
+ * soft. Same cool night-register formula as the other sections. */
+const CLOSING_GRADE = "saturate(0.86) contrast(1.12) brightness(0.92) hue-rotate(5deg)";
+
 function DesktopPhoto({ visible }: { visible: boolean }) {
   return (
     <div
-      className="relative z-[1] ml-auto hidden overflow-hidden bg-c7-bg-3 transition-opacity duration-1000 ease-out md:block md:aspect-[3/4]"
-      style={fade(visible, 0)}
+      className="relative z-[1] ml-auto hidden overflow-hidden bg-c7-bg-3 transition-[opacity,transform] duration-1000 ease-out md:block md:w-[54%] lg:w-[60%]"
+      style={{ ...fade(visible, 0), transform: visible ? "scale(1)" : "scale(1.02)" }}
     >
       <Image
         src="/venue/entrance-signage.jpg"
         alt="Club 7 entrance at night — Play, Train, Devour"
         fill
-        sizes="42vw"
+        sizes="60vw"
         quality={90}
         className="object-cover"
-        style={{ objectPosition: "50% 42%" }}
+        style={{ objectPosition: "50% 42%", filter: CLOSING_GRADE }}
       />
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-c7-bg-1 to-transparent"
+        className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
+        style={{ backgroundImage: `url("${FILM_GRAIN_URL}")`, backgroundSize: "120px 120px" }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 w-1/5 bg-gradient-to-r from-c7-bg-1 to-transparent"
         aria-hidden="true"
       />
       <div
@@ -159,7 +180,7 @@ function DesktopPhoto({ visible }: { visible: boolean }) {
 
 function MobilePhoto({ visible }: { visible: boolean }) {
   return (
-    <div className="relative transition-opacity duration-1000 ease-out" style={fade(visible, 0)}>
+    <div className="relative transition-[opacity,transform] duration-1000 ease-out" style={{ ...fade(visible, 0), transform: visible ? "scale(1)" : "scale(1.02)" }}>
       <div className="relative aspect-[430/758] overflow-hidden bg-c7-bg-3">
         <Image
           src="/venue/entrance-signage.jpg"
@@ -168,7 +189,12 @@ function MobilePhoto({ visible }: { visible: boolean }) {
           sizes="100vw"
           quality={90}
           className="object-cover"
-          style={{ objectPosition: "50% 38%" }}
+          style={{ objectPosition: "50% 38%", filter: CLOSING_GRADE }}
+        />
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
+          style={{ backgroundImage: `url("${FILM_GRAIN_URL}")`, backgroundSize: "120px 120px" }}
+          aria-hidden="true"
         />
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-1/6 bg-gradient-to-b from-c7-bg-1 to-transparent"
@@ -189,8 +215,9 @@ export default function YourMoveSection() {
   return (
     <section id="your-move" className="relative bg-c7-bg-1 overflow-x-hidden md:flex md:h-[95svh] md:min-h-[640px] md:flex-col">
       <div ref={ref} className="relative md:flex-1 md:flex md:min-h-0 md:flex-col">
-        {/* Mobile — linear stack, photo breaks the flow between headline
-            and venue info, full-bleed width */}
+        {/* Mobile — headline first, then the venue facts and the ask,
+            then the human sign-off, with the photo closing the section
+            rather than interrupting the copy midway through it. */}
         <div className="flex flex-col gap-8 pt-24 pb-10 md:hidden">
           <div className="flex flex-col gap-4 px-edge">
             <Label visible={visible} />
@@ -199,60 +226,69 @@ export default function YourMoveSection() {
             </div>
           </div>
 
-          <MobilePhoto visible={visible} />
-
-          <div className="flex flex-col gap-6 px-edge">
+          <div className="flex flex-col gap-4 px-edge">
             <InfoBlock visible={visible} />
             <CtaRow visible={visible} />
             <HumanLine visible={visible} />
           </div>
+
+          <MobilePhoto visible={visible} />
         </div>
 
-        {/* Desktop — one composed block on the left, the entrance photo
-            stretched to the row's full height on the right, flush to
-            the true edge. Width follows from the height automatically
-            via aspect-ratio, so it scales correctly across viewports
-            without separate tuning. */}
-        <div className="relative hidden md:flex md:flex-1 md:min-h-0 md:items-stretch md:py-4">
+        {/* Desktop — one composed final scene, not two isolated
+            columns: a defined gap (not flex auto-margin leftover)
+            separates the copy from a photo that now claims a real
+            majority of the row's width, so it sits closer to centre
+            instead of stranded at the far edge. The content block sits
+            lower than dead-centre (justify-end + generous bottom
+            clearance) — a settled, confident closing frame rather than
+            a centred hero repeated a fifth time. */}
+        <div className="relative hidden md:flex md:flex-1 md:min-h-0 md:items-stretch md:gap-10 md:py-4 lg:gap-14">
           <BrandWatermark />
           <FieldLine />
 
-          <div className="relative z-10 flex flex-col justify-center gap-6 pl-edge md:max-w-[46%] lg:max-w-[42%]">
-            <Label visible={visible} />
-            <div className="transition-[opacity,transform] duration-700" style={rise(visible, 200)}>
-              <Headline />
+          <div className="relative z-10 flex flex-col justify-end gap-7 pb-10 pl-edge md:max-w-[40%] lg:max-w-[34%] lg:pb-14">
+            <div className="flex flex-col gap-4">
+              <Label visible={visible} />
+              <div className="transition-[opacity,transform] duration-700" style={rise(visible, 200)}>
+                <Headline />
+              </div>
             </div>
-            <InfoBlock visible={visible} />
-            <CtaRow visible={visible} />
-            <HumanLine visible={visible} />
+            <div className="flex flex-col gap-4">
+              <InfoBlock visible={visible} />
+              <CtaRow visible={visible} />
+              <HumanLine visible={visible} />
+            </div>
           </div>
 
           <DesktopPhoto visible={visible} />
         </div>
       </div>
 
-      {/* Minimal integrated footer — the last line on the page, not a
-          second section. Solid background so it stays legible over
-          whatever sits behind it. */}
-      <div className="relative z-10 shrink-0 border-t border-c7-line/10 bg-c7-bg-1 px-edge py-4 md:py-3">
-        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6 sm:gap-y-1">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim">
-            <span className="text-c7-ink">Club 7</span>
-            <span className="text-c7-ink-dim/40">/</span>
+      {/* Footer metadata — the page's last line, deliberately quiet so
+          it never competes with the section's own primary action.
+          Lower contrast throughout (no bright "Club 7" anchor point
+          left in it), a hairline divider, and generous horizontal
+          spacing so it reads as a closing credit line, not a bar. */}
+      <div className="relative z-10 shrink-0 border-t border-c7-line/[0.07] bg-c7-bg-1 px-edge py-3.5 md:py-2.5">
+        <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-10 sm:gap-y-1">
+          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-body text-[0.6875rem] tracking-[0.18em] uppercase text-c7-ink-dim/70">
+            <span>Club 7</span>
+            <span className="text-c7-ink-dim/30">/</span>
             <span>Sector 89 / Faridabad</span>
           </div>
-          <p className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim">
+          <p className="font-body text-[0.6875rem] tracking-[0.18em] uppercase text-c7-ink-dim/70">
             Cricket / Football / Pickleball / Cafe
           </p>
           <div className="flex items-center gap-4">
             <button
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim transition-colors hover:text-c7-red"
+              className="font-body text-[0.6875rem] tracking-[0.18em] uppercase text-c7-ink-dim/70 transition-colors hover:text-c7-red"
             >
               Book a Slot <span aria-hidden="true">↑</span>
             </button>
-            <span className="font-body text-[0.65rem] text-c7-ink-dim/40">© Club 7</span>
+            <span className="font-body text-[0.625rem] text-c7-ink-dim/35">© Club 7</span>
           </div>
         </div>
       </div>
