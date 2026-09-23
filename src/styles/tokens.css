@@ -121,4 +121,17 @@
 
 :root {
   color-scheme: dark;
+
+  /* Fallback only — SiteHeader measures its own real rendered height
+     (ResizeObserver) and overwrites this the moment it mounts, so
+     layout is never pinned to a guessed number once JS is running.
+     This value only covers the brief pre-hydration window, so it
+     errs slightly generous rather than risking a clipped headline. */
+  --header-height: 80px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-height: 90px;
+  }
 }

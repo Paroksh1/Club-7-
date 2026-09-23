@@ -1,11 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { WHATSAPP_HREF } from "@/lib/constants";
 import FixtureOverlay from "./FixtureOverlay";
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  /* The header's height is purely content-driven (no fixed h-*) — it
+     changes with breakpoint, font-metric swaps, and copy edits. Any
+     page that needs to clear it should never hardcode a guessed
+     padding value; it should read this measured number instead. Kept
+     on :root (not component state) so plain CSS elsewhere — including
+     `scroll-padding-top` in globals.css — can consume it too. */
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    function applyHeight() {
+      document.documentElement.style.setProperty("--header-height", `${header!.offsetHeight}px`);
+    }
+
+    applyHeight();
+    const observer = new ResizeObserver(applyHeight);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -28,7 +49,10 @@ export default function SiteHeader() {
           shared px-edge gutter) so the two share one consistent frame
           instead of the header running edge-to-edge against a hero
           that's deliberately composed within a margin. */}
-      <header className="fixed inset-x-0 top-0 z-50 mx-auto flex w-full max-w-[1600px] items-center justify-between px-edge py-5 md:py-7">
+      <header
+        ref={headerRef}
+        className="fixed inset-x-0 top-0 z-50 mx-auto flex w-full max-w-[1600px] items-center justify-between px-edge py-5 md:py-7"
+      >
         <div className="flex items-baseline gap-3">
           <a href="#" className="font-display text-2xl md:text-3xl uppercase tracking-tight text-c7-ink leading-none">
             Club<span className="text-c7-red">7</span>

@@ -4,6 +4,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* Keeps any #anchor scroll (e.g. the homepage's "Enter the Ground"
+     link) from landing its target directly under the fixed header.
+     Reads the same measured value SiteHeader keeps on :root. */
+  scroll-padding-top: var(--header-height, 96px);
 }
 
 body {

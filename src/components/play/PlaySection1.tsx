@@ -53,11 +53,12 @@ function SportPhoto({ activeId, className }: { activeId: PlaySportId; className:
 }
 
 /** Extremely faint per-sport line-art — a goal-net grid, a crease and
- * stumps, a court and net — sitting behind the identity block as a
- * watermark, not a framed illustration. 5% opacity, bleeding past the
- * text column's edge so it never reads as a contained graphic. */
+ * stumps, a court and net — anchored to the corner behind the identity
+ * block as atmosphere, not a framed illustration. Small and low-
+ * opacity enough that it reads as structure in the background rather
+ * than a pattern crossing through the metadata/CTA text. */
 function SportMotif({ sportId }: { sportId: PlaySportId }) {
-  const common = "pointer-events-none absolute -z-10 -left-6 bottom-[-10%] h-[380px] w-[380px] text-c7-ink opacity-[0.05] md:h-[460px] md:w-[460px]";
+  const common = "pointer-events-none absolute -z-10 -bottom-10 -left-8 h-[260px] w-[260px] text-c7-ink opacity-[0.035] md:h-[320px] md:w-[320px]";
   if (sportId === "football") {
     return (
       <svg aria-hidden="true" viewBox="0 0 200 200" fill="none" className={common}>
@@ -174,7 +175,10 @@ export default function PlaySection1({ activeId, onSelect }: PlaySection1Props) 
   const sport = PLAY_SPORTS.find((s) => s.id === activeId)!;
 
   return (
-    <section className="relative bg-c7-bg-1 px-edge pb-20 pt-24 md:pb-24 md:pt-20">
+    <section
+      className="relative bg-c7-bg-1 px-edge pb-20 md:pb-24"
+      style={{ paddingTop: "calc(var(--header-height, 90px) + 40px)" }}
+    >
       {/* Intro — controlled, not hero-scale. One quick staged reveal on
           mount (this is always the first thing on screen, no scroll
           needed) rather than a scroll-triggered one. */}
