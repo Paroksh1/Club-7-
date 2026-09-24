@@ -76,3 +76,26 @@ export function formatTime12h(time24: string): string {
   h = h % 12 || 12;
   return `${h}:${mStr} ${period}`;
 }
+
+/** Current "HH:MM" at the venue (Asia/Kolkata), for filtering out
+ * preferred-time options that have already passed today — a visitor
+ * picking "6:00 PM" for today at 9:00 PM Kolkata time shouldn't be
+ * able to send that as a real preference. */
+export function nowInKolkata(): string {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kolkata",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date());
+  const h = parts.find((p) => p.type === "hour")!.value;
+  const m = parts.find((p) => p.type === "minute")!.value;
+  return `${h}:${m}`;
+}
+
+/** "18:00" < "19:30" as plain string comparison works fine for
+ * zero-padded 24h HH:MM, but spelled out here so call sites read as
+ * intentional time comparisons rather than incidental string sorting. */
+export function isTimeBefore(a: string, b: string): boolean {
+  return a < b;
+}

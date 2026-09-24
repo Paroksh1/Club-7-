@@ -5,11 +5,7 @@ export type PlaySport = {
   number: string;
   /** short form used in nav-style contexts (selector, CTA) */
   shortName: string;
-  /** the panel's benefit headline, split across two display lines.
-   * Plain ink, not automatically red — red is reserved for selection
-   * and action, not every second heading line. */
-  heading: [string, string];
-  /** one supporting sentence — what this sport's booking flow actually does */
+  /** the sport stage's benefit line — one sentence, not a heading pair */
   line: string;
   /** 2-3 verified facts only — nothing invented */
   info: { label: string; value: string }[];
@@ -18,38 +14,44 @@ export type PlaySport = {
     position: string;
     alt: string;
     stock?: boolean;
-    /** How much cinematic correction this specific photo needs to
-     * match the others — not tied to `stock`. Football's stock shot
-     * and cricket's real top-down shot are both already reasonably
-     * moody and share the same "moderate" grade; pickleball's real
-     * photo is genuinely flat daylight (see note below) and needs
-     * the much stronger "strong" day-for-night treatment to sit in
-     * the same register, regardless of it being real Club 7 media. */
-    grade?: "moderate" | "strong";
+    /** Subtle crop tightening for sources where the useful subject
+     * doesn't fill the frame (e.g. football's net rope). 1 = no zoom. */
+    zoom?: number;
   };
 };
 
 /**
  * Every fact in `info` below already exists elsewhere on the site
- * (Hero, GroundSection/ground-data.ts) — nothing new is asserted
- * here. Pickleball genuinely only has one confirmed detail beyond
- * location; it stays at two info points rather than padding to three.
+ * (Hero, GroundSection). Pickleball genuinely only has one confirmed
+ * detail beyond location; it stays at two info points rather than
+ * padding to three.
  *
- * Football's image is representative stock already used elsewhere on
- * the site (flagged via `stock: true`); Cricket and Pickleball are
- * real Club 7 photography. Pickleball's asset is the weakest of the
- * three (empty, flat daytime light) but it's the only one that
- * exists — swap it the moment better photography is available. Its
- * `grade: "strong"` is compensating for that source material, not a
- * statement that the photo itself is fine as shot.
+ * PHOTOGRAPHY — verified status of each image, and what's still missing:
+ * - Football: representative stock (`stock: true`), not Club 7's own
+ *   footage — disclosed honestly in the alt text rather than
+ *   attributed to the venue. Cropped tighter and shifted toward the
+ *   player/referee cluster to reduce how much of the frame the goal
+ *   net's foreground rope dominates; the rope crosses most of the
+ *   photo at some density, so no crop removes it entirely.
+ * - Cricket: real Club 7 photography, but an empty top-down shot of
+ *   the turf — no player action exists in the library. Kept because
+ *   it's genuine and unambiguous (the red pitch marking identifies the
+ *   sport clearly), not because it satisfies "recognisable action."
+ *   Real cricket action photography is a real gap.
+ * - Pickleball: real Club 7 photography, shot in daylight. Previously
+ *   graded with a heavy "day-for-night" filter + dark overlay to fake
+ *   a night mood — dropped that entirely here in favour of a light,
+ *   natural grade, since the photo is honestly daytime and forcing it
+ *   into a false night register was exactly the "synthetic-looking"
+ *   treatment to avoid. No players are in this photo either; real
+ *   pickleball action photography is also a gap.
  */
 export const PLAY_SPORTS: PlaySport[] = [
   {
     id: "football",
     number: "01",
     shortName: "Football",
-    heading: ["Make Time for", "a Proper Game."],
-    line: "Get your side together and choose a time to play.",
+    line: "Make time for a proper game.",
     info: [
       { label: "Format", value: "7-a-side" },
       { label: "Setting", value: "Under the Lights" },
@@ -57,18 +59,17 @@ export const PLAY_SPORTS: PlaySport[] = [
     ],
     image: {
       src: "/stock/last-goal-night.jpg",
-      position: "40% 55%",
-      alt: "Floodlit football match at night, Club 7",
+      position: "22% 60%",
+      zoom: 1.12,
+      alt: "Floodlit 7-a-side football match at night — representative photo",
       stock: true,
-      grade: "moderate",
     },
   },
   {
     id: "cricket",
     number: "02",
     shortName: "Box Cricket",
-    heading: ["Settle It", "on the Pitch."],
-    line: "Bring the batting order. We'll help you check a turf slot.",
+    line: "Settle it on the pitch.",
     info: [
       { label: "Format", value: "Box Cricket" },
       { label: "Turfs", value: "2 Turfs" },
@@ -76,26 +77,24 @@ export const PLAY_SPORTS: PlaySport[] = [
     ],
     image: {
       src: "/venue/turf-top-down-night.jpg",
-      position: "65% 50%",
+      position: "62% 48%",
+      zoom: 1.05,
       alt: "Top-down view of Club 7's floodlit cricket pitch at night",
-      grade: "moderate",
     },
   },
   {
     id: "pickleball",
     number: "03",
     shortName: "Pickleball",
-    heading: ["Meet You", "Across the Net."],
-    line: "Arrange a game with friends and enquire about court time.",
+    line: "Meet you across the net.",
     info: [
       { label: "Level", value: "Beginner Friendly" },
       { label: "Location", value: "Sector 89" },
     ],
     image: {
       src: "/venue/pickleball.jpg",
-      position: "50% 55%",
-      alt: "Club 7's floodlit pickleball court at night",
-      grade: "strong",
+      position: "50% 60%",
+      alt: "Club 7's pickleball court in daylight",
     },
   },
 ];

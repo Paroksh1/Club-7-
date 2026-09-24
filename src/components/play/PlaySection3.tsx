@@ -4,78 +4,51 @@ import { useRevealOnView } from "@/lib/useRevealOnView";
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
 
 /**
- * Only two facts here are actually verified anywhere in the project
- * (Location, Hours — both already established sitewide). Equipment,
- * arrival time, change/rain policy and payment handling are real
- * questions an organiser needs answered, but the venue hasn't
- * confirmed them yet — so rather than inventing plausible-sounding
- * policy, they're listed honestly as "ask when you message," with one
- * direct route to actually ask. Swap this for real published answers
- * the moment Club 7 confirms them; the layout doesn't need to change.
+ * The six-question FAQ list this replaced answered every question the
+ * same way ("Confirmed when you message us"), which read as an
+ * unfinished page rather than a genuinely useful one. No approved
+ * answers exist yet for equipment, arrival time, change/rain policy or
+ * payment handling — rather than inventing plausible policy, this is
+ * one honest, compact block routing straight to a real answer. Swap
+ * for a real Q&A the moment Club 7 confirms these.
  */
 const KNOWN_FACTS = [
   { label: "Location", value: "Sector 89, Faridabad" },
   { label: "Hours", value: "Open 24 hours" },
 ];
 
-const OPEN_QUESTIONS = [
-  "What equipment should we bring?",
-  "How early should we arrive?",
-  "Can we change the booking?",
-  "What happens if it rains?",
-  "How are payments and confirmation handled?",
-  "Is equipment available to hire?",
-];
-
 export default function PlaySection3() {
   const { ref, visible } = useRevealOnView<HTMLDivElement>(0.15);
 
   return (
-    <section ref={ref} className="relative mx-auto w-full max-w-[1600px] bg-c7-bg-1 px-edge pb-20 pt-20 md:pb-24 md:pt-24">
-      <div className="md:grid md:grid-cols-[36%_1fr] md:items-start md:gap-12">
-        <div
-          className="transition-[opacity,transform] duration-700 ease-out"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(14px)" }}
-        >
-          <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-red">03 / Before You Arrive</p>
-          <h2 className="-ml-1 mt-2 font-display uppercase leading-[0.96] text-c7-ink text-[clamp(2rem,3vw,3rem)]">
-            Before you arrive.
-          </h2>
-
-          <div className="mt-6 flex flex-col divide-y divide-c7-line/15 border-t border-c7-line/15">
-            {KNOWN_FACTS.map((fact) => (
-              <div key={fact.label} className="flex items-center justify-between py-3">
-                <span className="font-body text-tag tracking-[0.2em] uppercase text-c7-ink-dim">{fact.label}</span>
-                <span className="font-body text-body-sm font-medium text-c7-ink">{fact.value}</span>
-              </div>
-            ))}
-          </div>
+    <section ref={ref} className="relative mx-auto w-full max-w-[1600px] bg-c7-bg-1 px-edge pb-28 pt-16 md:pb-20 md:pt-20">
+      <div
+        className="flex flex-col gap-8 border-t border-c7-line/15 pt-10 transition-[opacity,transform] duration-700 ease-out sm:flex-row sm:items-start sm:justify-between md:gap-12"
+        style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(14px)" }}
+      >
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
+          {KNOWN_FACTS.map((fact) => (
+            <p key={fact.label} className="font-body text-body-sm text-c7-ink-dim">
+              <span className="uppercase tracking-[0.1em] text-c7-ink-dim/70">{fact.label}</span>{" "}
+              <span className="font-medium text-c7-ink">{fact.value}</span>
+            </p>
+          ))}
         </div>
 
-        <div
-          className="mt-10 transition-[opacity,transform] duration-700 ease-out md:mt-0"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(14px)",
-            transitionDelay: visible ? "120ms" : "0ms",
-          }}
-        >
-          <ul className="flex flex-col divide-y divide-c7-line/15 border-t border-c7-line/15">
-            {OPEN_QUESTIONS.map((q) => (
-              <li key={q} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3.5">
-                <span className="font-body text-body text-c7-ink">{q}</span>
-                <span className="font-body text-body-sm text-c7-ink-dim/70">Confirmed when you message us</span>
-              </li>
-            ))}
-          </ul>
-
+        <div className="max-w-sm">
+          <p className="font-display uppercase leading-[0.98] text-c7-ink text-[clamp(1.375rem,2vw,1.75rem)]">
+            Need to Check Something First?
+          </p>
+          <p className="mt-2 font-body text-body-sm text-c7-ink-dim">
+            Ask us about equipment, arrival, weather or changing your booking.
+          </p>
           <a
-            href={whatsappHref(WHATSAPP_MESSAGES.booking)}
+            href={whatsappHref(WHATSAPP_MESSAGES.support)}
             target="_blank"
             rel="noopener noreferrer"
-            className="group mt-6 inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+            className="group mt-3 inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
           >
-            Ask Club 7 these questions
+            Ask Club 7
             <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
               ↗
             </span>
@@ -83,23 +56,17 @@ export default function PlaySection3() {
         </div>
       </div>
 
-      {/* Coaching — a separate, smaller enquiry intent, not another
-          lifestyle section. */}
+      {/* Coaching — a subtle secondary row, not another promotional block */}
       <div
-        className="mt-14 flex flex-col items-start gap-2 border-t border-c7-line/15 pt-8 transition-opacity duration-700 ease-out md:mt-16"
-        style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "220ms" : "0ms" }}
+        className="mt-8 flex flex-wrap items-baseline gap-x-2.5 gap-y-1 border-t border-c7-line/10 pt-6 transition-opacity duration-700 ease-out"
+        style={{ opacity: visible ? 1 : 0, transitionDelay: visible ? "140ms" : "0ms" }}
       >
-        <p className="font-display uppercase leading-none text-c7-ink text-[clamp(1.25rem,1.8vw,1.625rem)]">
-          Looking for coaching?
-        </p>
-        <p className="font-body text-body-sm text-c7-ink-dim">
-          Ask about current cricket batches, age groups and trial availability.
-        </p>
+        <span className="font-body text-body-sm text-c7-ink-dim">Looking for coaching?</span>
         <a
           href={whatsappHref(WHATSAPP_MESSAGES.academy)}
           target="_blank"
           rel="noopener noreferrer"
-          className="group mt-1 inline-flex items-center gap-2 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink-dim transition-colors hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+          className="group inline-flex items-center gap-1.5 font-body text-body-sm font-medium uppercase tracking-[0.06em] text-c7-ink-dim transition-colors hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
         >
           Enquire about coaching
           <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">

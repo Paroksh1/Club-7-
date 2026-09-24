@@ -203,6 +203,39 @@
   animation: c7-reveal 500ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
+/* A photograph settling into place on first load — scale only, no
+   opacity ramp on the filter itself (see c7-photo-expose for that).
+   Used once per page, on the stage frame's initial mount; sport
+   switching afterwards uses SportPhoto's own per-image opacity
+   crossfade instead, not this. */
+@keyframes c7-photo-settle {
+  0% {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.c7-anim-photo-settle {
+  animation: c7-photo-settle 750ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* The Play page's sport title settling upward on switch — a shorter,
+   smaller-distance sibling of c7-reveal, replayed via key={sportId}
+   each time the selection changes. */
+@keyframes c7-play-title {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Scroll cue's arrow — a slow, small nudge, not a bouncing icon. */
 @keyframes c7-cue-bounce {
   0%,
@@ -301,6 +334,11 @@
   .c7-anim-scrim-lift {
     animation: none !important;
     opacity: 0 !important;
+  }
+  .c7-anim-photo-settle {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
   .c7-anim-photo-expose {
     animation: none !important;

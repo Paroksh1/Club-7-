@@ -41,6 +41,7 @@ export const WHATSAPP_MESSAGES = {
   football: "Hi Club 7, I want to check football availability.",
   pickleball: "Hi Club 7, I want to check pickleball slots.",
   academy: "Hi Club 7, I'd like to enquire about a cricket academy trial.",
+  support: "Hi Club 7, I have a question about equipment, arrival, weather or changing a booking.",
   teamDay: "Hi Club 7, I'm planning a team outing.",
   birthday: "Hi Club 7, I'd like to plan a birthday.",
   events: "Hi Club 7, I'd like to plan an event.",

@@ -11,6 +11,8 @@ import {
   fullDateLabel,
   getTodayInKolkata,
   isSameDate,
+  isTimeBefore,
+  nowInKolkata,
   shortDateLabel,
   shortDayLabel,
   toISODate,
@@ -36,9 +38,10 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
   return <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">{children}</p>;
 }
 
-/** Today + the next 4 days as quick-pick chips, plus a native date input
- * for anything further out — the rail alone can't reach next month, and
- * a visitor planning two weeks ahead shouldn't be blocked from doing so. */
+/** Comfortably sized tiles, not text chips — weekday over date, a
+ * filled red state for the current selection rather than just an
+ * underline, and a native date input for anything beyond the 5-day
+ * rail so a visitor planning further out isn't blocked. */
 function DatePicker({
   today,
   selected,
@@ -53,11 +56,7 @@ function DatePicker({
 
   return (
     <div>
-      <div
-        className="flex gap-6 overflow-x-auto [scrollbar-width:none] sm:gap-8 [&::-webkit-scrollbar]:hidden"
-        role="group"
-        aria-label="Pick a day"
-      >
+      <div className="grid grid-cols-5 gap-2" role="group" aria-label="Pick a day">
         {railDates.map((d) => {
           const isActive = isSameDate(d, selected);
           return (
@@ -66,35 +65,25 @@ function DatePicker({
               type="button"
               aria-pressed={isActive}
               onClick={() => onSelect(d)}
-              className="group relative flex shrink-0 flex-col items-start gap-1.5 pb-3.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+              className={`flex min-h-[68px] flex-col items-center justify-center gap-1 border px-1 py-3 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-red ${
+                isActive
+                  ? "border-c7-red bg-c7-red text-c7-ink"
+                  : "border-c7-line/25 text-c7-ink hover:border-c7-line/50"
+              }`}
             >
-              <span
-                className={`font-body text-tag tracking-[0.14em] uppercase transition-colors duration-200 ${
-                  isActive ? "text-c7-red" : "text-c7-ink-dim group-hover:text-c7-ink"
-                }`}
-              >
+              <span className={`font-body text-[0.6875rem] tracking-[0.1em] uppercase ${isActive ? "text-c7-ink/85" : "text-c7-ink-dim"}`}>
                 {shortDayLabel(d, today)}
               </span>
-              <span
-                className={`font-display text-[1.25rem] uppercase leading-none tabular-nums transition-colors duration-200 ${
-                  isActive ? "text-c7-ink" : "text-c7-ink-dim group-hover:text-c7-ink"
-                }`}
-              >
+              <span className="font-display text-[1.125rem] uppercase leading-none tabular-nums">
                 {shortDateLabel(d)}
               </span>
-              <span
-                aria-hidden="true"
-                className={`absolute -bottom-px left-0 right-0 h-[2px] origin-left scale-x-0 bg-c7-red transition-transform duration-300 motion-reduce:transition-none ${
-                  isActive ? "scale-x-100" : ""
-                }`}
-              />
             </button>
           );
         })}
       </div>
 
-      <label className="mt-5 flex items-center gap-3">
-        <span className="font-body text-body-sm text-c7-ink-dim">Or pick another date</span>
+      <label className="mt-4 flex items-center gap-3">
+        <span className="font-body text-body-sm text-c7-ink-dim">Choose another date</span>
         <input
           type="date"
           min={toISODate(today)}
@@ -109,22 +98,34 @@ function DatePicker({
   );
 }
 
-function TimePicker({ value, onChange }: { value: string; onChange: (t: string) => void }) {
+function TimePicker({
+  value,
+  onChange,
+  disabledTimes,
+}: {
+  value: string;
+  onChange: (t: string) => void;
+  disabledTimes: Set<string>;
+}) {
   return (
     <div>
-      <div className="flex flex-wrap gap-2.5">
+      <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
         {QUICK_TIMES.map((t) => {
           const isActive = t === value;
+          const isDisabled = disabledTimes.has(t);
           return (
             <button
               key={t}
               type="button"
+              disabled={isDisabled}
               aria-pressed={isActive}
               onClick={() => onChange(t)}
-              className={`border px-3.5 py-2 font-body text-body-sm font-medium tabular-nums transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-red ${
-                isActive
-                  ? "border-c7-red text-c7-red"
-                  : "border-c7-line/30 text-c7-ink-dim hover:border-c7-line/60 hover:text-c7-ink"
+              className={`border px-2 py-2.5 font-body text-body-sm font-medium tabular-nums transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-red ${
+                isDisabled
+                  ? "cursor-not-allowed border-c7-line/10 text-c7-ink-dim/30 line-through"
+                  : isActive
+                    ? "border-c7-red text-c7-red"
+                    : "border-c7-line/30 text-c7-ink-dim hover:border-c7-line/60 hover:text-c7-ink"
               }`}
             >
               {formatTime12h(t)}
@@ -145,10 +146,12 @@ function TimePicker({ value, onChange }: { value: string; onChange: (t: string) 
   );
 }
 
+/** A true segmented control — one shared border, dividers between
+ * segments, not three separately-bordered buttons with gaps. */
 function DurationPicker({ value, onChange }: { value: number; onChange: (m: number) => void }) {
   return (
-    <div className="flex flex-wrap gap-2.5">
-      {DURATIONS.map((d) => {
+    <div className="inline-flex border border-c7-line/30">
+      {DURATIONS.map((d, i) => {
         const isActive = d.minutes === value;
         return (
           <button
@@ -156,11 +159,9 @@ function DurationPicker({ value, onChange }: { value: number; onChange: (m: numb
             type="button"
             aria-pressed={isActive}
             onClick={() => onChange(d.minutes)}
-            className={`border px-3.5 py-2 font-body text-body-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-red ${
-              isActive
-                ? "border-c7-red text-c7-red"
-                : "border-c7-line/30 text-c7-ink-dim hover:border-c7-line/60 hover:text-c7-ink"
-            }`}
+            className={`px-4 py-2.5 font-body text-body-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-c7-red ${
+              i > 0 ? "border-l border-c7-line/30" : ""
+            } ${isActive ? "bg-c7-red text-c7-ink" : "text-c7-ink-dim hover:text-c7-ink"}`}
           >
             {d.label}
           </button>
@@ -170,10 +171,9 @@ function DurationPicker({ value, onChange }: { value: number; onChange: (m: numb
   );
 }
 
-/** The signature moment: a match-slip summary that updates one line at
- * a time as the visitor changes a field, rather than the whole panel
- * re-rendering flatly. Explicitly an unconfirmed request, never styled
- * or worded like a held reservation. */
+/** The match slip — one value animates at a time via `key`, the rest
+ * of the panel stays still. Dark, tonally separated from the page by
+ * a border and a slightly raised fill; no cream card, no fake stamp. */
 function SummarySlip({
   shortName,
   date,
@@ -197,7 +197,7 @@ function SummarySlip({
   ];
 
   return (
-    <div className="border border-c7-line/20 bg-c7-bg-3/60 p-6 md:p-7">
+    <div className="border border-c7-line/20 bg-c7-bg-3/70 p-6 md:p-7">
       <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">Your Game</p>
       <div className="mt-4 flex flex-col divide-y divide-c7-line/10">
         {rows.map((row) => (
@@ -222,11 +222,21 @@ function SummarySlip({
 export default function PlaySection2({ activeId }: { activeId: PlaySportId }) {
   const sport = PLAY_SPORTS.find((s) => s.id === activeId)!;
   const today = useMemo(() => getTodayInKolkata(), []);
+  const now = useMemo(() => nowInKolkata(), []);
+  const defaultTime = useMemo(() => QUICK_TIMES.find((t) => !isTimeBefore(t, now)) ?? QUICK_TIMES[QUICK_TIMES.length - 1], [now]);
+
   const [selectedDate, setSelectedDate] = useState<Date>(today);
-  const [time, setTime] = useState("20:00");
+  const [time, setTime] = useState(defaultTime);
   const [duration, setDuration] = useState(60);
   const [flexible, setFlexible] = useState(false);
   const { ref, visible } = useRevealOnView<HTMLDivElement>(0.2);
+
+  const isToday = isSameDate(selectedDate, today);
+  const disabledTimes = useMemo(
+    () => new Set(isToday ? QUICK_TIMES.filter((t) => isTimeBefore(t, now)) : []),
+    [isToday, now]
+  );
+  const isPastTime = isToday && isTimeBefore(time, now);
 
   const message = [
     `Hi Club 7, I'd like to ask about a slot.`,
@@ -250,7 +260,7 @@ export default function PlaySection2({ activeId }: { activeId: PlaySportId }) {
           className="font-body text-tag tracking-[0.24em] uppercase text-c7-red transition-opacity duration-500"
           style={{ opacity: visible ? 1 : 0 }}
         >
-          02 / Book
+          Book
         </p>
         <h2
           className="-ml-1 mt-2 font-display uppercase leading-[0.94] text-c7-ink text-[clamp(2.5rem,3.6vw,4rem)] transition-[opacity,transform] duration-700"
@@ -260,7 +270,7 @@ export default function PlaySection2({ activeId }: { activeId: PlaySportId }) {
         </h2>
       </div>
 
-      <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-[1fr_minmax(280px,360px)] md:items-start md:gap-16">
+      <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-[7fr_5fr] md:items-start md:gap-14">
         <div className="flex flex-col gap-8 transition-[opacity,transform] duration-700" style={fade(visible, 160)}>
           <div>
             <FieldLabel>Preferred Date</FieldLabel>
@@ -272,8 +282,13 @@ export default function PlaySection2({ activeId }: { activeId: PlaySportId }) {
           <div>
             <FieldLabel>Preferred Start Time</FieldLabel>
             <div className="mt-4">
-              <TimePicker value={time} onChange={setTime} />
+              <TimePicker value={time} onChange={setTime} disabledTimes={disabledTimes} />
             </div>
+            {isPastTime ? (
+              <p role="alert" className="mt-2 font-body text-body-sm text-c7-red">
+                That time has already passed today — pick a later time.
+              </p>
+            ) : null}
           </div>
 
           <div>
@@ -298,10 +313,16 @@ export default function PlaySection2({ activeId }: { activeId: PlaySportId }) {
           <SummarySlip shortName={sport.shortName} date={selectedDate} today={today} time={time} duration={duration} flexible={flexible} />
 
           <a
-            href={whatsappHref(message)}
+            href={isPastTime ? undefined : whatsappHref(message)}
             target="_blank"
             rel="noopener noreferrer"
-            className="group mt-6 inline-flex w-full items-center justify-center gap-2.5 bg-c7-red px-7 py-4 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-[background-color,box-shadow] duration-200 hover:bg-c7-red-dim focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+            aria-disabled={isPastTime}
+            onClick={(e) => {
+              if (isPastTime) e.preventDefault();
+            }}
+            className={`group mt-6 inline-flex w-full items-center justify-center gap-2.5 px-7 py-4 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-[background-color,box-shadow] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red ${
+              isPastTime ? "cursor-not-allowed bg-c7-red/40" : "bg-c7-red hover:bg-c7-red-dim"
+            }`}
           >
             Ask About This Slot
             <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-[3px]">
@@ -309,7 +330,7 @@ export default function PlaySection2({ activeId }: { activeId: PlaySportId }) {
             </span>
           </a>
           <p className="mt-3 font-body text-body-sm text-c7-ink-dim">
-            Opens WhatsApp with your choices. Your booking is confirmed by Club 7.
+            Opens WhatsApp with your choices. Club 7 confirms availability.
           </p>
         </div>
       </div>

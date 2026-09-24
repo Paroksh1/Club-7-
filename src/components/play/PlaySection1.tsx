@@ -2,117 +2,64 @@
 
 import Image from "next/image";
 import { PLAY_SPORTS, type PlaySportId } from "@/lib/play-data";
-import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/constants";
 import { FILM_GRAIN_URL } from "@/lib/grain";
 import { entrance } from "@/lib/entrance";
+import { SportDiagram } from "./SportDiagram";
 
-/** Two correction tiers, chosen per-photo (see play-data.ts) rather
- * than inferred from `stock` — being a stock photo says nothing about
- * how much a given image actually needs. Football's stock shot and
- * cricket's real top-down shot are both already reasonably moody, so
- * both use "moderate" and now genuinely match each other. Pickleball
- * is a flat daylight source photo standing in for night photography
- * that doesn't exist yet — "strong" pushes it much further, the same
- * day-for-night approach already used for this exact photo on the
- * homepage's Ground section. */
-function gradeFor(grade: "moderate" | "strong" | undefined): string {
-  return grade === "strong"
-    ? "saturate(0.75) contrast(1.14) brightness(0.62) hue-rotate(6deg) sepia(0.03)"
-    : "saturate(0.87) contrast(1.08) brightness(0.93) hue-rotate(4deg)";
-}
+/** One consistent grade for all three sport photos — no per-sport
+ * strength tiers, no dark overlay. Real venue photos stay close to
+ * source; the stock football frame gets the same treatment as the
+ * others so it doesn't read as a different photoshoot. */
+const GRADE = "saturate(0.9) contrast(1.06) brightness(0.97) hue-rotate(2deg)";
 
-/** All three photos stay mounted and cross-fade via opacity/transform —
- * same technique the homepage's Ground section uses. The very slight
- * scale-settle (1.02 → 1) on switch stands in for depth without any
- * cursor-tracking machinery. */
+/** All three photos stay mounted and cross-fade via opacity/transform
+ * within one stable frame — switching sports never changes the frame's
+ * size, so nothing else on the page reflows. */
 function SportPhoto({ activeId, className }: { activeId: PlaySportId; className: string }) {
   return (
     <div className={`relative overflow-hidden bg-c7-bg-3 ${className}`}>
       {PLAY_SPORTS.map((sport) => (
         <div
           key={sport.id}
-          className="absolute inset-0 transition-[opacity,transform] duration-500 ease-out motion-reduce:transition-none"
-          style={{
-            opacity: sport.id === activeId ? 1 : 0,
-            transform: sport.id === activeId ? "translateY(0) scale(1)" : "translateY(8px) scale(1.02)",
-          }}
+          className="absolute inset-0 transition-opacity duration-500 ease-out motion-reduce:transition-none"
+          style={{ opacity: sport.id === activeId ? 1 : 0 }}
         >
           <Image
             src={sport.image.src}
             alt={sport.image.alt}
             fill
-            sizes="(min-width: 768px) 58vw, 100vw"
+            sizes="(min-width: 768px) 66vw, 100vw"
             quality={90}
             priority={sport.id === activeId}
-            className="object-cover"
-            style={{ objectPosition: sport.image.position, filter: gradeFor(sport.image.grade) }}
+            className="object-cover transition-transform duration-500 ease-out motion-reduce:transition-none"
+            style={{
+              objectPosition: sport.image.position,
+              filter: GRADE,
+              transform: `scale(${sport.image.zoom ?? 1})`,
+            }}
           />
           <div
-            className="pointer-events-none absolute inset-0 opacity-[0.045] mix-blend-overlay"
+            className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay"
             style={{ backgroundImage: `url("${FILM_GRAIN_URL}")`, backgroundSize: "120px 120px" }}
           />
-          {/* Day-for-night's filter alone isn't enough to fully sell a
-              bright daylight source as night — same conclusion reached
-              grading this identical photo on the homepage. A cool
-              multiply tint on top finishes the job. */}
-          {sport.image.grade === "strong" && (
-            <div
-              className="pointer-events-none absolute inset-0 mix-blend-multiply"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(4,14,14,0.5) 0%, rgba(4,14,14,0.2) 55%, rgba(4,14,14,0.35) 100%)",
-              }}
-            />
-          )}
         </div>
       ))}
     </div>
   );
 }
 
-/** Extremely faint per-sport line-art — a goal-net grid, a crease and
- * stumps, a court and net — anchored to the corner behind the identity
- * block as atmosphere, not a framed illustration. Small and low-
- * opacity enough that it reads as structure in the background rather
- * than a pattern crossing through the metadata/CTA text. */
-export function SportMotif({ sportId }: { sportId: PlaySportId }) {
-  const common = "pointer-events-none absolute -z-10 -bottom-10 -left-8 h-[260px] w-[260px] text-c7-ink opacity-[0.035] md:h-[320px] md:w-[320px]";
-  if (sportId === "football") {
-    return (
-      <svg aria-hidden="true" viewBox="0 0 200 200" fill="none" className={common}>
-        <path d="M0 55 H130 M0 95 H160 M0 135 H130" stroke="currentColor" strokeWidth="1" />
-        <path d="M45 20 V180 M90 20 V180 M135 20 V180" stroke="currentColor" strokeWidth="1" />
-      </svg>
-    );
-  }
-  if (sportId === "cricket") {
-    return (
-      <svg aria-hidden="true" viewBox="0 0 200 200" fill="none" className={common}>
-        <path d="M64 40 V150 M80 40 V150 M96 40 V150" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M62 42 H98 M20 150 H160 M20 150 V170 M160 150 V170" stroke="currentColor" strokeWidth="1" />
-      </svg>
-    );
-  }
-  return (
-    <svg aria-hidden="true" viewBox="0 0 200 200" fill="none" className={common}>
-      <rect x="24" y="24" width="152" height="152" stroke="currentColor" strokeWidth="1" />
-      <path d="M24 100 H176 M24 68 H176 M24 132 H176" stroke="currentColor" strokeWidth="1" />
-    </svg>
-  );
-}
-
-function Selector({
+function SportSelector({
   activeId,
   onSelect,
 }: {
   activeId: PlaySportId;
   onSelect: (id: PlaySportId) => void;
 }) {
+  const activeIndex = PLAY_SPORTS.findIndex((s) => s.id === activeId);
+
   return (
-    <div
-      className="flex items-baseline gap-6 overflow-x-auto border-b border-c7-line/15 sm:gap-9 md:gap-12 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-    >
-      {PLAY_SPORTS.map((sport) => {
+    <div className="relative grid grid-cols-3 border-y border-c7-line/15">
+      {PLAY_SPORTS.map((sport, i) => {
         const isActive = sport.id === activeId;
         return (
           <button
@@ -120,38 +67,39 @@ function Selector({
             type="button"
             aria-pressed={isActive}
             onClick={() => onSelect(sport.id)}
-            className="group relative flex shrink-0 items-baseline gap-2 pb-3.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red md:pb-4"
+            className={`group flex min-h-[84px] flex-col items-center justify-center gap-1.5 py-5 text-center transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-c7-red md:min-h-[112px] md:items-start md:py-7 md:text-left ${
+              i > 0 ? "border-l border-c7-line/15" : ""
+            }`}
           >
             <span
-              className={`hidden font-body text-body-sm tracking-[0.04em] tabular-nums transition-colors duration-300 sm:inline ${
-                isActive ? "text-c7-red" : "text-c7-ink-dim/60"
+              className={`font-body text-body-sm tabular-nums transition-colors duration-300 ${
+                isActive ? "text-c7-red" : "text-c7-ink-dim/60 group-hover:text-c7-ink-dim"
               }`}
             >
               {sport.number}
             </span>
             <span
-              className={`font-body text-body font-medium uppercase tracking-[0.02em] transition-colors duration-300 ${
-                isActive ? "text-c7-ink" : "text-c7-ink-dim group-hover:text-c7-ink"
+              className={`font-display uppercase leading-[0.95] transition-colors duration-300 text-[clamp(1.375rem,3.4vw,2.5rem)] ${
+                isActive ? "text-c7-ink" : "text-c7-ink-dim/70 group-hover:text-c7-ink-dim"
               }`}
             >
               {sport.shortName}
             </span>
-            <span
-              aria-hidden="true"
-              className={`absolute -bottom-px left-0 right-0 h-[2px] origin-left scale-x-0 transition-transform duration-300 motion-reduce:transition-none ${
-                isActive ? "scale-x-100 bg-c7-red" : "bg-c7-ink-dim group-hover:scale-x-100"
-              }`}
-            />
           </button>
         );
       })}
+      <span
+        aria-hidden="true"
+        className="absolute -bottom-px left-0 h-[3px] w-1/3 bg-c7-red transition-transform duration-[420ms] ease-out motion-reduce:transition-none"
+        style={{ transform: `translateX(${activeIndex * 100}%)` }}
+      />
     </div>
   );
 }
 
 function InfoRow({ info }: { info: { label: string; value: string }[] }) {
   return (
-    <div className="flex flex-wrap gap-x-10 gap-y-4 border-t border-c7-line/10 pt-5">
+    <div className="flex flex-wrap gap-x-8 gap-y-4 border-t border-c7-line/10 pt-5">
       {info.map((item) => (
         <div key={item.label}>
           <p className="font-body text-[0.6875rem] tracking-[0.22em] uppercase text-c7-ink-dim/70">{item.label}</p>
@@ -161,26 +109,6 @@ function InfoRow({ info }: { info: { label: string; value: string }[] }) {
         </div>
       ))}
     </div>
-  );
-}
-
-function SportCta({ shortName, href }: { shortName: string; href: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative mt-8 inline-flex w-fit items-center gap-2 pb-1.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
-    >
-      Ask About {shortName}
-      <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
-        ↗
-      </span>
-      <span
-        aria-hidden="true"
-        className="absolute -inset-x-1.5 bottom-0 h-px bg-c7-line/40 transition-colors duration-200 group-hover:bg-c7-red"
-      />
-    </a>
   );
 }
 
@@ -194,84 +122,119 @@ export default function PlaySection1({ activeId, onSelect }: PlaySection1Props) 
 
   return (
     <section
-      className="relative mx-auto w-full max-w-[1600px] bg-c7-bg-1 px-edge pb-20 md:pb-24"
-      style={{ paddingTop: "calc(var(--header-height, 90px) + 40px)" }}
+      className="relative mx-auto w-full max-w-[1600px] bg-c7-bg-1 px-edge pb-16 md:pb-20"
+      style={{ paddingTop: "calc(var(--header-height, 90px) + 28px)" }}
     >
-      {/* Intro — controlled, not hero-scale. One quick staged reveal on
-          mount (this is always the first thing on screen, no scroll
-          needed) rather than a scroll-triggered one. */}
-      <div className="max-w-2xl">
-        <p className={`c7-anim-reveal font-body text-tag tracking-[0.24em] uppercase text-c7-red ${entrance(0)}`}>
-          01 / Play
-        </p>
-        <h1
-          className={`c7-anim-headline -ml-1 mt-3 font-display uppercase leading-[0.94] text-c7-ink text-[clamp(3rem,4.5vw,5.5rem)] ${entrance(
-            120
+      {/* Opening — compact, brings the selector into the first
+          viewport. Headline left, supporting line pulled to the lower
+          right so the two read as one composed line, not a stacked
+          hero. */}
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between md:gap-10">
+        <div>
+          <p className={`c7-anim-reveal font-body text-tag tracking-[0.24em] uppercase text-c7-red ${entrance(0)}`}>
+            Club 7 / Play
+          </p>
+          <h1
+            className={`c7-anim-headline -ml-1 mt-2 font-display uppercase leading-[0.9] text-c7-ink text-[clamp(3rem,5vw+2rem,7rem)] ${entrance(
+              120
+            )}`}
+          >
+            Pick Your Game.
+          </h1>
+        </div>
+        <p
+          className={`c7-anim-reveal mt-4 max-w-[26ch] font-body text-body text-c7-ink-dim md:mt-0 md:text-right ${entrance(
+            280
           )}`}
         >
-          Pick Your Game.
-        </h1>
-        <p className={`c7-anim-reveal mt-4 font-body text-body text-c7-ink-dim ${entrance(240)}`}>
-          Choose a sport, then tell us when you&apos;d like to play.
+          Choose your sport. We&apos;ll help sort the slot.
         </p>
       </div>
+      <div className={`c7-anim-reveal mt-6 border-t border-c7-line/15 md:mt-8 ${entrance(360)}`} />
 
-      {/* Selector — connected to the title, not floating below it */}
-      <div className={`c7-anim-reveal mt-9 md:mt-10 ${entrance(360)}`}>
-        <Selector activeId={activeId} onSelect={onSelect} />
+      {/* Selector — a major control, not a tab strip */}
+      <div className={`c7-anim-reveal ${entrance(420)}`}>
+        <SportSelector activeId={activeId} onSelect={onSelect} />
       </div>
 
-      {/* Active panel — desktop: asymmetric 42/58 split, image begins
-          at the same level as the eyebrow rather than being vertically
-          centred against it, so the two columns read as one scene. */}
-      <div className="relative mt-7 hidden md:mt-8 md:grid md:grid-cols-[42%_1fr] md:items-start md:gap-14">
-        <div key={sport.id} className="relative max-w-xl [animation:c7-reveal_320ms_cubic-bezier(0.2,0.7,0.2,1)_both] motion-reduce:[animation:none]">
-          <SportMotif sportId={sport.id} />
-          <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">
-            {sport.number} / {sport.shortName}
-          </p>
-          <h2 className="-ml-1 mt-2 font-display uppercase leading-[0.92] text-[clamp(2.75rem,4vw,5rem)]">
-            <span className="text-c7-ink">{sport.heading[0]}</span>
-            <br />
-            <span className="text-c7-ink">{sport.heading[1]}</span>
+      {/* Photographic stage — desktop: photo ~67%, info column ~33% */}
+      <div className="mt-10 hidden md:mt-12 md:grid md:grid-cols-[2fr_1fr] md:items-start md:gap-12">
+        <SportPhoto
+          activeId={activeId}
+          className={`c7-anim-photo-settle h-[520px] w-full ${entrance(520)}`}
+        />
+
+        <div className="pt-1">
+          <h2
+            key={sport.id}
+            className="-ml-1 font-display uppercase leading-[0.92] text-c7-ink text-[clamp(2.5rem,3.6vw,4rem)] [animation:c7-play-title_450ms_cubic-bezier(0.2,0.7,0.2,1)_both] motion-reduce:[animation:none]"
+          >
+            {sport.shortName}
           </h2>
-          <p className="mt-3 max-w-[36ch] font-body text-body-lg text-c7-ink/85">{sport.line}</p>
-          <div className="mt-7">
+          <p
+            key={`${sport.id}-line`}
+            className="mt-3 max-w-[32ch] font-body text-body-lg text-c7-ink/85 [animation:c7-reveal_450ms_cubic-bezier(0.2,0.7,0.2,1)_both] motion-reduce:[animation:none]"
+            style={{ animationDelay: "60ms" }}
+          >
+            {sport.line}
+          </p>
+
+          <div
+            key={`${sport.id}-info`}
+            className="mt-6 [animation:c7-reveal_450ms_cubic-bezier(0.2,0.7,0.2,1)_both] motion-reduce:[animation:none]"
+            style={{ animationDelay: "100ms" }}
+          >
             <InfoRow info={sport.info} />
           </div>
-          <SportCta shortName={sport.shortName} href={whatsappHref(WHATSAPP_MESSAGES[sport.id])} />
-        </div>
 
-        <SportPhoto activeId={activeId} className="h-[480px] w-full" />
+          <div key={`${sport.id}-diagram`} className="mt-6 h-[64px] w-[96px] text-c7-ink/70">
+            <SportDiagram sportId={sport.id} />
+          </div>
+
+          <a
+            href="#book-enquiry"
+            className="group relative mt-7 inline-flex w-fit items-center gap-2 pb-1.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+          >
+            Choose a Time
+            <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-y-[2px]">
+              ↘
+            </span>
+            <span
+              aria-hidden="true"
+              className="absolute -inset-x-1.5 bottom-0 h-px bg-c7-line/40 transition-colors duration-200 group-hover:bg-c7-red"
+            />
+          </a>
+        </div>
       </div>
 
-      {/* Active panel — mobile: sport identity, then a strong near-
-          full-width image, then the statement, metadata and CTA below
-          it — never beside the text. */}
-      <div className="relative mt-7 md:hidden">
-        <div key={`${sport.id}-mobile-head`} className="relative [animation:c7-reveal_320ms_cubic-bezier(0.2,0.7,0.2,1)_both] motion-reduce:[animation:none]">
-          <SportMotif sportId={sport.id} />
-          <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-ink-dim">
-            {sport.number} / {sport.shortName}
-          </p>
-          <h2 className="-ml-1 mt-2 font-display uppercase leading-[0.92] text-[clamp(2.75rem,10vw,3.75rem)]">
-            <span className="text-c7-ink">{sport.heading[0]}</span>
-            <br />
-            <span className="text-c7-ink">{sport.heading[1]}</span>
+      {/* Mobile — photo, then title/line/facts/diagram/CTA below it */}
+      <div className="relative mt-8 md:hidden">
+        <SportPhoto activeId={activeId} className={`c7-anim-photo-settle h-[280px] w-full ${entrance(480)}`} />
+
+        <div key={`${sport.id}-mobile`} className="mt-6 [animation:c7-reveal_450ms_cubic-bezier(0.2,0.7,0.2,1)_both] motion-reduce:[animation:none]">
+          <h2 className="-ml-1 font-display uppercase leading-[0.92] text-c7-ink text-[clamp(2.5rem,10vw,3.25rem)]">
+            {sport.shortName}
           </h2>
-        </div>
-
-        <SportPhoto activeId={activeId} className="mt-5 h-[260px] w-full" />
-
-        <div
-          key={`${sport.id}-mobile-body`}
-          className="mt-6 [animation:c7-reveal_320ms_cubic-bezier(0.2,0.7,0.2,1)_both] motion-reduce:[animation:none]"
-        >
-          <p className="max-w-[36ch] font-body text-body-lg text-c7-ink/85">{sport.line}</p>
+          <p className="mt-3 max-w-[32ch] font-body text-body-lg text-c7-ink/85">{sport.line}</p>
           <div className="mt-6">
             <InfoRow info={sport.info} />
           </div>
-          <SportCta shortName={sport.shortName} href={whatsappHref(WHATSAPP_MESSAGES[sport.id])} />
+          <div className="mt-6 h-[56px] w-[84px] text-c7-ink/70">
+            <SportDiagram sportId={sport.id} />
+          </div>
+          <a
+            href="#book-enquiry"
+            className="group relative mt-7 inline-flex w-fit items-center gap-2 pb-1.5 font-body text-body font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+          >
+            Choose a Time
+            <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-y-[2px]">
+              ↘
+            </span>
+            <span
+              aria-hidden="true"
+              className="absolute -inset-x-1.5 bottom-0 h-px bg-c7-line/40 transition-colors duration-200 group-hover:bg-c7-red"
+            />
+          </a>
         </div>
       </div>
     </section>
