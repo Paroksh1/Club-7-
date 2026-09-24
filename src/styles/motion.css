@@ -292,6 +292,49 @@
   animation: c7-grow-y 650ms cubic-bezier(0.3, 0.7, 0.2, 1) both;
 }
 
+/* Headline line rising up from behind a mask — the outer element needs
+   `overflow: hidden` (Tailwind's `overflow-hidden`), this animates the
+   inner line only. Used once per line, staggered ~100-140ms apart. */
+@keyframes c7-clip-rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.c7-anim-clip-rise {
+  animation: c7-clip-rise 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* A photograph uncovering vertically, top edge first — clip-path
+   rather than scale so the image itself is never distorted. */
+@keyframes c7-uncover-y {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.c7-anim-uncover-y {
+  animation: c7-uncover-y 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* A wide photograph uncovering horizontally, for the manifesto's
+   filmstrip image. */
+@keyframes c7-uncover-x {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.c7-anim-uncover-x {
+  animation: c7-uncover-x 750ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* A generic court outline flashing on then off — the bridge between
    the turf and the real pickleball photo resolving underneath it, so
    the swap reads as "lines reorganizing" rather than a plain fade. */
@@ -330,6 +373,15 @@
   .c7-anim-line-flash {
     animation: none !important;
     opacity: 0 !important;
+  }
+  .c7-anim-clip-rise {
+    animation: none !important;
+    transform: none !important;
+  }
+  .c7-anim-uncover-y,
+  .c7-anim-uncover-x {
+    animation: none !important;
+    clip-path: none !important;
   }
   .c7-anim-scrim-lift {
     animation: none !important;
