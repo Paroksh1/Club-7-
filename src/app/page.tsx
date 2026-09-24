@@ -1,7 +1,7 @@
 import Hero from "@/components/hero/Hero";
 import GroundSection from "@/components/ground/GroundSection";
 import WallSection from "@/components/wall/WallSection";
-import NightSection from "@/components/night/NightSection";
+import CafeSection from "@/components/night/CafeSection";
 import YourMoveSection from "@/components/move/YourMoveSection";
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
       <Hero />
       <GroundSection />
       <WallSection />
-      <NightSection />
+      <CafeSection />
       <YourMoveSection />
     </>
   );

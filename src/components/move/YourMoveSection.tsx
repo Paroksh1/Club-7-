@@ -20,8 +20,8 @@ export default function YourMoveSection() {
 
   return (
     <section id="visit" className="relative bg-c7-bg-1">
-      <div ref={ref} className="mx-auto w-full max-w-[1600px] px-edge py-16 md:py-20">
-        <div className="md:grid md:grid-cols-[1fr_1fr] md:items-center md:gap-16">
+      <div ref={ref} className="mx-auto w-full max-w-[1600px] px-edge pb-16 pt-10 md:pb-20 md:pt-12">
+        <div className="md:grid md:grid-cols-[1.4fr_1fr] md:items-center md:gap-14">
           <div
             className="transition-[opacity,transform] duration-700 ease-out"
             style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(14px)" }}
@@ -54,21 +54,24 @@ export default function YourMoveSection() {
           </div>
 
           <div
-            className="relative mt-10 aspect-[4/3] w-full overflow-hidden bg-c7-bg-3 transition-[opacity,transform] duration-700 ease-out md:mt-0 md:aspect-[5/4]"
+            className="relative mt-10 aspect-[3/4] w-full max-w-[300px] overflow-hidden bg-c7-bg-3 transition-[opacity,transform] duration-700 ease-out md:mt-0 md:max-w-[340px] md:justify-self-end"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(18px)",
               transitionDelay: visible ? "140ms" : "0ms",
             }}
           >
+            {/* Source is a native 430x758 photo — kept close to its own
+                resolution (max 340px) rather than stretched to fill a
+                much wider column, which was visibly softening it. */}
             <Image
               src="/venue/entrance-signage.jpg"
               alt="Club 7's entrance at night, Sector 89, Faridabad"
               fill
-              sizes="(min-width: 768px) 46vw, 100vw"
+              sizes="340px"
               quality={90}
               className="object-cover"
-              style={{ objectPosition: "50% 40%", filter: "saturate(0.86) contrast(1.1) brightness(0.94) hue-rotate(4deg)" }}
+              style={{ objectPosition: "50% 46%", filter: "saturate(0.86) contrast(1.1) brightness(0.94) hue-rotate(4deg)" }}
             />
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"

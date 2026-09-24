@@ -13,9 +13,16 @@ export type Hotspot = {
    * same illustrative-overlay language as the marker position. */
   box: { left: number; top: number; width: number; height: number };
   fact: string;
-  image: { src: string; alt: string; position: string };
+  /** Every hotspot but café shows a small supporting crop. Café
+   * deliberately has none — showing the same café photo a second time
+   * here would repeat it; a description + link to the café section is
+   * enough. */
+  image?: { src: string; alt: string; position: string };
   /** Sport pages don't have a dedicated café route */
   playHref?: string;
+  /** Café's only action — jumps to the on-page café section rather
+   * than a sport booking flow. */
+  sectionHref?: string;
 };
 
 export const HOTSPOTS: Hotspot[] = [
@@ -56,6 +63,6 @@ export const HOTSPOTS: Hotspot[] = [
     y: 34,
     box: { left: 14, top: 24, width: 18, height: 16 },
     fact: "On-site, for after the game.",
-    image: { src: "/stock/cafe-porch.jpg", alt: "Friends gathered together at night at Club 7", position: "50% 38%" },
+    sectionHref: "#the-cafe",
   },
 ];

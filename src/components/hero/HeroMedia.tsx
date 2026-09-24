@@ -73,22 +73,26 @@ export default function HeroMedia({
       />
 
       {/* Slight lift on the lower portion of the photo only — the ground
-          itself, not the sky/tree band above it. ~13%, not a global
+          itself, not the sky/tree band above it. ~16%, not a global
           brighten — just enough that the floodlights and turf read as
           the natural focal point on the right. */}
       <div
         className="pointer-events-none absolute inset-0 mix-blend-screen"
         style={{
           background:
-            "linear-gradient(180deg, transparent 0%, transparent 44%, rgba(255,255,255,0.13) 100%)",
+            "linear-gradient(180deg, transparent 0%, transparent 44%, rgba(255,255,255,0.16) 100%)",
         }}
       />
 
-      {/* Compositional reveal — lets the photo's own darkness merge
-          into the site background. Top-down on mobile (copy sits
-          below), side-on from the left on desktop (copy sits left). */}
+      {/* Compositional reveal — mobile only: top-down, since copy sits
+          below the photo there and needs a legible zone beneath it.
+          Desktop drops this entirely in favour of the side-on gradient
+          below — copy sits left, so only the left needs protecting;
+          darkening the bottom too (as this used to, on both
+          breakpoints) muddied the ground/floodlights on the right for
+          no reason. */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 md:hidden"
         style={{
           background:
             "linear-gradient(180deg, transparent 0%, transparent 18%, var(--color-c7-bg-1) 58%)",
@@ -98,7 +102,7 @@ export default function HeroMedia({
         className="absolute inset-0 hidden md:block"
         style={{
           background:
-            "linear-gradient(100deg, var(--color-c7-bg-1) 2%, var(--color-c7-bg-1) 34%, transparent 64%)",
+            "linear-gradient(100deg, var(--color-c7-bg-1) 2%, var(--color-c7-bg-1) 30%, transparent 56%)",
         }}
       />
 

@@ -25,7 +25,7 @@ export default function WallSection() {
       <div className="mx-auto w-full max-w-[1600px] px-edge py-14 md:py-20">
         <div
           ref={ref}
-          className="border-l-2 border-c7-red pl-6 transition-[opacity,transform] duration-700 ease-out md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:pl-8"
+          className="border-l-2 border-c7-red pl-6 transition-[opacity,transform] duration-700 ease-out md:grid md:grid-cols-[1fr_360px] md:items-center md:gap-6 md:pl-8"
           style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(14px)" }}
         >
           <div>
@@ -46,12 +46,12 @@ export default function WallSection() {
             </a>
           </div>
 
-          <div className="relative mt-8 h-[160px] w-full overflow-hidden bg-c7-bg-3 md:mt-0 md:h-[140px] md:w-[220px]">
+          <div className="relative mt-8 h-[200px] w-full overflow-hidden bg-c7-bg-3 md:mt-0 md:h-[220px] md:w-[360px]">
             <Image
               src={IMAGE.src}
               alt={IMAGE.alt}
               fill
-              sizes="220px"
+              sizes="(min-width: 768px) 360px, 100vw"
               quality={90}
               className="object-cover"
               style={{ objectPosition: IMAGE.position, filter: "saturate(0.85) contrast(1.06) brightness(0.92)" }}

@@ -61,7 +61,7 @@ export default function VenueExplorer() {
           />
           <div
             className="pointer-events-none absolute inset-0"
-            style={{ background: "linear-gradient(180deg, rgba(4,14,14,0.35) 0%, transparent 30%, rgba(4,14,14,0.3) 100%)" }}
+            style={{ background: "linear-gradient(180deg, rgba(4,14,14,0.4) 0%, rgba(4,14,14,0.12) 30%, rgba(4,14,14,0.38) 100%)" }}
           />
 
           <BoundaryTrace key={activeId} box={active.box} />
@@ -78,17 +78,30 @@ export default function VenueExplorer() {
                   aria-pressed={isActive}
                   onClick={() => setActiveId(h.id)}
                   onFocus={() => setActiveId(h.id)}
-                  className="group absolute -translate-x-1/2 -translate-y-1/2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+                  className="group absolute flex -translate-x-1/2 -translate-y-1/2 items-center justify-center p-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c7-red"
                   style={{ left: `${h.x}%`, top: `${h.y}%` }}
                 >
+                  {/* Unmistakable active state: a soft pulsing ring behind
+                      the dot, not just a colour/scale change on the dot
+                      alone. */}
+                  {isActive && (
+                    <span
+                      className="c7-anim-pulse-dot pointer-events-none absolute h-6 w-6 rounded-full border border-c7-red/70"
+                      aria-hidden="true"
+                    />
+                  )}
                   <span
-                    className={`block h-2.5 w-2.5 rounded-full border transition-all duration-300 ${
-                      isActive ? "scale-125 border-c7-red bg-c7-red" : "border-c7-line/70 bg-c7-bg-1/70 group-hover:border-c7-ink"
+                    className={`relative block h-3 w-3 rounded-full border-2 transition-all duration-300 ${
+                      isActive
+                        ? "scale-110 border-c7-ink bg-c7-red"
+                        : "border-c7-ink/80 bg-c7-bg-1 group-hover:border-c7-red group-hover:bg-c7-red/80"
                     }`}
                   />
+                  {/* Label sits on its own scrim so it stays readable
+                      regardless of what's underneath it in the photo. */}
                   <span
-                    className={`absolute left-1/2 top-full mt-1.5 -translate-x-1/2 whitespace-nowrap font-body text-[0.6875rem] tracking-[0.1em] uppercase transition-opacity duration-300 ${
-                      isActive ? "text-c7-ink opacity-100" : "text-c7-ink-dim opacity-50 group-hover:opacity-90"
+                    className={`absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-nowrap rounded-[2px] bg-c7-bg-1/80 px-1.5 py-0.5 font-body text-[0.6875rem] tracking-[0.1em] uppercase backdrop-blur-[1px] transition-opacity duration-300 ${
+                      isActive ? "text-c7-ink opacity-100" : "text-c7-ink-dim opacity-70 group-hover:opacity-100 group-hover:text-c7-ink"
                     }`}
                   >
                     {h.label}
@@ -99,34 +112,50 @@ export default function VenueExplorer() {
           </div>
         </div>
 
-        {/* Info panel — crossfades with the active hotspot */}
-        <div key={activeId} className="c7-anim-reveal mt-6 md:mt-0">
-          <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-red">{active.label}</p>
-          <p className="mt-2 font-body text-body-lg text-c7-ink/90">{active.fact}</p>
+        {/* Info panel — fixed min-height so switching hotspots never
+            shifts the layout beneath it; crossfades content in ~250ms. */}
+        <div className="relative mt-6 min-h-[280px] md:mt-0 md:min-h-[360px]">
+          <div key={activeId} className="c7-anim-reveal absolute inset-0 [animation-duration:250ms]">
+            <p className="font-body text-tag tracking-[0.24em] uppercase text-c7-red">{active.label}</p>
+            <p className="mt-2 font-body text-body-lg text-c7-ink/90">{active.fact}</p>
 
-          <div className="relative mt-5 aspect-[4/3] w-full max-w-[280px] overflow-hidden bg-c7-bg-3">
-            <Image
-              src={active.image.src}
-              alt={active.image.alt}
-              fill
-              sizes="280px"
-              quality={90}
-              className="object-cover"
-              style={{ objectPosition: active.image.position, filter: "saturate(0.85) contrast(1.06) brightness(0.92)" }}
-            />
+            {active.image ? (
+              <div className="relative mt-5 aspect-[4/3] w-full max-w-[280px] overflow-hidden bg-c7-bg-3">
+                <Image
+                  src={active.image.src}
+                  alt={active.image.alt}
+                  fill
+                  sizes="280px"
+                  quality={90}
+                  className="object-cover"
+                  style={{ objectPosition: active.image.position, filter: "saturate(0.85) contrast(1.06) brightness(0.92)" }}
+                />
+              </div>
+            ) : null}
+
+            {active.playHref ? (
+              <a
+                href={active.playHref}
+                className="group mt-5 inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+              >
+                Explore on Play
+                <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
+                  ↗
+                </span>
+              </a>
+            ) : null}
+            {active.sectionHref ? (
+              <a
+                href={active.sectionHref}
+                className="group mt-5 inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
+              >
+                Explore the Café
+                <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
+                  ↓
+                </span>
+              </a>
+            ) : null}
           </div>
-
-          {active.playHref ? (
-            <a
-              href={active.playHref}
-              className="group mt-5 inline-flex items-center gap-2 border-b border-c7-line/40 pb-1 font-body text-body-sm font-medium uppercase tracking-[0.08em] text-c7-ink transition-colors hover:border-c7-red hover:text-c7-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-c7-red"
-            >
-              Explore on Play
-              <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[3px]">
-                ↗
-              </span>
-            </a>
-          ) : null}
         </div>
       </div>
 
@@ -140,7 +169,7 @@ export default function VenueExplorer() {
               type="button"
               aria-pressed={isActive}
               onClick={() => setActiveId(h.id)}
-              className="flex items-center justify-between py-3.5 text-left focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-c7-red"
+              className="flex min-h-12 items-center justify-between py-3.5 text-left focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-c7-red"
             >
               <span className={`font-body text-body font-medium uppercase tracking-[0.02em] ${isActive ? "text-c7-red" : "text-c7-ink"}`}>
                 {h.label}

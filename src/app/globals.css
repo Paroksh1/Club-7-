@@ -27,3 +27,19 @@ body {
   background: var(--color-c7-red);
   color: var(--color-c7-ink);
 }
+
+/* Site-wide safety net for reduced motion. motion.css already cancels
+   the c7-anim-* keyframe classes outright, but most of the site's
+   scroll reveals (useRevealOnView + inline opacity/translateY styles)
+   were never covered by that — they'd still visibly slide/fade in over
+   500-900ms regardless of this preference. Forcing every transition to
+   resolve almost instantly gets those straight to their finished,
+   static state without an explicit override in each component. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
